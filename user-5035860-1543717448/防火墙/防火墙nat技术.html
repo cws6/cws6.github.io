@@ -108,20 +108,31 @@
 
 
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="####NAT基本原理NAT技术通过对IP报文头中的源地址或目的地址进行转换，可以使大量的私网IP地址通过共享少量的公网IP地址来访问公网 ###事例1 ####通过nat转换池给内网ip分配可以上网的外网ip 防火墙接口以及区域配置 配置PC1、PC2到PC3的安全策略nat 地址池转换12**防火墙静态路由配置** ip route-static 0.0.0.0 0.0.0.0 20.1.1.">
+<meta property="og:type" content="website">
 <meta property="og:title" content="cws6">
-<meta property="og:url" content="https://cws6.github.io/index.html">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/防火墙/防火墙nat技术.html">
 <meta property="og:site_name" content="cws6">
+<meta property="og:description" content="####NAT基本原理NAT技术通过对IP报文头中的源地址或目的地址进行转换，可以使大量的私网IP地址通过共享少量的公网IP地址来访问公网 ###事例1 ####通过nat转换池给内网ip分配可以上网的外网ip 防火墙接口以及区域配置 配置PC1、PC2到PC3的安全策略nat 地址池转换12**防火墙静态路由配置** ip route-static 0.0.0.0 0.0.0.0 20.1.1.">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-fde99a702e7059b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-f96f1b56fc473fd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-8afc70480db4a8ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-e10075b4fa9a6037.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6685d55e29b954a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-3cbfd1a91117759d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="####NAT基本原理NAT技术通过对IP报文头中的源地址或目的地址进行转换，可以使大量的私网IP地址通过共享少量的公网IP地址来访问公网 ###事例1 ####通过nat转换池给内网ip分配可以上网的外网ip 防火墙接口以及区域配置 配置PC1、PC2到PC3的安全策略nat 地址池转换12**防火墙静态路由配置** ip route-static 0.0.0.0 0.0.0.0 20.1.1.">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-fde99a702e7059b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/">
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/防火墙/防火墙nat技术.html">
 
 
 
@@ -131,7 +142,7 @@
   };
 </script>
 
-  <title>cws6</title>
+  <title> | cws6</title>
   
 
 
@@ -180,8 +191,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -223,7 +233,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -279,6 +289,22 @@
   
     
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
   
 
   
@@ -302,487 +328,129 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/02/p神代码审计知识星球二周年wp-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
         
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/p神代码审计知识星球二周年wp-1/" class="post-title-link" itemprop="https://cws6.github.io/index.html">p神代码审计知识星球二周年wp[1]</a>
-              
-            
-          </h1>
+      
+    
+      
+      
         
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-02 18:07:50 / Modified: 18:33:05" itemprop="dateCreated datePublished" datetime="2018-12-02T18:07:50+08:00">2018-12-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+          <li>防火墙</li>
+        
+      
     
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/防火墙nat技术.html/">防火墙NAT技术.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+
+</div>
+
+</header>
 
       
       
-
       
+      <div class="post-body">
         
-          
-          题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/a
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/02/p神代码审计知识星球二周年wp-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
+          <p>####NAT基本原理<br><strong>NAT技术通过对IP报文头中的源地址或目的地址进行转换，可以使大量的私网IP地址通过共享少量的公网IP地址来访问公网</strong></p>
+<p>###事例1</p>
+<p>####通过nat转换池给内网ip分配可以上网的外网ip<br><img src="https://upload-images.jianshu.io/upload_images/5035860-fde99a702e7059b1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><strong>防火墙接口以及区域配置</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-f96f1b56fc473fd2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><strong>配置PC1、PC2到PC3的安全策略</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-8afc70480db4a8ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><strong>nat 地址池转换</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-e10075b4fa9a6037.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**防火墙静态路由配置**</span><br></pre></td></tr></table></figure></p>
+<p>ip route-static 0.0.0.0 0.0.0.0 20.1.1.2 #将所有经过防火墙的下一跳都设置为20.1.1.2<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">![](https://upload-images.jianshu.io/upload_images/5035860-363528c6223c4dc2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">**路由器静态路由配置**</span><br><span class="line">*返回地址找不到需要配置静态路由 目的为地址池IP*</span><br></pre></td></tr></table></figure></p>
+<p>ip route-static 100.100.100.0 24 20.1.1.1<br><code>`</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-6685d55e29b954a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>###事例2<br><strong>出接口地址为防火墙出口地址配置<br>与地址池配置相同，只需修改NAT策略，转换方式选择出接口地址，即所有经过防火墙出去的私有地址转换为防火墙的出口地址</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-3cbfd1a91117759d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+        
+      </div>
+      
+      
       
     </div>
-
     
 
-    
-    
-    
-    <div>
-    
-    </div>
 
+  
+  
+  <ul class="breadcrumb">
     
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
       
       
-        <div class="post-eof"></div>
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
       
-    </footer>
+    
+      
+      
+        
+          <li>防火墙</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/防火墙nat技术.html/">防火墙NAT技术.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/02/empire入门/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/empire入门/" class="post-title-link" itemprop="https://cws6.github.io/index.html">empire入门</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-02 10:27:03 / Modified: 19:17:06" itemprop="dateCreated datePublished" datetime="2018-12-02T10:27:03+08:00">2018-12-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          参考文献：http://www.52bug.cn/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/4158.htmlhttp://www.freebuf.com/articles/network/175097.htmlhttps://www.tuicool.com/arti
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/02/empire入门/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/01/源码泄露总结/" class="post-title-link" itemprop="https://cws6.github.io/index.html">源码泄露总结</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-01 21:26:29" itemprop="dateCreated datePublished" datetime="2018-12-01T21:26:29+08:00">2018-12-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-02 18:33:02" itemprop="dateModified" datetime="2018-12-02T18:33:02+08:00">2018-12-02</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538
-GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/01/源码泄露总结/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1008,6 +676,10 @@ GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的�
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 

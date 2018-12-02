@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head>
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="实验吧 隐写            body {         margin: 0;         font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Hiragino Sans GB&quot;, sans-serif;         font-size: 14px;         line-height: 20">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/ctf记录/实验吧-隐写.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="实验吧 隐写            body {         margin: 0;         font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Hiragino Sans GB&quot;, sans-serif;         font-size: 14px;         line-height: 20">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="实验吧 隐写            body {         margin: 0;         font-family: &quot;Helvetica Neue&quot;, Helvetica, Arial, &quot;Hiragino Sans GB&quot;, sans-serif;         font-size: 14px;         line-height: 20">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/ctf记录/实验吧-隐写.html"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br />Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br />Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br />Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/实验吧-隐写.html/">实验吧-隐写.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <!DOCTYPE html>
+<html lang="en">
+  <head><meta name="generator" content="Hexo 3.8.0">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>实验吧 隐写</title>
+    <style type="text/css" media="all">
+      body {
+        margin: 0;
+        font-family: "Helvetica Neue", Helvetica, Arial, "Hiragino Sans GB", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        color: #777;
+        background-color: white;
+      }
+      .container {
+        width: 700px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .post {
+        font-family: Georgia, "Times New Roman", Times, "SimSun", serif;
+        position: relative;
+        padding: 70px;
+        bottom: 0;
+        overflow-y: auto;
+        font-size: 16px;
+        font-weight: normal;
+        line-height: 25px;
+        color: #515151;
+      }
+
+      .post h1{
+        font-size: 50px;
+        font-weight: 500;
+        line-height: 60px;
+        margin-bottom: 40px;
+        color: inherit;
+      }
+
+      .post p {
+        margin: 0 0 35px 0;
+      }
+
+      .post img {
+        border: 1px solid #D9D9D9;
+      }
+
+      .post a {
+        color: #28A1C5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="post">
+        <h1 class="title">实验吧 隐写</h1>
+        <div class="show-content">
+          <p>1.欢迎来到地狱</p><p>前面先加文件头，打开图片，下载音频，音频里面是摩斯密码，再解开文档，文档里的图片挺坑的是image steganography，拉到http://www.atool.org/steganography.php解一下就行了，最后一个zip压缩包是个弱口令爆破，直接拉到zip用字典爆破，最后的文档按照提示先base64在rabbit，最后凯撒就行了。</p><p><br></p><p>2.听会歌吧</p><p>这个题挺好玩的，下载歌曲之后发现歌曲和名字是反的，但是并没有在歌曲里面找到什么东西，查看页面源代码，给的链接base64解开就是歌曲的名字，把download.php给base64编码，加在url后面就出现了源码。看源码，最后再将hereiskey.php给base64编码就能得到flag了。</p><p><br></p><p>3.女神又和大家见面了</p><p>下载图片拖到010里面看到了压缩包，直接改名字解压，得到一个钥匙simctf还有一首歌。用mp3stego解密，打开cmd命令框  G:\tools\信息隐藏\MP3Stego_1_1_18\MP3Stego&gt;Decode.exe -X -P simctf C:\Users\cws6\Desktop\music.mp3，然后再打开解压得到的txt，得到一个base64加密的字符串，解码就行了。</p><p><br></p><p>4.LSB</p><p>这是个webStego加密，将图片直接拖进去解密，详细的步骤可以看这个网址的截图http://blog.csdn.net/lijia111111/article/details/69903951</p><p><br></p><p>5.BrainFuck</p><p>真的是第一次知道还有bftools这种工具，还是cmd命令窗进入到bftools目录下，使用下面两个命令得到东西base64解码就出来了。</p><p>bftools.exe decode braincopter doge.png --output --dogeout.png</p><p>bftools.exe run --dogeout.png</p><p><br></p><p>6.认真你就输了</p><p>这个题真的是没话说，直接下载拖到010里面就看到答案了。</p><p><br></p><p>7.复杂的QR_code</p><p>题目给了个二维码，扫了一下并没有给东西，拉到010里面，发现有个压缩包，改名字，但是解压需要密码，给的提示是四个数字，直接暴力破解解压就行了。</p><p><br></p><p>8.刷新 刷新 快刷新</p><p>嗯看的WP是f5隐写，但是王大佬的压缩里面的那个不会用，就直接下载的github里面的，然后用</p><p>java Extract 123456.jpg -p 123456这个命令解密，得到的out.txt就是答案。</p><p><br></p><p>9.流</p><p>010真是个强大的工具，直接将题目给的东西拖进去，搜索题目给的关键词CTF就找到了。</p><p><br></p><p>10.guess</p><p>outguess这个工具的安装真的是烦死了，找了好久最后还是决定在kali上安装。</p><p>git clone https://github.com/crorvick/outguess然后再切换到这个目录下面，再执行./configure &amp;&amp; make &amp;&amp; make install这个命令（原作者给的命令不能用。。），再执行outguess -r /root/Desktop/angrybird.jpg 1.txt答案就有了</p><p><br></p><p>11.小苹果</p><p>嗯，打开题目能看到一张二维码，本来想在电脑上下载一个可以直接扫描二维码的工具，但是一直找不到好的，就直接用手机了，扫出来的内容刚开始以为是url编码，后来发现不对，是unicode解密，解出来当铺密码，再解密，9158753624。肯定还没结束，图片改成zip里面还有个歌。。既然解压缩包没要密码，那应该是mp3stego加密，Decode.exe -X -P 9158753624 C:\Users\cws6\Desktop\apple.mp3在cmd中解出，再base64解码。</p><p><br></p><p>12.Fonts</p><p>没什么意义的题，拖到010里面，往下翻翻看就找到了。</p><p><br></p><p>13.so beautiful so white</p><p>下载的压缩包直接解开有张图片和一个压缩包，图片拖到stegsolve查看，找打key，解压压缩包，得到gif图片，图片受损打不开，拖到010里面加文件头，然后拖进stegsolve中的frame里面一帧一帧的查看得到flag。</p><p><br></p><p>14.水果</p><p>下载图片拖到stegsolve找到二维码，扫描得到45 46 32想到摩斯密码，用ascii转下-. 就行了，最后的提交格式都是小写，中间有_</p><p><br></p><p>15.最低位的亲吻</p><p>感觉这个题挺奇怪的，bmp改成png格式然后去查看就可以看到清晰的二维码，但是如果直接将bmp改成png不行，必须得将这个图片用画图工具打开另存为.png格式。但是对比两张图只是刚开始有点东西不一样，头文件什么的都没变，不明白为什么要转为png格式可以看清楚二维码。</p><p><br></p><p>16.想看正面？那就要看仔细了！</p><p>图片下载下来，看属性，嗯找到了。。。base64解码就好了。。</p><p><br></p><p>17.无处不在的广告</p><p>图片拖进stegsolve找到二维码扫描。。</p><p><br></p><p>18.打不开的文件</p><p>一个很神奇的事情，用火狐不能下载，但是用谷歌可以。。大概是人品吧。。。添加头文件，frame查看，最后base64解密就行了。</p><p><br></p><p>19.FIVE1</p><p>下载图片拖进010里面发现有个压缩包，但是解压需要密码，直接暴力破解就行了，还挺快的，然后又得到一张图片，找到图片的最末尾，echo了一串奇奇怪怪的东西，base64解码得到摩斯密码，摩斯密码再解密得到16位数的字符串，感觉像是md5加密，但是MD5加密一般不都是不可逆么，直接搜了下那个字符串，嗯。。百度上有答案</p><p><br></p><p>20.男神一般都很低调很低调的！！</p><p>这个题还是挺好玩的，下载之后解压是两张图片，拖进stegsolve中，analyse中image combiner可以比较两张图片，找到一个二维码另存，再分析这个二维码得到三张清晰的二维码，win下面自带的画图真的是个好东西，crtl+shift+i直接反色扫描，得到des加密的密文和密钥，解密就行了</p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/实验吧-隐写.html/">实验吧-隐写.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">实验吧 隐写</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

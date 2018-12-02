@@ -108,20 +108,30 @@
 
 
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="官方解读： 1.如果一个或两个参数都是NULL，比较的结果是NULL，除了NULL安全的&amp;lt;=&amp;gt;相等比较运算符。对于NULL &amp;lt;=&amp;gt; NULL，结果为true。不需要转换 2.如果比较操作中的两个参数都是字符串，则将它们作为字符串进行比较。 3.如果两个参数都是整数，则将它们作为整数进行比较。 4.如果不与数字进行比较，则将十六进制值视为二进制字符串 5.如果其中一个参数是十">
+<meta property="og:type" content="website">
 <meta property="og:title" content="cws6">
-<meta property="og:url" content="https://cws6.github.io/index.html">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/数据库及漏洞学习/MySQL的隐式类型转换.html">
 <meta property="og:site_name" content="cws6">
+<meta property="og:description" content="官方解读： 1.如果一个或两个参数都是NULL，比较的结果是NULL，除了NULL安全的&amp;lt;=&amp;gt;相等比较运算符。对于NULL &amp;lt;=&amp;gt; NULL，结果为true。不需要转换 2.如果比较操作中的两个参数都是字符串，则将它们作为字符串进行比较。 3.如果两个参数都是整数，则将它们作为整数进行比较。 4.如果不与数字进行比较，则将十六进制值视为二进制字符串 5.如果其中一个参数是十">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-420901f6895be007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b81b5f904159f5dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-4fb1058afe59e0ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-524462932471f9fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-377eddd651fa0a5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="官方解读： 1.如果一个或两个参数都是NULL，比较的结果是NULL，除了NULL安全的&amp;lt;=&amp;gt;相等比较运算符。对于NULL &amp;lt;=&amp;gt; NULL，结果为true。不需要转换 2.如果比较操作中的两个参数都是字符串，则将它们作为字符串进行比较。 3.如果两个参数都是整数，则将它们作为整数进行比较。 4.如果不与数字进行比较，则将十六进制值视为二进制字符串 5.如果其中一个参数是十">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-420901f6895be007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/">
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/数据库及漏洞学习/MySQL的隐式类型转换.html">
 
 
 
@@ -131,7 +141,7 @@
   };
 </script>
 
-  <title>cws6</title>
+  <title> | cws6</title>
   
 
 
@@ -180,8 +190,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -223,7 +232,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -279,6 +288,22 @@
   
     
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
   
 
   
@@ -302,487 +327,134 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/02/p神代码审计知识星球二周年wp-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
         
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/p神代码审计知识星球二周年wp-1/" class="post-title-link" itemprop="https://cws6.github.io/index.html">p神代码审计知识星球二周年wp[1]</a>
-              
-            
-          </h1>
+      
+    
+      
+      
         
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-02 18:07:50 / Modified: 18:33:05" itemprop="dateCreated datePublished" datetime="2018-12-02T18:07:50+08:00">2018-12-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+          <li>数据库及漏洞学习</li>
+        
+      
     
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/MySQL的隐式类型转换.html/">MYSQL的隐式类型转换.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+
+</div>
+
+</header>
 
       
       
-
       
+      <div class="post-body">
         
-          
-          题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/a
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/02/p神代码审计知识星球二周年wp-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
+          <p>官方解读：</p>
+<pre><code>1.如果一个或两个参数都是NULL，比较的结果是NULL，除了NULL安全的&lt;=&gt;相等比较运算符。对于NULL &lt;=&gt; NULL，结果为true。不需要转换
+2.如果比较操作中的两个参数都是字符串，则将它们作为字符串进行比较。
+3.如果两个参数都是整数，则将它们作为整数进行比较。
+4.如果不与数字进行比较，则将十六进制值视为二进制字符串
+5.如果其中一个参数是十进制值，则比较取决于另一个参数。 如果另一个参数是十进制或整数值，则将参数与十进制值进行比较，如果另一个参数是浮点值，则将参数与浮点值进行比较
+6.如果其中一个参数是TIMESTAMP或DATETIME列，另一个参数是常量，则在执行比较之前将常量转换为时间戳。
+7.在所有其他情况下，参数都是作为浮点数（实数）比较的。
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/5035860-420901f6895be007.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-b81b5f904159f5dc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br><img src="https://upload-images.jianshu.io/upload_images/5035860-4fb1058afe59e0ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>在select * from users where username=’0x3535’+’a’;这个查询语句中，+为算术操作符这样就可以解释为什么’0x3535’+’a’都转换为double了，所以值为0；又因为当0和字符串比较的时候，字符串若不是以数字开头都会和0相等，但是就比如说55aaa这个，当它和0比较的时候，55aaa转化为了55，所以查询的时候没有它</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-524462932471f9fa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>select ‘a’+’b’=’c’的值为1，和上面的道理很像，’a’+’b’的时候，a和b都转换成了浮点型，所以值为0，又因为0=’c’，所以为真，值为1</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-377eddd651fa0a5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>在users这个表中的username字段为varchar类型，当输入username=55的时候，55为整形，和字符串比较的时候，55aaa会转换为55，所以也会输出。只有当两个都是字符串的时候，类型才不会转变，所以应该加引号的地方别忘记了。</p>
+
+        
+      </div>
+      
+      
       
     </div>
-
     
 
-    
-    
-    
-    <div>
-    
-    </div>
 
+  
+  
+  <ul class="breadcrumb">
     
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
       
       
-        <div class="post-eof"></div>
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
       
-    </footer>
+    
+      
+      
+        
+          <li>数据库及漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/MySQL的隐式类型转换.html/">MYSQL的隐式类型转换.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/02/empire入门/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/empire入门/" class="post-title-link" itemprop="https://cws6.github.io/index.html">empire入门</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-02 10:27:03 / Modified: 19:17:06" itemprop="dateCreated datePublished" datetime="2018-12-02T10:27:03+08:00">2018-12-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          参考文献：http://www.52bug.cn/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/4158.htmlhttp://www.freebuf.com/articles/network/175097.htmlhttps://www.tuicool.com/arti
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/02/empire入门/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/01/源码泄露总结/" class="post-title-link" itemprop="https://cws6.github.io/index.html">源码泄露总结</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-01 21:26:29" itemprop="dateCreated datePublished" datetime="2018-12-01T21:26:29+08:00">2018-12-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-02 18:33:02" itemprop="dateModified" datetime="2018-12-02T18:33:02+08:00">2018-12-02</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538
-GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/01/源码泄露总结/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1008,6 +680,10 @@ GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的�
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 

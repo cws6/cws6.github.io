@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：http://www.manks.top/document/install.html配置项参考：http://www.manks.top/document/yii2-blog-config.htmlyii安装条件:    ①php是PHP 5.4 以上版本    ②安装了PDO PHP扩展    ③安装了相应的数据库驱动，如 pdo_mysql在ubuntu下安装PDO PHP，可以参考">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/框架学习/YII入门及创建博客.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：http://www.manks.top/document/install.html配置项参考：http://www.manks.top/document/yii2-blog-config.htmlyii安装条件:    ①php是PHP 5.4 以上版本    ②安装了PDO PHP扩展    ③安装了相应的数据库驱动，如 pdo_mysql在ubuntu下安装PDO PHP，可以参考">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-532636671511b58c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-07c032a531c89edf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-999137f48d1467a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-050aaab1c20a70ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-fc3a2c4d8ed8f3a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-ab9009cd9824b60f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b85a66ba877c6c43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-664f6d1809e3ffbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-5fbbc90ff43d349b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-87333d5d541ef977.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：http://www.manks.top/document/install.html配置项参考：http://www.manks.top/document/yii2-blog-config.htmlyii安装条件:    ①php是PHP 5.4 以上版本    ②安装了PDO PHP扩展    ③安装了相应的数据库驱动，如 pdo_mysql在ubuntu下安装PDO PHP，可以参考">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-532636671511b58c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/框架学习/YII入门及创建博客.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>框架学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/YII入门及创建博客.html/">YII入门及创建博客.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="http://www.manks.top/document/install.html" target="_blank" rel="noopener">http://www.manks.top/document/install.html</a><br>配置项参考：<a href="http://www.manks.top/document/yii2-blog-config.html" target="_blank" rel="noopener">http://www.manks.top/document/yii2-blog-config.html</a><br>yii安装条件:<br>    ①php是PHP 5.4 以上版本<br>    ②安装了PDO PHP扩展<br>    ③安装了相应的数据库驱动，如 pdo_mysql<br>在ubuntu下安装PDO PHP，可以参考<a href="http://blog.csdn.net/mrwangweijin/article/details/76152693" target="_blank" rel="noopener">http://blog.csdn.net/mrwangweijin/article/details/76152693</a><br>修改配置文件<br>先安装mysql，我的版本是php7.0；然后执行以下命令<br>cd  /etc/php/7.0/cli    //进入配置文件目录<br>vim php.ini        //vim打开配置文件<br>extension=php_pdo_mysql.dll  //去掉extensions前面的;号<br>sudo service apache2 restart //重启服务就行了。<br>若是不知道是否安装好了，可以在www目录下放一个1.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$dbms=&apos;mysql&apos;;     //数据库类型</span><br><span class="line">$host=&apos;localhost&apos;; //数据库主机名</span><br><span class="line">$dbName=&apos;mysql&apos;;    //使用的数据库</span><br><span class="line">$user=&apos;root&apos;;      //数据库连接用户名</span><br><span class="line">$pass=&apos;&apos;;          //对应的密码</span><br><span class="line">$dsn=&quot;$dbms:host=$host;dbname=$dbName&quot;;</span><br><span class="line">try &#123;</span><br><span class="line">    $dbh = new PDO($dsn, $user, $pass); //初始化一个PDO对象</span><br><span class="line">    echo &quot;连接成功&lt;br/&gt;&quot;;&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>运行输出 连接成功 就可以了。</p>
+<p>准备工作做好了，现在可以开始安装yii了。</p>
+<p>①在官网(<a href="http://www.yiiframework.com/download/)下载一份高级版本(advanced)，与其对应的是basic版本。advanced自带多应用，其实就是可以直接在这个版本上配置多个应用，比如frontend(前台应用)，backend(后台应用)，console(命令行应用)以及api应用。basic还得手动配置，麻烦一些。" target="_blank" rel="noopener">http://www.yiiframework.com/download/)下载一份高级版本(advanced)，与其对应的是basic版本。advanced自带多应用，其实就是可以直接在这个版本上配置多个应用，比如frontend(前台应用)，backend(后台应用)，console(命令行应用)以及api应用。basic还得手动配置，麻烦一些。</a><br>②解压后拷贝advanced目录放到web(linux下就是www/html)可访问目录，文件名advanced,不做改动<br>③在linux下，切换到advanced目录执行php init命令进行初始化<br>④回车后这里会让选择开发环境 0开发环境 1生产环境 这里我们选择0 开发环境，输入后回车，会让输入yes或者no进行确认，输入yes确认即可<br>⑤ok了之后，切换到根目录下，执行命令composer install，这里的根目录指的是common目录的同级目录。//但是这一步骤，我显示的是没有composer这个命令<br>⑥验证下是否安装成功了。在apache下运行localhost/advanced/frontend/web/，界面上显示一个大大的Congratulations即表示安装成功！</p>
+<p>参考文献：<a href="http://www.manks.top/document/easy_blog_manage_system.html" target="_blank" rel="noopener">http://www.manks.top/document/easy_blog_manage_system.html</a><br>1.我们先把数据库配置一下，打开 <code>common\config\main-local.php</code>文件，在 components 下面的db配置，将dbname改成已经创建好的数据库名字，username和password改成自己连接数据库的时候的用户名和密码。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-532636671511b58c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>感觉在ubuntu下面的时候，权限给的是真的少，yii都没有权限，需要用到的文件什么的给权限就好，chmod命令很方便的<br><code>./yii migrate/create create_blog_table</code>，用这个命令可以生成的迁移文件位于 <code>advanced\console\migrations</code>目录，yii migrate 命令已经在迁移文件中为我们添加了主键ID和表名，接下来我们要打开该文件修改表名以及添加更我们需要的列到数据表<br><img src="https://upload-images.jianshu.io/upload_images/5035860-07c032a531c89edf.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"><br>表创建好之后使用<code>./yii migrate</code>命令，中间会让我们确认，yes后回车即可，该命令会为我们创建迁移文件（console\migrations目录）中定义的所有数据表，执行完该命令打开数据库会发现，我们的blog表已经创建成功了，其中包含了我们在migration中定义的列。 在我们创建的数据库中还有uesr和migration这两个表，其中migration这个表中记录了我们使用它创建表的命令。</p>
+<p>在目前的advanced版本中，实际上配置文件有4个，分别是<code>common\config\main.php</code>和<code>common\config\main-local.php</code>以及应用的<code>main.php</code>和<code>main-local.php</code>，这四个配置文件是有优先级的，按照项目入口文件内加载的顺序来看，其优先级为 <code>app\config\main-loca.php &gt; app\config\main.php &gt; common\config\main-local.php &gt; common\config\main.php</code>，这些配置文件的区分对比可按照下面2条来理解<br>   ①app针对具体应用的配置，common是公共的配置，多个项目共同的配置可以写在common\config内；<br>  ② 实际的开发环境可能包括本地环境、测试环境、正式环境，以这三种环境为例，main.php可以作为三者都可能存在的配置，main-local.php可以作为当前环境独有的配置，比如本地的main-local和测试的、正式的main-local都是独立的，互不影响，其独立而互不影响的前提就在于git的ignore文件。</p>
+<p>2.使用gii生成AR模型和CRUD<br>gii是yii2中的一个强大的组件，是一种高度可定制和可扩展的代码生成工具。使用它可以大幅提高我们的开发效率。如果在安装的过程中，选择的是开发环境，gii默认是开启的。也就是说无需再进行配置便可以使用，也可以打开文件 <code>advanced\frontend\config\main-local.php</code>查看配置代码。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-999137f48d1467a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"><br>打开 <a href="http://localhost/advanced/frontend/web/index.php?r=gii可以直接访问gii这个模块。" target="_blank" rel="noopener">http://localhost/advanced/frontend/web/index.php?r=gii可以直接访问gii这个模块。</a><br> 2.1生成AR模型类<br>点击页面上的Model Generator start,像下面这样生成AR模型类。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-050aaab1c20a70ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>其中Namespace不要用app\models，要不下面生成CRUD会出错，然后点击Preview之后，再点击Generate，若是出现成功单词就创建成功了，刚开始一直创建不成功，我后来尝试先在/var/www/html/advanced/common/models/下创建Blog.php依旧不行，后来大佬提醒我可能是权限不够，我就把全部权限都给advanced这个文件了，然后就好了。<br>2.2生成CRUD代码<br>CRUD这四个字母分别是Create Read Update Delete，也就是创建、读取、更新和删除的意思。接着点击左侧菜单CRUD Generator像下面这样生成crud<img src="https://upload-images.jianshu.io/upload_images/5035860-fc3a2c4d8ed8f3a8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>按照以上操作，我们会在如下相关目录生成9个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">common\models\Blog.php</span><br><span class="line">common\models\BlogSearch.php</span><br><span class="line">frontend\controllers\BlogController.php</span><br><span class="line">frontend\views\blog\ _form.php</span><br><span class="line">frontend\views\blog\ _search.php</span><br><span class="line">frontend\views\blog\create.php</span><br><span class="line">frontend\views\blog\index.php</span><br><span class="line">frontend\views\blog\update.php</span><br><span class="line">frontend\views\blog\view.php</span><br></pre></td></tr></table></figure></p>
+<p>然后可以通过。访问<code>http://localhost/advanced/frontend/web/index.php?r=blog</code>看到blog具体页面信息。</p>
+<p>3.添加博客<br>以上通过gii我们便已经完成了博客管理的增删改查。实际开发中，最常见的便是共用一套配置的方法了，比如我们在<code>common\config\main-local.php</code>文件中对数据库配置好，当前项目下所有的应用都可以同数据库交互了。<br>3.1首先已经在<code>common\models</code>下定类模型blog，为了各个应用操作方便，为单个应用创建一个继承该基类的模型类，如<code>frontend\models\BlogForm</code>，<code>backend\models\BlogForm</code>，操作前台的BlogForm完全不会影响到后台的模型类，与此同时前后台还可以通过基类common\models\Blog有共同用法。<br>操作方法：<br>【1】拷贝<code>common\models\Blog.php</code>到<code>frontend\models\BlogForm.php</code>(自己创建的)后，打开<code>BlogForm.php</code>文件稍作修改：<br>     ①命名空间（namespace）修改为 namespace frontend\models;<br>     ②增加需要继承的父类 use common\models\Blog;<br>     ③类名修改为BlogForm<br>     ④继承类修改为Blog//这个继承类若是不修改的话，下面的修改其他函数，会出现调用问题。修改成这样class BlogForm extends Blog<br>【2】打开<code>frontend\controllers\BlogController.php</code>文件：<br>①在控制器文件BlogController.php文件顶部，namespace下面添加<code>use frontend\models\BlogForm</code>;<br>②修改actionCreate方法$model实例化的类为BlogForm, 即 <code>$model = new BlogForm()</code>;<br>③修改findModel($id)函数中的(<code>$model = Blog::findOne($id)) !== null</code>) 中的Blog为<code>BlogForm</code><br>3.2修改博客的显示方式<br><code>frontend\controllers\BlogController.php</code>的create方法我们可以看到，模版文件是通过<br><img src="https://upload-images.jianshu.io/upload_images/5035860-ab9009cd9824b60f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>来调用的，然后我们找到跟<code>frontend\views\blog\create.php</code>，views这里存放的基本上都是视图文件<br><img src="https://upload-images.jianshu.io/upload_images/5035860-b85a66ba877c6c43.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"><br>这里引用了一个子视图文件_form,该文件位于create.php同级下，打开该文件后会发现一开始显示的表单原来在这里。</p>
+<p>为了实现我们想要把字段显示为中文的标题内容，在BlogForm文件修改attributeLabels方法。而我们这里的label跟我们一开始用gii生成model时是否勾选Generate Labels from DB Comments一项有关。我们修改attributeLabels方法如下：<br><img src="https://upload-images.jianshu.io/upload_images/5035860-664f6d1809e3ffbb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>在_form.php文件中，表单的创建借助的是组件 ActiveForm ，表单提交默认的action是当前操作方法。yii2中利用该组件不仅可以快速方便的构建表单，而且还结合model+jquery实现了表单的各种验证，要对用户提交的数据进行验证，需要声明与需验证模型特性相关的验证规则。接下来我们修改BlogForm的rules方法，展示对标题设置为必填项，而且长度不能超过100个字符。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-5fbbc90ff43d349b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>为了让我们的规则起作用，还需要调用yii\base\Model::validate()方法。该方法会返回一个布尔值。若没有通过，则通过 yii\base\Model::errors 属性获取相应的报错信息。我们稍微对actionCreate进行修改， 比如像下面这样：<br><img src="https://upload-images.jianshu.io/upload_images/5035860-87333d5d541ef977.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="3.png"><br>然后添加数据就行了。</p>
+<p>3.3代码列表页数据的由来。<br>通过<code>frontend\models\BlogSearch</code>（将common\models\BlogSearch.php拷贝到frontend\models\BlogSearch）的search提供的，打开frontend\models\BlogSearch.php文件<br>    ①增加 use frontend\models\BlogForm;<br>    ②继承类修改为 BlogForm<br>    ③search方法中Blog::find()修改为BlogForm::find()<br>    ④将#use common\models\Blog;这一行注释掉，或者修改blog.php里面的数据为中文</p>
+<p>关于博客数据的删除，可以手动点击右侧按钮直接进行删除即可。该动作会执行 BlogController的actionDelete操作，调用model的delete方法进行数据的删除，该删除属于数据直接从数据库中永久性删除。</p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>框架学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/YII入门及创建博客.html/">YII入门及创建博客.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

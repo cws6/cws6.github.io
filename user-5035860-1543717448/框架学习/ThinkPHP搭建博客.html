@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="博客源码：https://github.com/cws6/blog源码地址：https://github.com/xialeistudio/thinkphp-inaction/tree/master/blog功能  管理员登陆，修改密码，退出登录 文章分类添加，编辑，删除。 文章添加，编辑，删除。 发表，管理评论 添加，删除，展示友情链接  创建数据表12345678910CREATE TABLE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/框架学习/ThinkPHP搭建博客.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="博客源码：https://github.com/cws6/blog源码地址：https://github.com/xialeistudio/thinkphp-inaction/tree/master/blog功能  管理员登陆，修改密码，退出登录 文章分类添加，编辑，删除。 文章添加，编辑，删除。 发表，管理评论 添加，删除，展示友情链接  创建数据表12345678910CREATE TABLE">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="博客源码：https://github.com/cws6/blog源码地址：https://github.com/xialeistudio/thinkphp-inaction/tree/master/blog功能  管理员登陆，修改密码，退出登录 文章分类添加，编辑，删除。 文章添加，编辑，删除。 发表，管理评论 添加，删除，展示友情链接  创建数据表12345678910CREATE TABLE">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/框架学习/ThinkPHP搭建博客.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>框架学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/ThinkPHP搭建博客.html/">THINKPHP搭建博客.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>博客源码：<a href="https://github.com/cws6/blog" target="_blank" rel="noopener">https://github.com/cws6/blog</a><br>源码地址：<a href="https://github.com/xialeistudio/thinkphp-inaction/tree/master/blog" target="_blank" rel="noopener">https://github.com/xialeistudio/thinkphp-inaction/tree/master/blog</a><br><strong>功能</strong></p>
+<ul>
+<li>管理员登陆，修改密码，退出登录</li>
+<li>文章分类添加，编辑，删除。</li>
+<li>文章添加，编辑，删除。</li>
+<li>发表，管理评论</li>
+<li>添加，删除，展示友情链接</li>
+</ul>
+<p><strong>创建数据表</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE blog_admin (`adminId` int(11) NOT NULL AUTO_INCREMENT, `username` varchar(20) NOT NULL COMMENT &apos;账号&apos;, `password` char(32) NOT NULL COMMENT &apos;密码&apos;, `createdAt` int(10) NOT NULL COMMENT &apos;添加时间&apos;,`loginAt` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;最近登录时间&apos;,`loginIp`varchar(15) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;最近登录IP&apos;,PRIMARY KEY (`adminId`), KEY `createdAt` (`createdAt`),KEY `account`(`username`,`password`)) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;</span><br><span class="line">INSERT INTO `blog_admin` VALUES (&apos;1&apos;, &apos;admin&apos;, &apos;6f1779da8462d85c012588fb73a2efb7&apos;, &apos;0&apos;, &apos;0&apos;, &apos;&apos;);//添加管理员账号密码admin和admin</span><br><span class="line"></span><br><span class="line">CREATE TABLE  blog_article (`articleId` int(11) NOT NULL AUTO_INCREMENT,`title` varchar(40) NOT NULL COMMENT &apos;标题&apos;, `description` varchar(100) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;简介&apos;,`image` varchar(128) NOT NULL DEFAULT &apos;&apos; COMMENT &apos;封面图片&apos;,`hits` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;点击数&apos;,`createdAt` int(11) NOT NULL COMMENT &apos;添加时间&apos;,`updateAt` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;更新时间&apos;,`status` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;状态&apos;,`sort` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;排序&apos;,`content` text NOT NULL COMMENT &apos;文章内容&apos;,`categoryId` int(10) unsigned NOT NULL,PRIMARY KEY (`articleId`),KEY `hit` (`hits`),KEY `createdAt` (`createdAt`),KEY `status` (`status`),KEY `sort` (`sort`),KEY `fk_blog_article_blog_category_idx` (`categoryId`),CONSTRAINT `fk_blog_article_blog_category` FOREIGN KEY (`categoryId`) REFERENCES `blog_category` (`categoryId`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br><span class="line"></span><br><span class="line">CREATE TABLE  blog_category (`categoryId` int(10) unsigned NOT NULL AUTO_INCREMENT, `name` varchar(20) NOT NULL COMMENT &apos;分类名称&apos;,`isNav` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;是否显示在导航栏&apos;,`total` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;文章总数&apos;,`sort` tinyint(4) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;排序&apos;,PRIMARY KEY (`categoryId`),KEY `sort` (`total`),KEY `total` (`total`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br><span class="line"></span><br><span class="line">CREATE TABLE  blog_comment (`commentId` int(11) NOT NULL AUTO_INCREMENT,`nickname` varchar(20) NOT NULL COMMENT &apos;昵称&apos;,`createdAt` int(11) NOT NULL COMMENT &apos;评论时间&apos;,`createdIp` varchar(15) NOT NULL COMMENT &apos;ip地址&apos;,`content` text NOT NULL COMMENT &apos;评论内容&apos;,`articleId` int(11) NOT NULL,PRIMARY KEY (`commentId`),KEY `created` (`createdAt`),KEY `fk_blog_comment_blog_article1_idx` (`articleId`),CONSTRAINT `fk_blog_comment_blog_article1` FOREIGN KEY (`articleId`) REFERENCES `blog_article` (`articleId`) ON DELETE NO ACTION ON UPDATE NO ACTION) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br><span class="line"></span><br><span class="line">CREATE TABLE  blog_link( `linkId` int(11) NOT NULL AUTO_INCREMENT `name` varchar(20) NOT NULL COMMENT &apos;站点名称&apos;,`link` varchar(100) NOT NULL COMMENT &apos;链接地址&apos;,`status` tinyint(1) NOT NULL DEFAULT &apos;1&apos; COMMENT &apos;状态&apos;,`sort` int(11) NOT NULL DEFAULT &apos;0&apos; COMMENT &apos;排序&apos;,PRIMARY KEY (`linkId`),KEY `sort` (`sort`),KEY `status` (`status`)) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;</span><br></pre></td></tr></table></figure></p>
+<p><strong>thinkphp\blog\Application\Admin模块</strong><br><em>这是后台管理模块，需要管理文章，分类，评论，友情链接等功能。</em><br>①<code>thinkphp\blog\Application\Admin\Controller</code>是这些功能的控制器：</p>
+<blockquote>
+<p>ArticleController.class.php                 文章控制器<br>CategoryController.class.php            分类控制器<br>CommentController.class.php           评论控制器<br>LinkController.class.php                    友情链接控制器</p>
+</blockquote>
+<p><em>admin模块是受保护的模块，所以这四个控制器许登陆后才能正常访问，在同级目录下创建<code>BaseController.class.php</code>控制器处理登录检测，需要进行权限检测的控制器继承它就行。</em>例如：<code>thinkphp\blog\index.php\admin\index\login</code>调用的是<code>blog\Application\Admin\Controller\IndexController.class.php</code>//U(‘index/admin/index/login’)</p>
+<p>②分页处理<br>数据量不可预测，须在列表页进行分页处理，在<code>需要分页的功能的控制器</code>里面加入分页代码</p>
+<p>③文章分类<br>文章是分类的，在读取文章列表的时候将分类信息同时查询处理，在这里使用ThinkPHP提供的ViewModel，在<code>thinkphp\blog\Application\Common\Model\ArticleCategoryViewModel.class.php</code>实现</p>
+<p>④文件上传<br><code>thinkphp\blog\Application\Admin\View\Common\upload.html</code>中定义上传功能，然后在<code>thinkphp\blog\Application\Admin\Controller\IndexController.class.php</code>控制器中添加upload方法，在<code>thinkphp\blog\Application\Admin\View\Article\post.html</code>中使用<code>&lt;include file=&quot;Common:upload&quot;/&gt;</code>引用</p>
+<p><strong>thinkphp\blog\Application\Common模块</strong><br>①分类处理<br>此模块是公用模块，其他模块公用的功能可以放在该模块下，例如上面提到的<code>③文章分类</code>是公用Model，所以放在<code>Common/Model</code>下。<br>文章分类时有’isNav’字段，这是用来标识分类是否是导航栏中的分类：</p>
+<blockquote>
+<p>status为1：读取属于导航栏的分类<br>status为0：读取不属于导航栏的分类<br>读取全部分类</p>
+</blockquote>
+<p>以上需求返回值是一致的，将以上三个需求封装成一个函数，根据传入的status决定返回数据<br><code>thinkphp\blog\Application\Common\Common\function.php</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">function getCategory($isNav = -1)</span><br><span class="line">&#123;</span><br><span class="line">	$map = array();</span><br><span class="line">	if ($isNav &gt; -1)</span><br><span class="line">	&#123;</span><br><span class="line">		$map[&apos;isNav&apos;] = $isNav;</span><br><span class="line">	&#125;</span><br><span class="line">	$model = new \Think\Model(&apos;Category&apos;);</span><br><span class="line">	return $model-&gt;where($map)-&gt;order(&apos;sort DESC&apos;)-&gt;select();</span><br><span class="line">&#125;//当给定的status&gt;-1时添加一个过滤参数，=-1则不添加。</span><br></pre></td></tr></table></figure></p>
+<p>②友情链接列表<br>友情链接是通过函数来定义，前端通过函数调用。<code>thinkphp\blog\Application\Common\Common\function.php</code></p>
+<p>③数据库字段大小写<br>在使用ThinkPHP的Model进行数据库操作时，返回的数据键名是大写的。<br>编辑’thinkphp\blog\Application\Common\Conf\db.php’，在其中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&apos;DB_PARAMS&apos; =&gt; array(</span><br><span class="line">		PDO::ATTR_CASE =&gt; PDO::CASE_NATURAL</span><br><span class="line">	)//控制大小写</span><br></pre></td></tr></table></figure></p>
+<p><strong>Home模块</strong><br>①前台布局<br>此模块用到了ThinkPHP的模板布局功能<br>在<code>thinkphp\blog\Application\Common\Conf\config.php</code>添加<code>&#39;LAYOUT_ON&#39; =&gt; true</code>，开启模板布局，ThinkPHP会默认使用名为“layout”的模板，在<code>thinkphp\blog\Application\Home\View\layout.html</code>文件。（代码就不贴了，github中都有），在此布局文件用到了模板常量，而ThinkPHP自带的模板常量只有<code>_PUBLIC_</code>，所以需在<code>thinkphp\blog\Application\Home\Conf\config.php</code>中单独定义<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">return array(</span><br><span class="line">	&apos;TMPL_PARSE_STRING&apos; =&gt; array(</span><br><span class="line">		&apos;__VENDOR__&apos; =&gt; &apos;/thinkphp/blog/public/vendor&apos;,</span><br><span class="line">		&apos;__JS__&apos; =&gt; &apos;/thinkphp/blog/public/home/js&apos;,</span><br><span class="line">		&apos;__CSS__&apos; =&gt; &apos;/thinkphp/blog/public/home/css&apos;,</span><br><span class="line">		&apos;__IMAGE__&apos; =&gt; &apos;/thinkphp/blog/public/home/images&apos;</span><br><span class="line">	),</span><br></pre></td></tr></table></figure></p>
+<p>我的项目是部署在localhost/thinkphp中，在定义模板常量的时候需要写全。<br>公用部分用vendor目录，<br>导航栏，友情链接等这几个功能都是公用功能，在模板文件使用调用<code>thinkphp\blog\Application\Common\Common\function.php</code>中的<code>getCategory</code>和<code>getLinks</code>函数，不会出现读取不到数据的问题。</p>
+<p>②评论间隔处理<br>使用缓存来做评论间隔处理<br><code>thinkphp\blog\Application\Home\Controller\IndexController.class.php</code>里的comment()方法执行此操作。$id是被评论文章的ID，<code>$key = get_client_ip() . &#39;-view-article-&#39; . $id;</code>是使用ID+IP的方式识别当前评论用户，若S函数返回值不为空，则缓存有效期内已经评论过，返回错误信息，若评论成功，则使用当前$key写入缓存</p>
+<p>③Ajax评论<br>在文章页评论功能的开发中使用<code>Ajax</code>， 在<code>thinkphp\blog\Application\Home\View\Index\article.html</code>中。提交的时候使用<code>$.post</code>方式提交。在回调函数中需要先判断是否出错，如果出错则显示错误信息，否则显示该评论。评论使用的是jQuery的prepend方法。因最新的评论在最前面，须将生成的html添加到最前面。</p>
+<p><strong>其他总结</strong></p>
+<ul>
+<li><p>入口<code>index.php</code>文件调用<code>thinkphp\blog\Application\Home\Controller\IndexController.class.php</code>和thinkphp\blog\Application\Common\Model\ArticleCategoryViewModel.class.php。<br><code>thinkphp\blog\Application\Common\Conf\config.php</code>应用配置文件也就是调用所有模块之前都会首先加载的公共配置文件</p>
+</li>
+<li><p><code>thinkphp\blog\Application\Admin\View\..</code>这个文件中<code>index.html</code>是后台的编写各个模块的列表，<code>post.html</code>则是发表页面</p>
+</li>
+<li><p>前台Home模块用到了ThinkPHP的模块布局功能。编辑<br><code>thinkphp\blog\Application\Common\Conf\config.php</code>文件，默认调用<code>thinkphp\blog\Application\Home\View</code>下的<code>layout.html</code>文件</p>
+</li>
+<li><p>该布局用到了常量模块，而ThinkPHP自带的模块常量只有<em>PUBLIC</em>，所以需在<br><code>thinkphp\blog\Application\Common\Conf\config.php</code>中单独定义，并在<br><code>thinkphp\blog\Application\Home\Conf\config.php</code>中调用需要的布局。</p>
+</li>
+</ul>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>框架学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/ThinkPHP搭建博客.html/">THINKPHP搭建博客.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

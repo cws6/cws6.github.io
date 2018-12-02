@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：http://www.vuln.cn/6701 通用思路  通读全文代码，从功能函数代码开始阅读，例如include文件夹下的common_fun.php，或者有类似关键字的文件。 看配置文件，带有config关键字的文件，找到mysql.class.php文件的connect()函数，查看在数据库连接时是否出现漏洞。 继续跟读首页文件index.php了解程序运作时调用了哪些函数和文件">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/代码审计记录/代码审计入门总结.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：http://www.vuln.cn/6701 通用思路  通读全文代码，从功能函数代码开始阅读，例如include文件夹下的common_fun.php，或者有类似关键字的文件。 看配置文件，带有config关键字的文件，找到mysql.class.php文件的connect()函数，查看在数据库连接时是否出现漏洞。 继续跟读首页文件index.php了解程序运作时调用了哪些函数和文件">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-74183ac9f43c0aee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-f49e18275d7cd178.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：http://www.vuln.cn/6701 通用思路  通读全文代码，从功能函数代码开始阅读，例如include文件夹下的common_fun.php，或者有类似关键字的文件。 看配置文件，带有config关键字的文件，找到mysql.class.php文件的connect()函数，查看在数据库连接时是否出现漏洞。 继续跟读首页文件index.php了解程序运作时调用了哪些函数和文件">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-74183ac9f43c0aee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/代码审计记录/代码审计入门总结.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>代码审计记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/代码审计入门总结.html/">代码审计入门总结.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="http://www.vuln.cn/6701" target="_blank" rel="noopener">http://www.vuln.cn/6701</a></p>
+<p><strong>通用思路</strong></p>
+<ul>
+<li>通读全文代码，从功能函数代码开始阅读，例如include文件夹下的<code>common_fun.php</code>，或者有类似关键字的文件。</li>
+<li>看配置文件，带有config关键字的文件，找到<code>mysql.class.php</code>文件的connect()函数，查看在数据库连接时是否出现漏洞。</li>
+<li>继续跟读首页文件<code>index.php</code>了解程序运作时调用了哪些函数和文件，以<code>index.php</code>文件作为标线，一层一层去扩展阅读所包含的文件，了解其功能，之后进入其功能文件夹的首页文件，进行扩展阅读。</li>
+</ul>
+<p>##漏洞总结：</p>
+<p>####1.文件操作漏洞<br><strong>①.文件包含漏洞：</strong>(详细可看：<a href="https://www.jianshu.com/p/41bb503abe61" target="_blank" rel="noopener">https://www.jianshu.com/p/41bb503abe61</a>)<br>(1) <em>本地文件包含：</em><br>一般存在于模块加载，模板加载，cache调用<br>包括函数：include()/include_once()，require()/require_once()寻找可控变量</p>
+<p>(2)<em> 远程文件包含：</em><br>前提条件：allow_url_include = on</p>
+<p>(3) <em>文件包含截断：</em><br>%00截断(php版本小于5.3)<br>问号截断(问号后面相当于请求的参数，伪截断)<br>英文(.) 反斜杠(/) 截断</p>
+<p><strong>②.文件读取(下载)漏洞：</strong><br>搜索关键函数:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">file_get_contents()</span><br><span class="line">highlight_file()</span><br><span class="line">fopen()</span><br><span class="line">read file()</span><br><span class="line">fread()</span><br><span class="line">fgetss()</span><br><span class="line">fgets()</span><br><span class="line">parse_ini_file()</span><br><span class="line">show_source()</span><br><span class="line">file()</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+<p><strong>③.文件上传漏洞：</strong><br>搜索关键函数:<br><code>move_uploaded_file()</code>接着看调用这个函数的代码是否存在为限制上传格式或者可以绕过。</p>
+<p>(1) <em>未过滤或本地过滤：</em><br>服务器端未过滤，直接上传PHP格式的文件即可利用。</p>
+<p>(2) <em>黑名单扩展名过滤：</em><br>限制不够全面：IIS默认支持解析.asp,.cdx, .asa,.cer等。</p>
+<p>(3) <em>文件头 content-type验证绕过：</em></p>
+<ul>
+<li>getimagesize()函数：验证文件头只要为GIF89a，就会返回真。</li>
+<li>限制$_FILES[“file”][“type”]的值 就是人为限制content-type为可控变量。</li>
+</ul>
+<p><strong>④.文件删除漏洞：</strong><br>搜索关键函数：<br><code>unlink()</code>利用回溯变量的方式<br>老版本下的session_destroy()，可以删除文件，现已基本被修复。</p>
+<p>####2.代码执行漏洞<br><strong>①代码执行函数：</strong><br>搜索关键函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">eval(), assert(), preg_replace(), call_user_func(), call_user_func_array(), array_map()</span><br></pre></td></tr></table></figure></p>
+<p>(1) preg_replace()函数：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mixed preg_replace ( mixed $pattern , mixed $replacement , mixed $subject [, int $limit = -1 [, int &amp;$count ]] )</span><br></pre></td></tr></table></figure></p>
+<p>当$pattern处存在e修饰符时，$replacement 会被当做php代码执行。</p>
+<p>(2)call_user_func()函数<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mixed call_user_func( callable $callbank [ , mixed $parameter [ , mixed $…)：</span><br></pre></td></tr></table></figure></p>
+<p>第一个参数为回调函数，第二个参数是回调函数的参数</p>
+<p>(3)eval()和assert()：<br>当assert()的参数为字符串时 可执行PHP代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">eval(&quot; phpinfo(); &quot;);【√】 eval(&quot; phpinfo() &quot;);【X】</span><br><span class="line">assert(&quot; phpinfo(); &quot;);【√】 assert(&quot; phpinfo() &quot;);【√】</span><br></pre></td></tr></table></figure></p>
+<p><strong>②.动态函数执行：</strong><br>动态函数后门：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$_GET[&apos;a&apos;]($_GET[&apos;b&apos;]);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-74183ac9f43c0aee.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p><strong>③.命令执行函数：</strong><br>搜索关键函数：<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">system(), exec(), shell_exec(), passthru() ,pcntl_exec(), popen(),proc_open()</span><br></pre></td></tr></table></figure></p>
+<p>(1) <em>popen()和proc_open()：</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">popen( &apos;whoami &gt;&gt; 1.txt&apos;, &apos;r&apos; ); </span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
+<p>所在路径就会出现一个1.txt ，里面的内容为命令执行后的结果</p>
+<p>(2) 反引号命令执行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">echo `whoami`;</span><br><span class="line">?&gt;                //直接就可以执行命令</span><br><span class="line">``` </span><br><span class="line">双引号和单引号的区别：</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php<br>$a = 1;<br>echo “ $a “ ; //1<br>echo ‘ $a ‘ ;//$a<br>?&gt;                //双引号时，可以直接解析变量，造成代码执行漏洞。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">####3.变量覆盖漏洞</span><br><span class="line">**①.函数使用不当：**</span><br></pre></td></tr></table></figure></p>
+<p>int extract( array &amp;$var_array , int $extract_type = EXTR_OVERWRITE , string $prefix = null )<br>void parse_str( string $str , array &amp;$arr )<br>bool import_request_variables( string $type , string $prefix )<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">**②.$$变量覆盖：**</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php<br>include “flag.php”;<br>if ($_SERVER[“REQUEST_METHOD”] != “POST”)<br>    die(“flag is here”);<br>if (!isset($_POST[“flag”]) )<br>    die($_403);<br>foreach ($_GET as $k =&gt; $v){<br>    $$k = $$v;<br>}<br>foreach ($_POST as $k =&gt; $v){<br>    $$k = $v;<br>}<br>if ( $_POST[“flag”] !== $flag )<br>    die($_403);<br>echo “flag: “. $flag . “\n”;<br>die($_200);<br>?&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">使用了两个foreach并且也使用了$$.两个foreach中对 $$key的处理是不一样的，满足条件后会将$flag里面的值打印出来。</span><br><span class="line">但是由于`后两个if语句及foreach`代码会将$flag的值给覆盖掉了，所以需要先将$flag的值赋给$_200或$_403变量，然后利用die($_200)或 die($_403)将flag打印出来。</span><br><span class="line"></span><br><span class="line">解题方法： </span><br><span class="line">利用第一个foreach先将$flag的值赋给$_200，然后利用die($_200)将原本的flag值打印出来。</span><br><span class="line">最终PAYLOAD：</span><br></pre></td></tr></table></figure></p>
+<p>GET DATA：?_200=flag<br>POST DATA：flag=aaaaaaaaaaaaaaaaaaaaa<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">####4.逻辑漏洞</span><br><span class="line">**需要思考的问题：**</span><br><span class="line">* 程序是否可以重复安装</span><br><span class="line">* 修改密码是否存在越权，修改其他用户密码</span><br><span class="line">* 找回密码验证码是否可以暴力破解</span><br><span class="line">* cookie是否可以预测 验证存在绕过</span><br><span class="line"></span><br><span class="line">**①.账户体系中的越权问题：**</span><br><span class="line">*   水平越权：A用户能够以B用户的身份，进行B用户的全部权限操作。前提A用户和B用户拥有相同的权限。</span><br><span class="line">*   垂直越权：A用户能够以C用户的身份，进行C用户的全部权限操作，前提C用户比A用户拥有更高的权限。</span><br><span class="line"></span><br><span class="line">(1) 未`exit`/`return`/`die`：</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php<br>if(file_exists(‘install.lock)){<br>    header(“Location:xxx.com”);<br>}<br>echo “test”;<br>?&gt;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">test 依旧会被输出，替换成安装流程，PHP依旧会进行。</span><br><span class="line"></span><br><span class="line">**(2) 支付漏洞：**</span><br><span class="line">*   客户端修改单价</span><br><span class="line">*   客户端修改总价和购买数量</span><br><span class="line">*   服务端未校验严格</span><br><span class="line">*   重复发包利用时间差：</span><br></pre></td></tr></table></figure>
+<pre><code>&lt;?php
+if (check_money($price)){
+  //Do something
+  //花费几秒
+  $money = $money - $price;
+}
+?&gt;
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**可能导致漏洞函数：** `str_replace()`</span><br></pre></td></tr></table></figure>
+</code></pre><p>&lt;?php<br>$a = addslashes($_GET[‘a’]);<br>$b = addslashes($_GET[‘b’]);<br>echo “$a<br>$b<br>“;<br>$c = str_replace($a,’’,$b);<br>echo trim($c);<br>?&gt;<br><code>`</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-f49e18275d7cd178.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>####5.会话认证漏洞</p>
+<ul>
+<li>COOKIE验证：没有使用SESSION验证，将信息直接保存在COOKIE中</li>
+<li>找到传入sql语句的参数的传递过程，回溯变量到最原始的函数，看它保存在cookie的算法是否可逆</li>
+<li>审计代码时，查看登录处代码</li>
+</ul>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>代码审计记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/代码审计入门总结.html/">代码审计入门总结.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

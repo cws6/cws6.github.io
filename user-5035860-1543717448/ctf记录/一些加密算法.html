@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://mp.weixin.qq.com/s?__biz=MzU1MzE3Njg2Mw==&amp;amp;mid=2247485826&amp;amp;idx=1&amp;amp;sn=60126c394a72cd6bfaf31a32bc04dce3&amp;amp;chksm=fbf793f2cc801ae4a85065a45ea6ced1781330f491f430743eebf7f8780e2b5e5a">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/ctf记录/一些加密算法.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://mp.weixin.qq.com/s?__biz=MzU1MzE3Njg2Mw==&amp;amp;mid=2247485826&amp;amp;idx=1&amp;amp;sn=60126c394a72cd6bfaf31a32bc04dce3&amp;amp;chksm=fbf793f2cc801ae4a85065a45ea6ced1781330f491f430743eebf7f8780e2b5e5a">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-eefa66a0ddc6e8f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：https://mp.weixin.qq.com/s?__biz=MzU1MzE3Njg2Mw==&amp;amp;mid=2247485826&amp;amp;idx=1&amp;amp;sn=60126c394a72cd6bfaf31a32bc04dce3&amp;amp;chksm=fbf793f2cc801ae4a85065a45ea6ced1781330f491f430743eebf7f8780e2b5e5a">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-eefa66a0ddc6e8f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/ctf记录/一些加密算法.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/一些加密算法.html/">一些加密算法.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="https://mp.weixin.qq.com/s?__biz=MzU1MzE3Njg2Mw==&amp;mid=2247485826&amp;idx=1&amp;sn=60126c394a72cd6bfaf31a32bc04dce3&amp;chksm=fbf793f2cc801ae4a85065a45ea6ced1781330f491f430743eebf7f8780e2b5e5a3156d32abf&amp;mpshare=1&amp;scene=23&amp;srcid=1119QvhhqD6IKKZplWqVXRTn#rd" target="_blank" rel="noopener">https://mp.weixin.qq.com/s?__biz=MzU1MzE3Njg2Mw==&amp;mid=2247485826&amp;idx=1&amp;sn=60126c394a72cd6bfaf31a32bc04dce3&amp;chksm=fbf793f2cc801ae4a85065a45ea6ced1781330f491f430743eebf7f8780e2b5e5a3156d32abf&amp;mpshare=1&amp;scene=23&amp;srcid=1119QvhhqD6IKKZplWqVXRTn#rd</a></p>
+<p>####多表加密<br>用一对字母来替代每个明文字母</p>
+<p>多文字加密法的密钥是一个5X5的矩阵。这个矩阵的5行和5列用<code>含有5个字母的关键词</code>来标识且该关键词<code>不能有重复的字母</code>。字母表的每一个字母填写在这个矩阵中。矩阵只有25个位置，而字母表有26个字母，因此i和j占同一个单元。这意味着所有j都变成了i。</p>
+<p>####一个栗子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ilnllliiikkninlekile</span><br></pre></td></tr></table></figure></p>
+<p>长度为20，提示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The length of this plaintext: 10</span><br></pre></td></tr></table></figure></p>
+<p><strong>密文长度是明文的2倍，密文只有5个字母出现，想到多表加密，但不知道表的边缘的排序方式</strong><br>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  l i n k e </span><br><span class="line">l a b c d e</span><br><span class="line">i f g h i k</span><br><span class="line">n l m n o p</span><br><span class="line">k q r s t u</span><br><span class="line">e v w x y z</span><br></pre></td></tr></table></figure></p>
+<p><strong>解密脚本</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">import itertools</span><br><span class="line"></span><br><span class="line">key = []</span><br><span class="line">cipher = &quot;ilnllliiikkninlekile&quot;</span><br><span class="line"></span><br><span class="line">for i in itertools.permutations(&apos;ilnke&apos;, 5):</span><br><span class="line">    key.append(&apos;&apos;.join(i))</span><br><span class="line"></span><br><span class="line">for now_key in key:</span><br><span class="line">    solve_c = &quot;&quot;</span><br><span class="line">    res = &quot;&quot;</span><br><span class="line">    for now_c in cipher:</span><br><span class="line">        solve_c += str(now_key.index(now_c))</span><br><span class="line">    for i in range(0,len(solve_c),2):</span><br><span class="line">        now_ascii = int(solve_c[i])*5+int(solve_c[i+1])+97</span><br><span class="line">        if now_ascii&gt;ord(&apos;i&apos;):</span><br><span class="line">            now_ascii+=1</span><br><span class="line">        res += chr(now_ascii)</span><br><span class="line">    if &quot;flag&quot; in res:</span><br><span class="line">        print now_key,res</span><br></pre></td></tr></table></figure></p>
+<p>####四方密码<br>四方密码用4个5×5的来加密。每个矩阵都有25个字母（通常会取消Q或将I,J视作同一样，或改进为6×6的矩阵，加入10个数字）。首先选择两个英文字作密匙，例如<code>example</code>和<code>keyword</code>。对于每一个密匙，将重复出现的字母去除，即<code>example</code>要转成<code>exampl</code>，然后将每个字母顺序放入矩阵，再将余下的字母顺序放入矩阵，便得出加密矩阵。<br>将这两个加密矩阵放在右上角和左下角，余下的两个角放a到z顺序的矩阵：</p>
+<p><strong>加密的步骤：</strong></p>
+<ul>
+<li>两个字母一组地分开讯息：（例如helloworld变成he ll ow or ld）</li>
+<li>找出第一个字母在左上角矩阵的位置</li>
+<li>找出第二个字母在右下角矩阵的位置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">a b c d e   E X A M P</span><br><span class="line">f g h i j   L B C D F</span><br><span class="line">k l m n o   G H I J K</span><br><span class="line">p r s t u   N O R S T</span><br><span class="line">v w x y z   U V W Y Z</span><br><span class="line"></span><br><span class="line">K E Y W O   a b c d e</span><br><span class="line">R D A B C   f g h i j</span><br><span class="line">F G H I J   k l m n o</span><br><span class="line">L M N P S   p r s t u</span><br><span class="line">T U V X Z   v w x y z</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-eefa66a0ddc6e8f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>如上图所示，则<code>he</code>加密之后的密文为<code>fy</code><br><strong>加密脚本</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">import collections</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">matrix = &quot;ABCDEFGHIJKLMNOPRSTUVWXYZ&quot;</span><br><span class="line">pla = &quot;abcdefghijklmnoprstuvwxyz&quot;</span><br><span class="line">key1 = &quot;[EXAMPL]&quot;</span><br><span class="line">key2 = &quot;[KEYWORD]&quot;</span><br><span class="line">key1 = &apos;&apos;.join(collections.OrderedDict.fromkeys(key1))</span><br><span class="line">key2 = &apos;&apos;.join(collections.OrderedDict.fromkeys(key2))</span><br><span class="line">matrix1 = re.sub(&apos;[\[\]]&apos;,&apos;&apos;,key1) + re.sub(key1,&apos;&apos;,matrix)</span><br><span class="line">matrix2 = re.sub(&apos;[\[\]]&apos;,&apos;&apos;,key2) + re.sub(key2,&apos;&apos;,matrix)</span><br><span class="line">matrix_list1 = []</span><br><span class="line">matrix_list2 = []</span><br><span class="line">pla_list = []</span><br><span class="line">for i in range(0,len(matrix1),5):</span><br><span class="line">    matrix_list1.append(list(matrix1[i:i+5]))</span><br><span class="line">for i in range(0,len(matrix2),5):</span><br><span class="line">    matrix_list2.append(list(matrix2[i:i+5]))</span><br><span class="line">for i in range(0,len(pla),5):</span><br><span class="line">    pla_list.append(list(pla[i:i+5]))</span><br><span class="line">def find_index(x):      #查询明文字母位置</span><br><span class="line">    for i in range(len(pla_list)):</span><br><span class="line">        for j in range(len(pla_list[i])):</span><br><span class="line">            if pla_list[i][j] == x:</span><br><span class="line">                return i,j</span><br><span class="line">def gen_cip(letter):</span><br><span class="line">    first = find_index(letter[0]) #两个子母中第一个字母位置</span><br><span class="line">    second = find_index(letter[1])    #两个子母中第二个字母位置</span><br><span class="line">    cip = &quot;&quot;</span><br><span class="line">    cip += matrix_list1[first[0]][second[1]]</span><br><span class="line">    cip += matrix_list2[second[0]][first[1]]</span><br><span class="line">    return cip</span><br><span class="line">def encrypt(pla):</span><br><span class="line">    #pla = &quot;whereismysecretkey&quot;</span><br><span class="line">    cip = &quot;&quot;</span><br><span class="line">    for i in range(0,len(pla),2):</span><br><span class="line">        cip += gen_cip(pla[i:i+2])</span><br><span class="line">    return cip</span><br><span class="line">def main():</span><br><span class="line">    pla = &quot;hello world&quot;</span><br><span class="line">    pla = pla.replace(&apos; &apos;,&apos;&apos;)</span><br><span class="line">    print encrypt(pla)</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>解密脚本</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">#coding:utf-8</span><br><span class="line">import collections</span><br><span class="line">import re</span><br><span class="line"></span><br><span class="line">matrix = &quot;ABCDEFGHIJKLMNOPRSTUVWXYZ&quot;</span><br><span class="line">pla = &quot;abcdefghijklmnoprstuvwxyz&quot;</span><br><span class="line">key1 = &quot;[EXAMPL]&quot;</span><br><span class="line">key2 = &quot;[KEYWORD]&quot;</span><br><span class="line">key1 = &apos;&apos;.join(collections.OrderedDict.fromkeys(key1))</span><br><span class="line">key2 = &apos;&apos;.join(collections.OrderedDict.fromkeys(key2))</span><br><span class="line">matrix1 = re.sub(&apos;[\[\]]&apos;,&apos;&apos;,key1) + re.sub(key1,&apos;&apos;,matrix)</span><br><span class="line">matrix2 = re.sub(&apos;[\[\]]&apos;,&apos;&apos;,key2) + re.sub(key2,&apos;&apos;,matrix)</span><br><span class="line">matrix_list1 = []</span><br><span class="line">matrix_list2 = []</span><br><span class="line">pla_list = []</span><br><span class="line">for i in range(0,len(matrix1),5):</span><br><span class="line">    matrix_list1.append(list(matrix1[i:i+5]))</span><br><span class="line">for i in range(0,len(matrix2),5):</span><br><span class="line">    matrix_list2.append(list(matrix2[i:i+5]))</span><br><span class="line">for i in range(0,len(pla),5):</span><br><span class="line">    pla_list.append(list(pla[i:i+5]))</span><br><span class="line">def find_index1(x):        #查询两个密文字母位置</span><br><span class="line">    for i in range(len(matrix_list1)):</span><br><span class="line">        for j in range(len(matrix_list1[i])):</span><br><span class="line">            if matrix_list1[i][j] == x:</span><br><span class="line">                return i,j</span><br><span class="line">def find_index2(y):</span><br><span class="line">    for k in range(len(matrix_list2)):</span><br><span class="line">        for l in range(len(matrix_list2[k])):</span><br><span class="line">            if matrix_list2[k][l] == y:</span><br><span class="line">                return k,l</span><br><span class="line">def gen_pla(letter):</span><br><span class="line">    first = find_index1(letter[0])        #两个子母中第一个字母位置</span><br><span class="line">    second = find_index2(letter[1])     #两个子母中第二个字母位置</span><br><span class="line">    pla = &quot;&quot;</span><br><span class="line">    pla += pla_list[first[0]][second[1]]</span><br><span class="line">    pla += pla_list[second[0]][first[1]]</span><br><span class="line">    return pla</span><br><span class="line">def main():</span><br><span class="line">    cip = &quot;FYHGHZHSJE&quot;</span><br><span class="line">    pla = &quot;&quot;</span><br><span class="line">    for i in range(0,len(cip),2):</span><br><span class="line">        pla += gen_pla(cip[i:i+2])</span><br><span class="line">    print pla</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure></p>
+<p>####RSA<br><strong>题目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">#!/usr/bin/python</span><br><span class="line">import random</span><br><span class="line">import string</span><br><span class="line">from hashlib import sha512</span><br><span class="line">from Crypto.Util.number import *</span><br><span class="line">from Crypto.Cipher import AES</span><br><span class="line">import flag</span><br><span class="line">def proof_of_work():</span><br><span class="line">    proof = &apos;&apos;.join([random.choice(string.ascii_letters+string.digits)</span><br><span class="line">                     for _ in xrange(20)])</span><br><span class="line">    digest = sha512(proof).hexdigest()</span><br><span class="line">    print_output(&quot;Proof of your work.\nsha512(%s+XXXX) == %s\n&quot; %</span><br><span class="line">                 (proof[:-4], digest))</span><br><span class="line">    print_output(&apos;Tell me XXXX:&apos;)</span><br><span class="line">    x = raw_input().strip()</span><br><span class="line">    if len(x) != 4 or sha512(proof[:-4]+x).hexdigest() != digest:</span><br><span class="line">        exit(1)</span><br><span class="line">    print_output(&quot;OK, you proof.&quot;)</span><br><span class="line">    return</span><br><span class="line">def egcd(a, b):</span><br><span class="line">    if (b == 0):</span><br><span class="line">        return 1, 0, a</span><br><span class="line">    else:</span><br><span class="line">        x, y, q = egcd(b, a % b)</span><br><span class="line">        x, y = y, (x - (a // b) * y)</span><br><span class="line">        return x, y, q</span><br><span class="line">def mod_inv(a, b):</span><br><span class="line">    return egcd(a, b)[0] % b</span><br><span class="line">def print_output(message):</span><br><span class="line">    print(message)</span><br><span class="line">    sys.stdout.flush()</span><br><span class="line">def rsa_gen(bit_n=2048, bit_e=64):</span><br><span class="line">    p = getPrime(bit_n/2)</span><br><span class="line">    q = getPrime(bit_n/2)</span><br><span class="line">    n = p*q</span><br><span class="line">    e = getPrime(bit_e)</span><br><span class="line">    d = mod_inv(e, (p-1)*(q-1))</span><br><span class="line">    msg = int(&apos;&apos;.join([random.choice(string.ascii_letters+string.digits)</span><br><span class="line">                   for _ in xrange(16)]).encode(&apos;hex&apos;), 16)</span><br><span class="line">    cipher = pow(msg, e, n)</span><br><span class="line">    return e, d, n, msg, cipher</span><br><span class="line">def tell_n_d():</span><br><span class="line">    e, d, n, m, c = rsa_gen()</span><br><span class="line">    print_output(&quot;Give you a message:0x%x\nand its ciphertext:0x%x&quot; % (m, c))</span><br><span class="line">    print_output(&quot;Please give me the private key to decrypt cipher&quot;)</span><br><span class="line">    print_output(&quot;n:&quot;)</span><br><span class="line">    N = int(raw_input().strip())</span><br><span class="line">    print_output(&quot;d:&quot;)</span><br><span class="line">    D = int(raw_input().strip())</span><br><span class="line">    if not pow(c, D, N) == m:</span><br><span class="line">        exit(1)</span><br><span class="line">    print_output(&quot;Oh, how you know the private key!&quot;)</span><br><span class="line">    return m</span><br><span class="line">  </span><br><span class="line">def number_theory():</span><br><span class="line">    while True:</span><br><span class="line">        e, d, n, m, c = rsa_gen()</span><br><span class="line">        print_output(&quot;n=0x%x\ne=0x%x\nc=0x%x\n&quot; % (n, e, c))</span><br><span class="line">        print_output(&quot;Now, you have a chance to decrypt something(but no c):&quot;)</span><br><span class="line">        C = int(raw_input().strip())</span><br><span class="line">        if C == c:</span><br><span class="line">            print_output(&quot;Nonono~&quot;)</span><br><span class="line">            continue</span><br><span class="line">        M = pow(C, d, n)</span><br><span class="line">        print_output(&quot;message:0x%x&quot; % M)</span><br><span class="line">        print_output(&quot;Give me right message:&quot;)</span><br><span class="line">        MM = int(raw_input().strip())</span><br><span class="line">        if not MM == m:</span><br><span class="line">            exit(1)</span><br><span class="line">        print_output(&quot;Master in math!&quot;)</span><br><span class="line">        return m</span><br><span class="line">        </span><br><span class="line">def pad(s):</span><br><span class="line">    return s + ((16-len(s)%16)*chr(16-len(s)%16))</span><br><span class="line">def handle():</span><br><span class="line">    proof_of_work()</span><br><span class="line">    msg1 = hex(tell_n_d())[2:-1].decode(&apos;hex&apos;)</span><br><span class="line">    msg2 = hex(number_theory())[2:-1].decode(&apos;hex&apos;)</span><br><span class="line">    cipher = AES.new(msg2, AES.MODE_CBC, msg1)</span><br><span class="line">    enc = cipher.encrypt(pad(flag.flag))</span><br><span class="line">    print_output(&quot;Here is your flag:0x%s&quot; % enc.encode(&apos;hex&apos;))</span><br><span class="line">if __name__ == &quot;__main__&quot;:</span><br><span class="line">    handle()</span><br></pre></td></tr></table></figure></p>
+<p><strong>解密脚本</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">from pwn import *</span><br><span class="line">from hashlib import sha512</span><br><span class="line">import string</span><br><span class="line">import gmpy2 as gm</span><br><span class="line"></span><br><span class="line">context.log_level = &quot;debug&quot;</span><br><span class="line">sh = remote(&quot;106.75.101.197&quot;, 7544)</span><br><span class="line">def proof():</span><br><span class="line">    sh.recvline()</span><br><span class="line">    tmp = sh.recv()</span><br><span class="line">    tmp_str = tmp[7:7+16]   </span><br><span class="line">    tmp_sha = tmp[-130:].strip()</span><br><span class="line">    print tmp_str</span><br><span class="line">    print tmp_sha</span><br><span class="line">    sha_dict = string.letters + string.digits </span><br><span class="line">    for i1 in sha_dict:</span><br><span class="line">        for i2 in sha_dict:</span><br><span class="line">            for i3 in sha_dict:</span><br><span class="line">                for i4 in sha_dict:</span><br><span class="line">                    res = i1+i2+i3+i4</span><br><span class="line">                    if(sha512(tmp_str+res).hexdigest()==tmp_sha):</span><br><span class="line">                        return res</span><br><span class="line">def stage1():</span><br><span class="line">    sh.recvline()</span><br><span class="line">    m_tmp = sh.recvline()</span><br><span class="line">    m = m_tmp[-35:]</span><br><span class="line">    log.success(&quot;Get the M: %s&quot; %m)</span><br><span class="line">    sh.recvuntil(&quot;ciphertext:&quot;)</span><br><span class="line">    c = sh.recv().strip()</span><br><span class="line">    log.success(&quot;Get the C: %s&quot; %c)</span><br><span class="line">    # generate the d, n</span><br><span class="line">    m, c = int(m, 16), int(c, 16)</span><br><span class="line">    d = 1</span><br><span class="line">    n = (c - m) / 2</span><br><span class="line">    sh.recvuntil(&quot;n:&quot;)</span><br><span class="line">    sh.sendline(str(n))</span><br><span class="line">    sh.recvuntil(&quot;d:&quot;)</span><br><span class="line">    sh.sendline(str(d))</span><br><span class="line">    log.success(&quot;---STAGE 1 PASS---\n\n&quot;)</span><br><span class="line">def stage2():</span><br><span class="line">    sh.recvuntil(&quot;n=&quot;)</span><br><span class="line">    n = sh.recvline()</span><br><span class="line">    sh.recvuntil(&quot;e=&quot;)</span><br><span class="line">    e = sh.recvline()</span><br><span class="line">    sh.recvuntil(&quot;c=&quot;)</span><br><span class="line">    c = sh.recvline()</span><br><span class="line">    log.success(&quot;Get the N: %s&quot; %n)</span><br><span class="line">    log.success(&quot;Get the E: %s&quot; %e)</span><br><span class="line">    log.success(&quot;Get the C: %s&quot; %c)</span><br><span class="line">    e,n,c = int(e,16), int(n,16), int(c,16)</span><br><span class="line">    sh.recvuntil(&quot;no c):&quot;)</span><br><span class="line">    y = gm.powmod(2, e, n)</span><br><span class="line">    y = gm.powmod(c*y, 1, n)</span><br><span class="line">    invert_numb = gm.invert(2, n)</span><br><span class="line">    sh.sendline(str(y))</span><br><span class="line">    sh.recvline()</span><br><span class="line">    res =sh.recvline()[8:].strip()</span><br><span class="line">    log.success(&quot;Get the Decrypt result: %s&quot;, res)</span><br><span class="line">    res = int(res, 16)</span><br><span class="line">    M = gm.powmod(res*invert_numb, 1, n)</span><br><span class="line">    sh.recvline()</span><br><span class="line">    sh.sendline(str(M))</span><br><span class="line">    sh.recv()   </span><br><span class="line">res = proof()</span><br><span class="line">log.success(&quot;Get the proof result: %s&quot; %res)</span><br><span class="line">sh.recvline()</span><br><span class="line">sh.sendline(res)</span><br><span class="line">stage1()</span><br><span class="line">stage2()</span><br><span class="line">sh.interactive()</span><br></pre></td></tr></table></figure></p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/一些加密算法.html/">一些加密算法.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

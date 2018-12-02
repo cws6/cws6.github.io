@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="bx,si,di,bp可以用在[…]中来进行内存单元的寻址  若是使用bp，则段地址默认在ss中 若是使用bx，则段地址默认在ds中  db,dw,dd区别0  db定义字节类型变量，一个字节数据占1个字节单元，读完一个，偏移量加1 dw定义字类型变量，一个字数据占2个字节单元，读完一个，偏移量加2 dd定义双字类型变量，一个双字数据占4个字节单元，读完一个，偏移量加4  offset的功能是取得">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/汇编语言/包含多个段的程序.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="bx,si,di,bp可以用在[…]中来进行内存单元的寻址  若是使用bp，则段地址默认在ss中 若是使用bx，则段地址默认在ds中  db,dw,dd区别0  db定义字节类型变量，一个字节数据占1个字节单元，读完一个，偏移量加1 dw定义字类型变量，一个字数据占2个字节单元，读完一个，偏移量加2 dd定义双字类型变量，一个双字数据占4个字节单元，读完一个，偏移量加4  offset的功能是取得">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="bx,si,di,bp可以用在[…]中来进行内存单元的寻址  若是使用bp，则段地址默认在ss中 若是使用bx，则段地址默认在ds中  db,dw,dd区别0  db定义字节类型变量，一个字节数据占1个字节单元，读完一个，偏移量加1 dw定义字类型变量，一个字数据占2个字节单元，读完一个，偏移量加2 dd定义双字类型变量，一个双字数据占4个字节单元，读完一个，偏移量加4  offset的功能是取得">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/汇编语言/包含多个段的程序.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>汇编语言</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/包含多个段的程序.html/">包含多个段的程序.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p><strong>bx,si,di,bp可以用在[…]中来进行内存单元的寻址</strong></p>
+<ul>
+<li>若是使用<code>bp</code>，则段地址默认在<code>ss</code>中</li>
+<li>若是使用<code>bx</code>，则段地址默认在<code>ds</code>中</li>
+</ul>
+<p><strong>db,dw,dd区别0</strong></p>
+<ul>
+<li><code>db</code>定义字节类型变量，一个字节数据占1个字节单元，读完一个，偏移量加1</li>
+<li><code>dw</code>定义字类型变量，一个字数据占2个字节单元，读完一个，偏移量加2</li>
+<li><p><code>dd</code>定义双字类型变量，一个双字数据占4个字节单元，读完一个，偏移量加4</p>
+</li>
+<li><p><code>offset</code>的功能是取得标号的偏移地址。<code>mov ax,offset start</code>相当于<code>mov ax,0</code></p>
+</li>
+</ul>
+<p>####jmp指令<br><strong>jmp short 标号(转到标号处执行)</strong></p>
+<ul>
+<li>功能为(IP)=(IP)+8位位移，进行的是短转移</li>
+<li>8位位移=标号处的地址-jmp指令后的第一个字节的地址</li>
+<li>short指明此处的位移为8位位移</li>
+<li>8位位移的范围为-128~127，用补码表示</li>
+<li>8位位移由编译程序在编译时算出</li>
+</ul>
+<p><strong>jmp near ptr 标号</strong></p>
+<ul>
+<li>16位位移=标号处的地址-jmp指令后的第一个字节的地址</li>
+<li>near ptr指明此处的位移为16位位移，进行的是段内近转移</li>
+<li>16位位移的范围为-32768~32767，用补码表示</li>
+<li>16位位移由编译程序在编译时算出</li>
+</ul>
+<p><strong>jmp far ptr 标号</strong></p>
+<ul>
+<li>far ptr指明了指令用标号的段地址和偏移地址修改CS和IP，进行的段间转移(远转移)</li>
+</ul>
+<p><strong>jmp word ptr 内存单元地址(段内转移)</strong></p>
+<ul>
+<li>从内存单元地址处开始存放着一个字，是转移的目的偏移地址</li>
+</ul>
+<p><strong>jmp dword ptr 内存单元地址(段间转移)</strong></p>
+<ul>
+<li>从内存单元地址处开始存放着两个字，高地址处的字是转移的目的段地址，低地址处是转移的目的偏移地址</li>
+<li>(cs)=(内存单元地址+2)，(IP)=(内存单元地址)</li>
+</ul>
+<p><strong>jcxz 标号</strong></p>
+<ul>
+<li>如果(cx)=0时，转移到标号处执行</li>
+<li>操作：当(cx)=0时，(IP)=(IP)+8位位移</li>
+<li>8位位移=标号处的地址-jcxz指令后的第一个字节的地址</li>
+<li>8位位移的范围为-128~127，用补码表示</li>
+<li>8位位移由编译程序在编译时算出</li>
+<li>当(cx)≠0，什么也不做，程序向下执行 </li>
+</ul>
+<p><strong>loop 标号</strong></p>
+<ul>
+<li>(cx)=(cx)-1，如果(cx)≠0，转移到标号处执行，(IP)=(IP)+8位位移</li>
+<li>8位位移=标号处的地址-loop指令后的第一个字节的地址</li>
+<li>8位位移的范围为-128~127，用补码表示</li>
+<li>8位位移由编译程序在编译时算出</li>
+<li>当(cx)=0，什么也不做，程序向下执行 </li>
+</ul>
+<p>####CALL和RET指令<br><strong>ret</strong></p>
+<ul>
+<li>ret指令用栈中的数据，修改IP的内容，从而实现近转移</li>
+<li>(IP)=((ss)*16+(sp))，(sp)=(sp)+2</li>
+</ul>
+<p><strong>retf</strong></p>
+<ul>
+<li>retf指令用栈中的数据，修改CS和IP的内容，从而实现远转移</li>
+<li>(IP)=((ss)x16+(sp))，(sp)=(sp)+2，(CS)=((ss)*16+(sp))，(sp)=(sp)+2</li>
+</ul>
+<p><strong>call 标号</strong></p>
+<ul>
+<li>功能：(sp)=(sp)-2，((ss)*16+(sp))=(IP)，(IP)=(IP)+16位位移</li>
+<li>16位位移=标号处的地址-call指令后的第一个字节的地址</li>
+<li>16位位移的范围为-32768~32767，用补码表示</li>
+<li>16位位移由编译程序在编译时算出</li>
+<li>相当于 <code>①push IP(此处的ip指的是call命令的下条命令的ip值)</code>，<code>②jmp near ptr 标号</code></li>
+</ul>
+<p><strong>call far ptr 标号</strong></p>
+<ul>
+<li>(sp)=(sp)-2，((ss)x16+(sp))=(CS)，(sp)=(sp)-2，((ss)*16+(sp))=(IP)</li>
+<li>(CS)=标号所在段的段地址，(IP)=标号在段中的偏移地址</li>
+<li>相当于 <code>①push CS</code>，<code>②push IP</code>，<code>③jmp far ptr 标号</code></li>
+</ul>
+<p><strong>call 16位reg</strong></p>
+<ul>
+<li>功能：(sp)=(sp)-2，((ss)*16+(sp))=(IP)，(IP)=(16位reg)</li>
+<li>相当于 <code>①push IP</code>，<code>②jmp 16位reg</code></li>
+</ul>
+<p><strong>call word ptr 内存单元地址</strong></p>
+<ul>
+<li>相当于 <code>①push IP</code>，<code>②jmp word ptr 内存单元地址</code></li>
+</ul>
+<p><strong>call dword ptr 内存单元地址</strong></p>
+<ul>
+<li>相当于<code>①push CS</code>，<code>②push IP</code>，<code>③jmp dword ptr 内存单元地址</code></li>
+</ul>
+<p>####标志寄存器flag<br><strong>第6位ZF</strong></p>
+<ul>
+<li>零标志位，记录相关指令执行后的结果是否为0。结果为0的话，zf=1；不为0，zf=0</li>
+</ul>
+<p><strong>第2位PF</strong></p>
+<ul>
+<li>奇偶标志位，记录相关指令执行后的结果所有bit位中1的个数是否为偶数。结果1的个数为偶数，pf=1；如果为奇数，pf=0</li>
+</ul>
+<p><strong>第7位SF</strong></p>
+<ul>
+<li>符号标志位，记录相关指令执行后的结果是否为负数。结果为负，sf=1；如果非负，sf=0</li>
+</ul>
+<p><strong>第0位CF</strong></p>
+<ul>
+<li>进位标志位，一般情况下，在进行<code>无符号数</code>运算的时候，它记录了运算结果的最高有效位向更高位的进位值，或从更高位的借位值</li>
+<li>一个小栗子<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mov al,98H</span><br><span class="line">add al,al   #执行后:al=30H,CF=1</span><br><span class="line">add al,al    #执行后：al=60H,CF=0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>第11位OF</strong></p>
+<ul>
+<li>溢出标志位，一般情况下，OF记录了<code>有符号数</code>运算的结果是否发生了溢出。如果发生溢出，OF=1；如果没有，OF=0</li>
+</ul>
+<p><strong>cmp 操作对象1，操作对象2</strong></p>
+<ul>
+<li>计算操作对象1-操作对象2但并不保存结果，仅仅根据计算结果对标志寄存器进行设置</li>
+<li>cmp ax,bx(无符号数运算)<br>①zf=1，则(ax)=(bx)，je(等于则转移)<br>②zf=0，则(ax)≠(bx)，jne(不等于则转移)<br>③cf=1，则(ax)&lt;(bx)，jb(低于则转移)<br>④cf=0，则(ax)≥(bx)，jnb(不低于则转移)<br>⑤cf=0且zf=0，则(ax)&gt;(bx)，ja(高于则转移)<br>⑥cf=1且zf=1，则(ax)≤(bx)，jna(不高于则转移)</li>
+<li>cmp ah,bh(有符号数运算)<br>①sf=1而of=0，则(ah)&lt;(bh)<br>②sf=1而of=1，则(ah)&gt;(bh)(如果因为溢出导致了实际结果为负，那么逻辑上真正的结果必然为正)<br>③sf=0而of=1，则(ah)&lt;(bh)(如果因为溢出导致了实际结果为正，那么逻辑上真正的结果必然为负)<br>④sf=0而of=0，则(ah)≥(bh)</li>
+</ul>
+<p><strong>第10位DF</strong></p>
+<ul>
+<li>方向标志位，在串处理指令中，控制每次操作后si，di的增减。df=0，每次操作后si，di递增；df=1，每次操作后si，di递减。</li>
+<li>串处理指令：movsb<br>相当于((es)<em>16+(di))=((ds)</em>16+(si))<br>若df=0，则(si)=(si)+1,(di)=(di)+1<br>若df=1，则(si)=(si)-1,(di)=(di)-1</li>
+<li>串处理指令：movsw<br>若df=0，则(si)=(si)+2,(di)=(di)+2<br>若df=1，则(si)=(si)-2,(di)=(di)-2</li>
+</ul>
+<p><strong>pushf和popf</strong></p>
+<ul>
+<li>pushf的功能是将标志寄存器的值压栈，而popf是从栈中弹出数据，送入标志寄存器</li>
+</ul>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>汇编语言</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/包含多个段的程序.html/">包含多个段的程序.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

