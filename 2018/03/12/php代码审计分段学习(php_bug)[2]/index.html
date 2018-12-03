@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考：https://github.com/bowu678/php_bugs 11.sql闭合绕过1$sql = &amp;quot;select user from php where (user=&amp;apos;$user&amp;apos;) and (pw=&amp;apos;$pass&amp;apos;)&amp;quot;; 嗯好吧这个不就是sqli-labs的Less-3么，放下writeup好了http://localho">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php代码审计分段学习(php_bug)[2]">
+<meta property="og:url" content="https://cws6.github.io/2018/03/12/php代码审计分段学习(php_bug)[2]/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考：https://github.com/bowu678/php_bugs 11.sql闭合绕过1$sql = &amp;quot;select user from php where (user=&amp;apos;$user&amp;apos;) and (pw=&amp;apos;$pass&amp;apos;)&amp;quot;; 嗯好吧这个不就是sqli-labs的Less-3么，放下writeup好了http://localho">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-03T12:58:56.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php代码审计分段学习(php_bug)[2]">
+<meta name="twitter:description" content="参考：https://github.com/bowu678/php_bugs 11.sql闭合绕过1$sql = &amp;quot;select user from php where (user=&amp;apos;$user&amp;apos;) and (pw=&amp;apos;$pass&amp;apos;)&amp;quot;; 嗯好吧这个不就是sqli-labs的Less-3么，放下writeup好了http://localho">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/03/12/php代码审计分段学习(php_bug)[2]/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>php代码审计分段学习(php_bug)[2] | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/03/12/php代码审计分段学习(php_bug)[2]/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">php代码审计分段学习(php_bug)[2]
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-12 16:45:45" itemprop="dateCreated datePublished" datetime="2018-03-12T16:45:45+08:00">2018-03-12</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 20:58:56" itemprop="dateModified" datetime="2018-12-03T20:58:56+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考：<a href="https://github.com/bowu678/php_bugs" target="_blank" rel="noopener">https://github.com/bowu678/php_bugs</a></p>
+<h4 id="11-sql闭合绕过"><a href="#11-sql闭合绕过" class="headerlink" title="11.sql闭合绕过"></a>11.sql闭合绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;select user from php where (user=&apos;$user&apos;) and (pw=&apos;$pass&apos;)&quot;;</span><br></pre></td></tr></table></figure>
+<p>嗯好吧这个不就是sqli-labs的Less-3么，放下writeup好了<code>http://localhost/php_bug/11.php/?user=admin&#39;)#</code></p>
+<h4 id="12-X-Forwarded-For绕过指定IP地址"><a href="#12-X-Forwarded-For绕过指定IP地址" class="headerlink" title="12.X-Forwarded-For绕过指定IP地址"></a>12.X-Forwarded-For绕过指定IP地址</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if ($GetIPs==&quot;1.1.1.1&quot;)&#123;</span><br><span class="line">echo &quot;Great! Key is *********&quot;;&#125;</span><br></pre></td></tr></table></figure>
+<p>直接bp抓包，在http头里面加上<code>X-Forwarded-For:1.1.1.1</code>就行了,X-Forwarded-For代表客户端，里面存放的是HTTP端请求的真实ip。</p>
+<h4 id="13-md5加密相等绕过"><a href="#13-md5加密相等绕过" class="headerlink" title="13.md5加密相等绕过"></a>13.md5加密相等绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$a != &apos;QNKCDZO&apos; &amp;&amp; $md51 == $md52，两个字符串不相等但是md5后的值相等，记下writeup。</span><br><span class="line">var_dump(md5(&apos;240610708&apos;) == md5(&apos;&apos;QNKCDZO&apos;));//ture</span><br><span class="line">var_dump(md5(&apos;aabg7XSs&apos;) == md5(&apos;aabC9RqS&apos;));//ture</span><br><span class="line">var_dump(sha1(&apos;aaroZmOk&apos;) == sha1(&apos;aaK1STfY&apos;));//ture</span><br><span class="line">var_dump(sha1(&apos;aaO8zKZF&apos;) == sha1(&apos;aa3OFF9m&apos;));//ture</span><br><span class="line">var_dump(&apos;0010e2&apos; == &apos;1e3&apos;);//ture</span><br><span class="line">var_dump(&apos;0x1234Ab&apos; == &apos;1193131&apos;);//ture</span><br><span class="line">var_dump(&apos;0xABCdef&apos; == &apos; 0xABCdef&apos;);//ture</span><br></pre></td></tr></table></figure>
+<p>==对比的时候会进行数据转换，0eXXXXXXXXX就成0了，如果比较一个数字和字符串或者比较涉及到数字内容的字符串，则字符串会被转换为数值并且比较按照数值来进行，嗯还是用===好一些，尽量不要用==。</p>
+<h4 id="14-intval函数四舍五入"><a href="#14-intval函数四舍五入" class="headerlink" title="14.intval函数四舍五入"></a>14.intval函数四舍五入</h4><p>emmmm,这个函数。。。先是查询的时候<code>intval($_GET[&#39;id&#39;])</code>为1024，但是<code>$_GET[&#39;id&#39;]</code>又不能为1024，直接<code>1024.325</code>加个小数点就行了。。intval会自动将小数点后面的数值舍掉</p>
+<h4 id="15-strpos数组绕过NULL与ereg正则-00截断"><a href="#15-strpos数组绕过NULL与ereg正则-00截断" class="headerlink" title="15 strpos数组绕过NULL与ereg正则%00截断"></a>15 strpos数组绕过NULL与ereg正则%00截断</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">@ereg (&quot;^[1-9]+$&quot;, $_GET[&apos;nctf&apos;]</span><br><span class="line">strpos ($_GET[&apos;nctf&apos;], &apos;#biubiubiu&apos;)</span><br></pre></td></tr></table></figure>
+<p>①.这个是要求输入的内容必须为纯数字，但是还有出现<code>#biubiubiu</code>的内容，eregde%00截断可以实现，但是题目上给的#需要url编码一下，要不实现不了。<code>http://localhost/php_bug/15.php?nctf=12414%00%23biubiubiu</code><br>②.strpos()找的是字符串,那么传一个数组给它,strpos()出错返回null,null!==false,符合要求. 所以输入nctf[]= ,ereg()在出错时返回的也是null,n<code>ull!==falsehttp://localhost/php_bug/15.php?nctf[]=</code></p>
+<h4 id="16-SQL注入or绕过"><a href="#16-SQL注入or绕过" class="headerlink" title="16.SQL注入or绕过"></a>16.SQL注入or绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$query=&apos;SELECT * FROM interest WHERE uname=\&apos;&apos;.$username.&apos;\&apos; AND pwd=\&apos;&apos;.$password.&apos;\&apos;;&apos;;</span><br><span class="line">$query=&apos;SELECT * FROM users WHERE name=\&apos;&apos;admin\&apos;\&apos; AND pass=\&apos;&apos;or 1 #&apos;\&apos;;&apos;;</span><br></pre></td></tr></table></figure>
+<p>?username=admin\’\’ AND pass=\’’or 1 #&amp;password=<br>有点传说中的花式闭合的感觉。。</p>
+<h4 id="17-密码md5比较绕过"><a href="#17-密码md5比较绕过" class="headerlink" title="17.密码md5比较绕过"></a>17.密码md5比较绕过</h4><p>总感觉眼熟，emmm和第九个是一样的。。。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?user=&apos; union select &apos;202cb962ac59075b964b07152d234b70&apos; #&amp;pass=123</span><br></pre></td></tr></table></figure></p>
+<h4 id="18-md5-函数-使用数组绕过"><a href="#18-md5-函数-使用数组绕过" class="headerlink" title="18.md5()函数===使用数组绕过"></a>18.md5()函数===使用数组绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$_GET[&apos;username&apos;] == $_GET[&apos;password&apos;]</span><br><span class="line">md5($_GET[&apos;username&apos;]) === md5($_GET[&apos;password&apos;])</span><br></pre></td></tr></table></figure>
+<p><code>http://localhost/php_bug/18.php?username[]=1&amp;password[]=2</code>，前面已经在sha1()函数比较绕过这个里面详细说过了，，基本同样道理，这里就不多做描述了。</p>
+<h4 id="19-ereg-函数strpos-函数用数组返回NULL绕过"><a href="#19-ereg-函数strpos-函数用数组返回NULL绕过" class="headerlink" title="19 ereg()函数strpos() 函数用数组返回NULL绕过"></a>19 ereg()函数strpos() 函数用数组返回NULL绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ereg (&quot;^[a-zA-Z0-9]+$&quot;, $_GET[&apos;password&apos;])</span><br><span class="line">strpos ($_GET[&apos;password&apos;], &apos;--&apos;)</span><br></pre></td></tr></table></figure>
+<p>emm这个和15是一样的只是ereg()的这个函数现在要求的是只能出现字母和数字，依旧是两种方法<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/php_bug/19.php?password[]=</span><br><span class="line">http://localhost/php_bug/19.php?password=12a%00--</span><br></pre></td></tr></table></figure></p>
+<h4 id="20-十六进制与数字比较"><a href="#20-十六进制与数字比较" class="headerlink" title="20. 十六进制与数字比较"></a>20. 十六进制与数字比较</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">($digit &gt;= $one) &amp;&amp; ($digit &lt;= $nine)</span><br><span class="line">$number == $temp</span><br></pre></td></tr></table></figure>
+<p>这个题的要求是输入的数字不能是1~9的数字，但是又要与<code>3735929054</code>相等，转化为<code>16进制</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">http://localhost/php_bug/20.php?password=0xdeadc0de</span><br><span class="line">54975581388转换成16进制为ccccccccc</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/07/RSA入门/" rel="next" title="RSA入门">
+                <i class="fa fa-chevron-left"></i> RSA入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/php代码审计分段学习-php-bug-1/" rel="prev" title="php代码审计分段学习(php_bug)[1]">
+                php代码审计分段学习(php_bug)[1] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#11-sql闭合绕过"><span class="nav-number">1.</span> <span class="nav-text">11.sql闭合绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-X-Forwarded-For绕过指定IP地址"><span class="nav-number">2.</span> <span class="nav-text">12.X-Forwarded-For绕过指定IP地址</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-md5加密相等绕过"><span class="nav-number">3.</span> <span class="nav-text">13.md5加密相等绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-intval函数四舍五入"><span class="nav-number">4.</span> <span class="nav-text">14.intval函数四舍五入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-strpos数组绕过NULL与ereg正则-00截断"><span class="nav-number">5.</span> <span class="nav-text">15 strpos数组绕过NULL与ereg正则%00截断</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#16-SQL注入or绕过"><span class="nav-number">6.</span> <span class="nav-text">16.SQL注入or绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#17-密码md5比较绕过"><span class="nav-number">7.</span> <span class="nav-text">17.密码md5比较绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#18-md5-函数-使用数组绕过"><span class="nav-number">8.</span> <span class="nav-text">18.md5()函数===使用数组绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#19-ereg-函数strpos-函数用数组返回NULL绕过"><span class="nav-number">9.</span> <span class="nav-text">19 ereg()函数strpos() 函数用数组返回NULL绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#20-十六进制与数字比较"><span class="nav-number">10.</span> <span class="nav-text">20. 十六进制与数字比较</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

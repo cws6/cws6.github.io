@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://hacksec.xyz/2018/03/23/php-trick/?nsukey=cWDNgiIxMsJayPNWtqM8Rc9amSOIgC0SI9Ko3jxxW2uV9mcoLNLdl4Q1U%2BrV9UhKIs3das0Cizzc8atumDKxG5nHSDPPthMpgeq5Xqa02MDie21AnddLn9BUUyOdXVEOsbvHRrlq1S61OS4%">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码审计补充知识点">
+<meta property="og:url" content="https://cws6.github.io/2018/03/31/代码审计补充知识点/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://hacksec.xyz/2018/03/23/php-trick/?nsukey=cWDNgiIxMsJayPNWtqM8Rc9amSOIgC0SI9Ko3jxxW2uV9mcoLNLdl4Q1U%2BrV9UhKIs3das0Cizzc8atumDKxG5nHSDPPthMpgeq5Xqa02MDie21AnddLn9BUUyOdXVEOsbvHRrlq1S61OS4%">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-03T13:04:59.997Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码审计补充知识点">
+<meta name="twitter:description" content="参考文献：https://hacksec.xyz/2018/03/23/php-trick/?nsukey=cWDNgiIxMsJayPNWtqM8Rc9amSOIgC0SI9Ko3jxxW2uV9mcoLNLdl4Q1U%2BrV9UhKIs3das0Cizzc8atumDKxG5nHSDPPthMpgeq5Xqa02MDie21AnddLn9BUUyOdXVEOsbvHRrlq1S61OS4%">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/03/31/代码审计补充知识点/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>代码审计补充知识点 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/03/31/代码审计补充知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">代码审计补充知识点
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-31 20:27:35" itemprop="dateCreated datePublished" datetime="2018-03-31T20:27:35+08:00">2018-03-31</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 21:04:59" itemprop="dateModified" datetime="2018-12-03T21:04:59+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="https://hacksec.xyz/2018/03/23/php-trick/?nsukey=cWDNgiIxMsJayPNWtqM8Rc9amSOIgC0SI9Ko3jxxW2uV9mcoLNLdl4Q1U%2BrV9UhKIs3das0Cizzc8atumDKxG5nHSDPPthMpgeq5Xqa02MDie21AnddLn9BUUyOdXVEOsbvHRrlq1S61OS4%2BRpRffcBRIuwbJUdeL%2FEcZRNmvBtBzhuGQhuRU9fs%2BM9pyrRyVvKRlq5SmzZRSXFYcAjYcQ%3D%3D" target="_blank" rel="noopener">https://hacksec.xyz/2018/03/23/php-trick/?nsukey=cWDNgiIxMsJayPNWtqM8Rc9amSOIgC0SI9Ko3jxxW2uV9mcoLNLdl4Q1U%2BrV9UhKIs3das0Cizzc8atumDKxG5nHSDPPthMpgeq5Xqa02MDie21AnddLn9BUUyOdXVEOsbvHRrlq1S61OS4%2BRpRffcBRIuwbJUdeL%2FEcZRNmvBtBzhuGQhuRU9fs%2BM9pyrRyVvKRlq5SmzZRSXFYcAjYcQ%3D%3D</a><br><a href="https://www.jianshu.com/p/9c8c9272e12e" target="_blank" rel="noopener">https://www.jianshu.com/p/9c8c9272e12e</a></p>
+<p>   ①<strong>is_numeric函数</strong><br>在判断是否是数字时会忽略字符串开头的’ ‘、’\t’、’\n’、’\r’、’\v’、’\f’。<br>​ 而’.’可以出现在任意位置，E、e能出现在参数中间，仍可以被判断为数字。也就是说<figure class="highlight plain"><figcaption><span>0.1e2”) >> TRUE```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">intval()函数会忽略’’ ‘\n’、’\r’、’\t’、’\v’、’\0’ ，也就是说```intval(“\r\n\t 12”) &gt;&gt; 12</span><br></pre></td></tr></table></figure></p>
+<p> ②<strong>PHP变量名不能带有点[.] 和空格，否则在会被转化为下划线[_]</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">parse_str(&quot;na.me=admin&amp;pass wd=123&quot;,$test);</span><br><span class="line">var_dump($test);</span><br></pre></td></tr></table></figure></p>
+<p>结果：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">array(2) &#123;</span><br><span class="line">  [&quot;na_me&quot;]=&gt;</span><br><span class="line">  string(5) &quot;admin&quot;</span><br><span class="line">  [&quot;pass_wd&quot;]=&gt;</span><br><span class="line">  string(3) &quot;123&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>③<strong>htmlspecialchars()函数默认只转义双引号不转义单引号，如果都转义的话需要添加上参数ENT_QUOTES</strong></p>
+<p>④<strong>in_arrary()函数默认进行松散比较（进行类型转换）</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">in_arrary(“1asd”,arrart(1,2,3,4))    =&gt; true</span><br><span class="line">in_arrary(“1asd”,arrart(1,2,3,4),TRUE)    =&gt; false   \\(需要设置strict参数为true才会进行严格比较，进行类型检测)</span><br></pre></td></tr></table></figure></p>
+<p>⑤<strong>sprintf()格式化漏洞（可以吃掉转义后的单引号）</strong><br>当我们输入的特殊字符被放到引号中进行转义时，但是又使用了sprintf函数进行拼接时,例如<figure class="highlight plain"><figcaption><span>中的 ‘%被当成使用%进行padding```，导致后一个’逃逸了</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">还有一种情况就是’被转义成了\’,例如输入```%’ and 1=1#```进入，存在SQL过滤，’被转成了\’,于是sql语句变成了 ```select * from user where username = ‘%\’ and 1=1#’;```如果这个语句被使用sprintf函数进行了拼接，%后的\被吃掉了，导致了’逃逸</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php<br>$sql = “select <em> from user where username = ‘%\’ and 1=1#’;”;<br>$args = “admin”;<br>echo sprintf( $sql, $args ) ;<br>//result: select </em> from user where username = ‘’ and 1=1#’<br>?&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">不过这样容易遇到 PHP Warning: sprintf(): Too few arguments的报错，这个时候我们可以使用%1$来吃掉转义添加的\</span><br></pre></td></tr></table></figure></p>
+<p>&lt;?php<br>$sql = “select <em> from user where username = ‘%1$\’ and 1=1#’ and password=’%s’;”;<br>$args = “admin”;<br>echo sprintf( $sql, $args) ;<br>//result: select </em> from user where username = ‘’ and 1=1#’ and password=’admin’;<br>?&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">⑥**php中 = 赋值运算的优先级高于and**</span><br></pre></td></tr></table></figure></p>
+<p>$c = is_numeric($a) and is_numeric($b)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">程序本意是要a、b都为数字才会继续，但是当\$a为数字时，会先赋值给\$c，所以可能导致$b绕过检测</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">⑦**url标准的灵活性导致绕过filter_var与parse_url进行ssrf**</span><br><span class="line">parse_url() 是专门用来解析 URL 而不是 URI 的。不过为遵从 PHP 向后兼容的需要有个例外，对 file:// 协议允许三个斜线（file:///...）。其它任何协议都不能这样.</span><br><span class="line"></span><br><span class="line">filter_var()函数对于</span><br></pre></td></tr></table></figure></p>
+<p><a href="http://evil.com;google.com" target="_blank" rel="noopener">http://evil.com;google.com</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">会返回false也就是认为url格式错误，但是对于</span><br></pre></td></tr></table></figure></p>
+<p>0://evil.com:80;google.com:80/<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">0://evil.com:80,google.com:80/</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0://evil.com:80\google.com:80/</span><br></pre></td></tr></table></figure>
+<p>却返回true。</p>
+<p>⑧<strong>通过file_get_contents获取网页内容并返回到客户端有可能造成xss</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if(filter_var($argv[1], FILTER_VALIDATE_URL)) &#123;</span><br><span class="line">   // parse URL</span><br><span class="line">   $r = parse_url($argv[1]);</span><br><span class="line">   print_r($r);</span><br><span class="line">   // check if host ends with google.com</span><br><span class="line">   if(preg_match(&apos;/baidu\.com$/&apos;, $r[&apos;host&apos;])) &#123;</span><br><span class="line">      // get page from URL</span><br><span class="line">      $a = file_get_contents($argv[1]);</span><br><span class="line">      echo($a);</span><br><span class="line">   &#125; else &#123;</span><br><span class="line">      echo &quot;Error: Host not allowed&quot;;</span><br><span class="line">   &#125;</span><br><span class="line">&#125; else &#123;</span><br><span class="line">   echo &quot;Error: Invalid URL&quot;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>虽然通过filter_var函数对url的格式进行检查，并且使用正则对url的host进行限定,<br>但是可以通过<code>data://baidu.com/plain;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pgo==</code> 页面会将<code>&lt;script&gt;alert(1)&lt;/script&gt;</code>返回给客户端，就有可能造成xss</p>
+<p>⑨<strong>parse_url与libcurl对与url的解析差异可能导致ssrf</strong></p>
+<p>当url中有多个@符号时，<strong>parse_url中获取的host是最后一个@符号后面的host，而libcurl则是获取的第一个@符号之后的</strong>。因此当代码对<code>http://user@eval.com:80@baidu.com</code> 进行解析时，PHP获取的host是baidu.com是允许访问的域名，而最后调用libcurl进行请求时则是请求的eval.com域名，可以造成ssrf绕过。此外对于<code>https://evil@baidu.com</code>这样的域名进行解析时,php获取的host是<a href="mailto:`evil@baidu.com" target="_blank" rel="noopener">`evil@baidu.com</a>`，但是libcurl获取的host却是evil.com</p>
+<p>⑩<strong>md5碰撞</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$Param1=&quot;\x4d\xc9\x68\xff\x0e\xe3\x5c\x20\x95\x72\xd4\x77\x7b\x72\x15\x87\xd3\x6f\xa7\xb2\x1b\xdc\x56\xb7\x4a\x3d\xc0\x78\x3e\x7b\x95\x18\xaf\xbf\xa2\x00\xa8\x28\x4b\xf3\x6e\x8e\x4b\x55\xb3\x5f\x42\x75\x93\xd8\x49\x67\x6d\xa0\xd1\x55\x5d\x83\x60\xfb\x5f\x07\xfe\xa2&quot;; </span><br><span class="line">$Param2=&quot;\x4d\xc9\x68\xff\x0e\xe3\x5c\x20\x95\x72\xd4\x77\x7b\x72\x15\x87\xd3\x6f\xa7\xb2\x1b\xdc\x56\xb7\x4a\x3d\xc0\x78\x3e\x7b\x95\x18\xaf\xbf\xa2\x02\xa8\x28\x4b\xf3\x6e\x8e\x4b\x55\xb3\x5f\x42\x75\x93\xd8\x49\x67\x6d\xa0\xd1\xd5\x5d\x83\x60\xfb\x5f\x07\xfe\xa2&quot;;</span><br><span class="line">#008ee33a9d58b51cfeb425b0959121c9</span><br><span class="line"></span><br><span class="line">$data1=&quot;\xd1\x31\xdd\x02\xc5\xe6\xee\xc4\x69\x3d\x9a\x06\x98\xaf\xf9\x5c\x2f\xca\xb5\x07\x12\x46\x7e\xab\x40\x04\x58\x3e\xb8\xfb\x7f\x89\x55\xad\x34\x06\x09\xf4\xb3\x02\x83\xe4\x88\x83\x25\xf1\x41\x5a\x08\x51\x25\xe8\xf7\xcd\xc9\x9f\xd9\x1d\xbd\x72\x80\x37\x3c\x5b\xd8\x82\x3e\x31\x56\x34\x8f\x5b\xae\x6d\xac\xd4\x36\xc9\x19\xc6\xdd\x53\xe2\x34\x87\xda\x03\xfd\x02\x39\x63\x06\xd2\x48\xcd\xa0\xe9\x9f\x33\x42\x0f\x57\x7e\xe8\xce\x54\xb6\x70\x80\x28\x0d\x1e\xc6\x98\x21\xbc\xb6\xa8\x83\x93\x96\xf9\x65\xab\x6f\xf7\x2a\x70&quot;;</span><br><span class="line">$data2=&quot;\xd1\x31\xdd\x02\xc5\xe6\xee\xc4\x69\x3d\x9a\x06\x98\xaf\xf9\x5c\x2f\xca\xb5\x87\x12\x46\x7e\xab\x40\x04\x58\x3e\xb8\xfb\x7f\x89\x55\xad\x34\x06\x09\xf4\xb3\x02\x83\xe4\x88\x83\x25\x71\x41\x5a\x08\x51\x25\xe8\xf7\xcd\xc9\x9f\xd9\x1d\xbd\xf2\x80\x37\x3c\x5b\xd8\x82\x3e\x31\x56\x34\x8f\x5b\xae\x6d\xac\xd4\x36\xc9\x19\xc6\xdd\x53\xe2\xb4\x87\xda\x03\xfd\x02\x39\x63\x06\xd2\x48\xcd\xa0\xe9\x9f\x33\x42\x0f\x57\x7e\xe8\xce\x54\xb6\x70\x80\xa8\x0d\x1e\xc6\x98\x21\xbc\xb6\xa8\x83\x93\x96\xf9\x65\x2b\x6f\xf7\x2a\x70&quot;;</span><br><span class="line">#79054025255fb1a26e4bc422aef54eb4</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/17/php代码审计分段学习(php_bug)[3]/" rel="next" title="php代码审计分段学习(php_bug)[3]">
+                <i class="fa fa-chevron-left"></i> php代码审计分段学习(php_bug)[3]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/09/php7的Opcache导致的getshell/" rel="prev" title="php7的Opcache导致的getshell">
+                php7的Opcache导致的getshell <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考：https://github.com/bowu678/php_bugs 21.数字验证正则绕过123`0 &amp;gt;= preg_match(&amp;apos;/^[[:graph:]]&amp;#123;12,&amp;#125;$/&amp;apos;, $password)`//输入的内容必须为12个以上，不包括空格和tab键`$reg = &amp;apos;/([[:punct:]]+|[[:digit:]]+|[[:u">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php代码审计分段学习(php_bug)[3]">
+<meta property="og:url" content="https://cws6.github.io/2018/03/17/php代码审计分段学习(php_bug)[3]/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考：https://github.com/bowu678/php_bugs 21.数字验证正则绕过123`0 &amp;gt;= preg_match(&amp;apos;/^[[:graph:]]&amp;#123;12,&amp;#125;$/&amp;apos;, $password)`//输入的内容必须为12个以上，不包括空格和tab键`$reg = &amp;apos;/([[:punct:]]+|[[:digit:]]+|[[:u">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-21ceaa01ae3595da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-1ab1b40d339089d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-bd6dc7b123aecf30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6bb326286e3eb7cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-05d2bcca99063a57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6799b3818c37cdbe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-9f5e980338c5733c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-38f439d018095f31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-426df6f8a236428b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-eba9fcdb84c6bfdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T13:02:25.765Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php代码审计分段学习(php_bug)[3]">
+<meta name="twitter:description" content="参考：https://github.com/bowu678/php_bugs 21.数字验证正则绕过123`0 &amp;gt;= preg_match(&amp;apos;/^[[:graph:]]&amp;#123;12,&amp;#125;$/&amp;apos;, $password)`//输入的内容必须为12个以上，不包括空格和tab键`$reg = &amp;apos;/([[:punct:]]+|[[:digit:]]+|[[:u">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-21ceaa01ae3595da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/03/17/php代码审计分段学习(php_bug)[3]/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>php代码审计分段学习(php_bug)[3] | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/03/17/php代码审计分段学习(php_bug)[3]/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">php代码审计分段学习(php_bug)[3]
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-17 14:33:45" itemprop="dateCreated datePublished" datetime="2018-03-17T14:33:45+08:00">2018-03-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 21:02:25" itemprop="dateModified" datetime="2018-12-03T21:02:25+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考：<a href="https://github.com/bowu678/php_bugs" target="_blank" rel="noopener">https://github.com/bowu678/php_bugs</a></p>
+<h4 id="21-数字验证正则绕过"><a href="#21-数字验证正则绕过" class="headerlink" title="21.数字验证正则绕过"></a>21.数字验证正则绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`0 &gt;= preg_match(&apos;/^[[:graph:]]&#123;12,&#125;$/&apos;, $password)`//输入的内容必须为12个以上，不包括空格和tab键</span><br><span class="line">`$reg = &apos;/([[:punct:]]+|[[:digit:]]+|[[:upper:]]+|[[:lower:]]+)/&apos;;` //[[:punct:]] 任何标点符号,[[:digit:]] 任何数字,[[:upper:]]任何大写字母,[[:lower:]] 任何小写字母 </span><br><span class="line">` if (6 &gt; preg_match_all($reg, $password, $arr))` //匹配到的次数要大于6次才能绕过。连续的大写或小写字母都只能算是一次。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ps = array(&apos;punct&apos;, &apos;digit&apos;, &apos;upper&apos;, &apos;lower&apos;)；</span><br><span class="line">        foreach ($ps as $pt) </span><br><span class="line">        &#123; </span><br><span class="line">            if (preg_match(&quot;/[[:$pt:]]+/&quot;, $password)) </span><br><span class="line">                $c += 1; </span><br><span class="line">        &#125; </span><br><span class="line">        if ($c &lt; 3) break;//必须要有大小写字母，数字，字符内容三种与三种以上</span><br></pre></td></tr></table></figure>
+<p><code>&quot;42&quot; == $password</code>//最后输入的内容还得和42相等。</p>
+<p>可以构造<code>420.000000e-1</code>//0可以随意添加不影响数值，但是要超过12个字符</p>
+<h4 id="22-弱类型整数大小比较绕过"><a href="#22-弱类型整数大小比较绕过" class="headerlink" title="22.弱类型整数大小比较绕过"></a>22.弱类型整数大小比较绕过</h4><p><code>is_numeric($temp)?die(&quot;no numeric&quot;):NULL;</code>//若是纯数字则会返回为no numeric<br>$temp&gt;1336//但是要是想得到flag还得比1336大,尝试构建13e4，但是整数、小数、指数表示以及16进制数值都会通过判断。<br>当一个整形和一个其他类型行比较的时候，会先把其他类型intval再比。若输入13e4a，在is_numeric中返回true，然后在比较时被转换成数字130000，成功实现</p>
+<h4 id="23-md5函数验证绕过"><a href="#23-md5函数验证绕过" class="headerlink" title="23.md5函数验证绕过"></a>23.md5函数验证绕过</h4><p>md5($temp)==0//这个很好绕过，md5后的值和0相等就行了<br>①.输入的值为空<br>②.有这种md5(‘240610708’)后的值为0e开头的就行<br>③.类似md5(‘1’)值开头为字母的也能通过</p>
+<h4 id="4-md5函数true绕过注入"><a href="#4-md5函数true绕过注入" class="headerlink" title="4 md5函数true绕过注入"></a>4 md5函数true绕过注入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;SELECT * FROM users WHERE password = &apos;&quot;.md5($password,true).&quot;&apos;&quot;;</span><br><span class="line">存在这个条件md5($password,true)</span><br></pre></td></tr></table></figure>
+<p>当md5后的hex转换成字符串后，如果包含 <code>&#39;or&#39;&lt;trash&gt;</code> 这样的字符串，那整个sql变成<br><code>SELECT * FROM admin WHERE pass = &#39; &#39; or  &#39;6&lt;trash&gt;&#39;</code>就绕过了</p>
+<p>字符串：<code>ffifdyop</code>,md5后，<code>276f722736c95d99e921722cf9ed621c</code> hex转换成字符串：<code>&#39;or&#39;6&lt;trash&gt;</code></p>
+<h4 id="25-switch没有break-字符与0比较绕过"><a href="#25-switch没有break-字符与0比较绕过" class="headerlink" title="25.switch没有break 字符与0比较绕过"></a>25.switch没有break 字符与0比较绕过</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">case 0:</span><br><span class="line">case 1:</span><br><span class="line">case 2:</span><br><span class="line">        require_once $which.&apos;.php&apos;;</span><br><span class="line">         echo $flag;break;</span><br><span class="line">    default:</span><br><span class="line">        echo GWF_HTML::error(&apos;PHP-0817&apos;, &apos;Hacker NoNoNo!&apos;, false);break;</span><br></pre></td></tr></table></figure>
+<p>学c语言的时候，对于switch的理解就是若是前几个case语句只有一个输出条件，并且只有一个break的话，就是前几个case语句共用这一个输出条件，只要满足其中一个case语句就会输出，看了大佬的wp，嗯好像理解差不多，就是若是第一个case若是判断成功，就算没有break，后面的也不会再判断了，直接到2的时候，输出require_once这个包含文件，若是$flag在那个文件中就输出了。<br><a href="http://localhost/php_bug/25.php?which=flag，嗯输出了我flag.php中的东西。" target="_blank" rel="noopener">http://localhost/php_bug/25.php?which=flag，嗯输出了我flag.php中的东西。</a></p>
+<h4 id="26-unserialize-反序列化"><a href="#26-unserialize-反序列化" class="headerlink" title="26.unserialize()反序列化"></a>26.unserialize()反序列化</h4><p><img src="https://upload-images.jianshu.io/upload_images/5035860-21ceaa01ae3595da.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-1ab1b40d339089d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-bd6dc7b123aecf30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>flag在pctf.php，但showimg.php中不允许直接读取pctf.php，只有在index.php中可以传入变量class ，index.php中Shield类的实例<code>$X = unserialize($g)</code>，<code>$g = $_GET[&#39;class&#39;]</code>;，$X中不知$filename变量，但需要找的是：<code>$filename = &quot;pctf.php&quot;</code>，现$X已知，求传入的class变量值。 可以进行序列化操作：<br>运行index.php得到<code>O:6:&quot;Shield&quot;:1:{s:4:&quot;file&quot;;s:8:&quot;pctf.php&quot;;}</code>，提交就行了</p>
+<h4 id="27"><a href="#27" class="headerlink" title="27."></a>27.</h4><p><img src="https://upload-images.jianshu.io/upload_images/5035860-6bb326286e3eb7cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这段代码的要求是提交a,b,c满足要求才能得到flag。首先id不能为0，但是下面的语句<code>$id==0</code>，可以利用弱类型让<code>id=0a</code>就可以了；a的话是打开名为a的文件内容为<code>1112 is a nice lab!</code>，但是stripos($a,’.’)这个又把文件包含给过滤了，看大佬们用到了<code>php://input</code>,在post里面提交<code>1112 is a nice lab!</code>就行了；b的话是长度大于5且b[0]!=4，且<code>’1114’中存在’111’+b[0]。</code>Strlen检测长度时遇到%00不会被截断，而eregi会被截断，故构造b为字串，首位为%00,长度大于5，则检测时长度满足，<code>eregi(‘111’,’1114’)</code>也满足，b首位整形也不等于4也满足，即可得到flag<br><code>http://localhost/php_bug/27.php?id=0a&amp;a=php://input&amp;b=%0011111</code>在火狐的post框框里面加上<code>1112 is a nice lab!</code>就i可以了。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-05d2bcca99063a57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="28"><a href="#28" class="headerlink" title="28."></a>28.</h4><p>题目链接：web.jarvisoj.com:32778/</p>
+<p>这个题目是源码泄露，在网址后面加上<code>index.php~</code>,下载下来然后改名字index.php.swp，在虚拟机里面打开，<code>vim -r index.php.swp</code><br>但是在保存的时候出现了<code>E212问题</code>，嗯直接看大佬博客就行了，<a href="https://www.jianshu.com/p/3e5a9be54d8f，" target="_blank" rel="noopener">https://www.jianshu.com/p/3e5a9be54d8f，</a><br>嗯源码贴下。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-6799b3818c37cdbe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>要想成功拿到flag，需要满足<code>$role===&quot;admin&quot; &amp;&amp; $hsh === md5($salt.strrev($_COOKIE[&quot;role&quot;]))</code><br>这个地方用到了哈希长度扩展攻击，它的原理是<a href="https://github.com/iagox86/hash_extender，" target="_blank" rel="noopener">https://github.com/iagox86/hash_extender，</a><br>这个解释的很详细，直接看这个就行了<br>我们可以在不知道salt是什么的情况下生成签名！我们将字符串与我们的新签名一起发送到服务器。服务器将预先签名，散列它，并提出与我们完全相同的散列</p>
+<p>可以直接用hashpump这个工具，安装方式如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/bwall/HashPump</span><br><span class="line">apt-get install g++ libssl-dev</span><br><span class="line">cd HashPump</span><br><span class="line">make</span><br><span class="line">make install</span><br></pre></td></tr></table></figure></p>
+<p>salt的长度不知道，但是我们可以尝试啊，</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-9f5e980338c5733c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>最后将role这个数据反一下提交，就出来flag了。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-38f439d018095f31.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="29"><a href="#29" class="headerlink" title="29."></a>29.</h4><p><img src="https://upload-images.jianshu.io/upload_images/5035860-426df6f8a236428b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>这个是题目的链接：<a href="http://web.jarvisoj.com:32794" target="_blank" rel="noopener">http://web.jarvisoj.com:32794</a><br>闭合<code>,</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">查用户名：?table=flag` `union select user() limit 1,1</span><br><span class="line">查表：?table=flag``union select group_concat(table_name) from information_schema.tables where table_schema=database() limit 1,1</span><br><span class="line">查列：?table=flag` `union select group_concat(column_name) from information_schema.columns where table_name=0x7365637265745f666c6167 limit 1,1</span><br><span class="line">查flag：?table=flag` `union select flagUwillNeverKnow from secret_flag limit 1,1</span><br></pre></td></tr></table></figure></p>
+<h4 id="30-利用提交数组绕过逻辑"><a href="#30-利用提交数组绕过逻辑" class="headerlink" title="30.利用提交数组绕过逻辑"></a>30.利用提交数组绕过逻辑</h4><p><img src="https://upload-images.jianshu.io/upload_images/5035860-eba9fcdb84c6bfdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>总觉得这段代码在哪里见过，但是就是找不到原题目了。先看代码，  <code>$role = unserialize(base64_decode($_COOKIE[&quot;role&quot;]))</code>;嗯把cookie解码并反序列化后是admin才能继续往下做，但是role本身给的值是guest，将生成的cookie拿去base64解码，然后将里面的guest改为admin再提交，就成功绕过了第一步；，然后就是post提交filename数据和data数据，前者没什么可以利用的，但是后者就比较难受了首先<code>（preg_match(&#39;[&lt;&gt;?]&#39;, $data）</code>，提交的数据中不能出现&lt;&gt;,但是在<br><code>$s = implode($data);if(!preg_match(&#39;[&lt;&gt;?]&#39;, $s)){$flag=&#39;None.&#39;;}，</code>这时候又需要有&lt;&gt;，想要通过Post请求的形式传入数组可以使用 <code>data[0]=123&amp;data[1]=&lt;&gt;</code>的形式传入数组，这样的话在执行 implode() 函数的时候就不会使 &amp;s 为空，成功绕过这段逻辑拿到flag。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/12/php代码审计分段学习-php-bug-1/" rel="next" title="php代码审计分段学习(php_bug)[1]">
+                <i class="fa fa-chevron-left"></i> php代码审计分段学习(php_bug)[1]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/31/代码审计补充知识点/" rel="prev" title="代码审计补充知识点">
+                代码审计补充知识点 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">35</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#21-数字验证正则绕过"><span class="nav-number">1.</span> <span class="nav-text">21.数字验证正则绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#22-弱类型整数大小比较绕过"><span class="nav-number">2.</span> <span class="nav-text">22.弱类型整数大小比较绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#23-md5函数验证绕过"><span class="nav-number">3.</span> <span class="nav-text">23.md5函数验证绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-md5函数true绕过注入"><span class="nav-number">4.</span> <span class="nav-text">4 md5函数true绕过注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#25-switch没有break-字符与0比较绕过"><span class="nav-number">5.</span> <span class="nav-text">25.switch没有break 字符与0比较绕过</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#26-unserialize-反序列化"><span class="nav-number">6.</span> <span class="nav-text">26.unserialize()反序列化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#27"><span class="nav-number">7.</span> <span class="nav-text">27.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#28"><span class="nav-number">8.</span> <span class="nav-text">28.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#29"><span class="nav-number">9.</span> <span class="nav-text">29.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#30-利用提交数组绕过逻辑"><span class="nav-number">10.</span> <span class="nav-text">30.利用提交数组绕过逻辑</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
