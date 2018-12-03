@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://www.anquanke.com/post/id/84632 RSA的加密过程 选择两个大素数p和q，计算出模数N = p * q 计算φ = (p−1) * (q−1) 即N的欧拉函数，然后选择一个e(1&amp;lt;e&amp;lt;φ),且e和φ互质 取e的模反数为d，计算方法: e * d ≡ 1 (mod φ) 对明文A进行加密： B = pow(A,e,n)，得到的B即为密">
+<meta name="keywords" content="ctf记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RSA入门">
+<meta property="og:url" content="https://cws6.github.io/2018/03/07/RSA入门/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://www.anquanke.com/post/id/84632 RSA的加密过程 选择两个大素数p和q，计算出模数N = p * q 计算φ = (p−1) * (q−1) 即N的欧拉函数，然后选择一个e(1&amp;lt;e&amp;lt;φ),且e和φ互质 取e的模反数为d，计算方法: e * d ≡ 1 (mod φ) 对明文A进行加密： B = pow(A,e,n)，得到的B即为密">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-5bfac242b51e7eaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/675">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-287371d73e1cb871.png?imageMogr2/auto-orient/">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6768c66404713482.png?imageMogr2/auto-orient/">
+<meta property="og:updated_time" content="2018-12-03T01:29:58.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RSA入门">
+<meta name="twitter:description" content="参考文献：https://www.anquanke.com/post/id/84632 RSA的加密过程 选择两个大素数p和q，计算出模数N = p * q 计算φ = (p−1) * (q−1) 即N的欧拉函数，然后选择一个e(1&amp;lt;e&amp;lt;φ),且e和φ互质 取e的模反数为d，计算方法: e * d ≡ 1 (mod φ) 对明文A进行加密： B = pow(A,e,n)，得到的B即为密">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-5bfac242b51e7eaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/675">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/03/07/RSA入门/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>RSA入门 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/03/07/RSA入门/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">RSA入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-03-07 16:12:35" itemprop="dateCreated datePublished" datetime="2018-03-07T16:12:35+08:00">2018-03-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 09:29:58" itemprop="dateModified" datetime="2018-12-03T09:29:58+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="https://www.anquanke.com/post/id/84632" target="_blank" rel="noopener">https://www.anquanke.com/post/id/84632</a></p>
+<h4 id="RSA的加密过程"><a href="#RSA的加密过程" class="headerlink" title="RSA的加密过程"></a>RSA的加密过程</h4><ul>
+<li>选择两个大素数p和q，计算出模数N = p * q</li>
+<li>计算φ = (p−1) * (q−1) 即N的欧拉函数，然后选择一个e(1&lt;e&lt;φ),且e和φ互质</li>
+<li>取e的模反数为d，计算方法: <code>e * d ≡ 1 (mod φ)</code></li>
+<li>对明文A进行加密： <code>B = pow(A,e,n)</code>，得到的B即为密文。</li>
+<li>对密文B进行解密，<code>A = pow(B,d,n)</code>，得到的A即为明文，这个pow()在python中的gmpy库中有，可以直接用</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">p 和 q ：大整数N的两个因子</span><br><span class="line">N：大整数N，我们称之为模数</span><br><span class="line">e 和 d：互为模反数的两个指数</span><br><span class="line">c 和 m：分别是密文和明文，这里一般指的是一个十进制的数，是16进制数的时候</span><br></pre></td></tr></table></figure>
+<p><strong>RSA的算法涉及三个参数，n、e、d。</strong></p>
+<ul>
+<li>其中，n是两个大质数p、q的积，n以二进制表示时所占用的位数，就是所谓的密钥长度。</li>
+<li>e和d是一对相关的值，e可以任意取，但要求e与(p-1)(q-1)互质；再选择d，要求<code>(ed) ≡ 1(mod(p-1)×(q-1))</code>。</li>
+<li>令<code>φ = (p-1)(q-1)</code>,上式即 <code>d*e = 1 mod φ</code>即：<code>(d*e - 1)% φ = 0</code><br>*（n，e),(n，d)就是密钥对。其中(n，e)为公钥，(n，d)为私钥。RSA加解密的算法完全相同，设A为明文，B为密文，则：A≡B^d( mod n)；B≡A^e (mod n)；</li>
+<li>e和d可以互换使用，即：<code>A≡B^e (mod n)；B≡A^d( mod n);</code></li>
+</ul>
+<h4 id="实验吧ctf的RSA的题"><a href="#实验吧ctf的RSA的题" class="headerlink" title="实验吧ctf的RSA的题"></a>实验吧ctf的RSA的题</h4><p><strong>1.RSA实践</strong><br>嗯，用工具<code>RSA-Tool 2 by tE!</code>（没有就自己下啊），至于E为啥子是11而不是题目上给的17，因为17出来的结果提交不对，公钥进制工具默认是hex不是十进制，需要将10进制17转换为16进制的11<br><img src="https://upload-images.jianshu.io/upload_images/5035860-5bfac242b51e7eaa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/675" alt=""></p>
+<p><strong>2.RSAROLL</strong><br>题目给的{920139713,19}，则n是920139713，在<code>http://www.atool.org/quality_factor.php</code>或者<code>http://factordb.com</code>这个网址上可以分解出两个质数pq，然后用pqe求出d，再用密文nd求出每个明文，最后合并下就行了，直接python脚本跑下就行了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import gmpy2</span><br><span class="line">N,p,q,e=920139713,18443,49891,19</span><br><span class="line">d=gmpy2.invert(e,(p-1)*(q-1))</span><br><span class="line">res=[]</span><br><span class="line">with open(&quot;1.txt&quot;)as f:</span><br><span class="line">    f.readline()</span><br><span class="line">    for i in f:</span><br><span class="line">        res.append(chr(pow(int(i),d,N)))</span><br><span class="line">    print (&quot;&quot;.join(res))</span><br></pre></td></tr></table></figure></p>
+<p><strong>3.rsarsa</strong><br>其实挺简单的，贴下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding: UTF-8 -*-</span><br><span class="line">import gmpy2</span><br><span class="line">p =9648423029010515676590551740010426534945737639235739800643989352039852507298491399561035009163427050370107570733633350911691280297777160200625281665378483</span><br><span class="line">q =11874843837980297032092405848653656852760910154543380907650040190704283358909208578251063047732443992230647903887510065547947313543299303261986053486569407</span><br><span class="line">n = p*q</span><br><span class="line">e =65537</span><br><span class="line">c=83208298995174604174773590298203639360540024871256126892889661345742403314929861939100492666605647316646576486526217457006376842280869728581726746401583705899941768214138742259689334840735633553053887641847651173776251820293087212885670180367406807406765923638973161375817392737747832762751690104423869019034</span><br><span class="line">d=gmpy2.invert(e,(p-1)*(q-1))</span><br><span class="line">print (&quot;d：&quot;,d)</span><br><span class="line">key=pow(c, d, n)</span><br><span class="line">print (&quot;pwd：&quot;,key)</span><br></pre></td></tr></table></figure></p>
+<p><strong>4.warmup</strong><br>这道题真的是神烦，下载下来是个txt文件和pub文件，打开pub文件能看到是一个公钥文件，这是用<code>openssl</code>加密过的一段密码，直接kali解下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl rsa -pubin -text -modulus -in warmup.pub</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>然后解开之后有点蒙，完全不知道啥是啥，有<code>Modulus：</code>和<code>Exponent：</code>两个模块，后来看了下大佬的wp知道了前者是N，后者是E，知道了N和E就可以求d了，用github中<code>https://github.com/pablocelayes/rsa-wiener-attack</code>这个里面的<code>RSAwienerHacker.py</code>文件来解，但是需要改一下，前面的不用动，把测试函数后面的内容改成下面的内容</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-287371d73e1cb871.png?imageMogr2/auto-orient/" alt=""></p>
+<ul>
+<li>然后就能求出d了，求出d之后<br><img src="https://upload-images.jianshu.io/upload_images/5035860-6768c66404713482.png?imageMogr2/auto-orient/" alt=""></li>
+</ul>
+<h4 id="其他解密方式"><a href="#其他解密方式" class="headerlink" title="其他解密方式"></a>其他解密方式</h4><p><strong>1.利用公约数</strong><br>两次公钥的加密过程中使用的<code>$n_1$</code>和<code>$n_2$</code>具有相同的<code>素因子</code>，那么可以利用欧几里得算法直接将<code>$n_1$</code>和<code>$n_2$</code>分解,通过欧几里得算法可以直接求出$n_1$和$n_2$的<code>最大公约数p</code>,通常题目给了若干个n，均不相同，并且都是2048bit，4096bit级别，无法正面硬杠，并且明文都没什么联系，e也一般取65537。</p>
+<ul>
+<li>例题：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">n1=9051013965404084482870087864821455535159008696042953021965631089095795348830954383127323853272528967729311045179605407693592665683311660581204886571146327720288455874927281128121117323579691204792399913106627543274457036172455814805715668293705603675386878220947722186914112990452722174363713630297685159669328951520891938403452797650685849523658191947411429068829734053745180460758604283051344339641429819373112365211739216160420494167071996438506850526168389386850499796102003625404245645796271690310748804327</span><br><span class="line">n2=13225948396179603816062046418717214792668512413625091569997524364243995991961018894150059207824093837420451375240550310050209398964506318518991620142575926623780411532257230701985821629425722030608722035570690474171259238153947095310303522831971664666067542649034461621725656234869005501293423975184701929729170077280251436216167293058560030089006140224375425679571181787206982712477261432579537981278055755344573767076951793312062480275004564657590263719816033564139497109942073701755011873153205366238585665743</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>通过直接分解，上factordb都分解失败。通过尝试发现：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">print gcd(n1,n2)</span><br></pre></td></tr></table></figure></p>
+<p>打印出：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1564859779720039565508870182569324208117555667917997801104862601098933699462849007879184203051278194180664616470669559575370868384820368930104560074538872199213236203822337186927275879139590248731148622362880471439310489228147093224418374555428793546002109</span><br></pre></td></tr></table></figure></p>
+<p>即为两个n共有的素因子p，然后进一步求出q。</p>
+<p><strong>2.Fermat方法与Pollard rho方法</strong><br>在p，q的取值差异过大，或者p，q的取值过于相近的时候，Format方法与Pollard rho方法都可以很快将n分解成功。可直接使用开源项目yafu将其自动化，不论n的大小，只要p和q存在相差过大或者过近时，都可以通过yafu很快地分解成功。</p>
+<p><strong>3.低加密指数攻击</strong><br>在RSA中e也称为加密指数。由于e是可以随意选取的，选取小一点的e可以缩短加密时间，但是选取不当的话，就会造成安全问题。<br>当e=3时，如果明文过小，导致明文的三次方仍然小于n，那么通过直接对密文三次开方，即可得到明文。</p>
+<p><strong>4.低加密指数广播攻击</strong><br>如果选取的加密指数较低，并且使用了相同的加密指数给一个接受者的群发送相同的信息，那么可以进行广播攻击得到明文。即，选取了相同的加密指数e（这里取e=3），对相同的明文m进行了加密并进行了消息的传递。<br>一般来说都是给了三组加密的参数和明密文，其中题目很明确地能告诉这三组的明文都是一样的，并且e都取了一个较小的数字。</p>
+<p><strong>5.低解密指数攻击</strong><br>e看起来很大就行了。通过<a href="https://github.com/pablocelayes/rsa-wiener-attack" target="_blank" rel="noopener">Wiener Attack</a>可以在多项式时间中分解n。</p>
+<p><strong>6.共模攻击</strong><br>如果在RSA的使用中使用了相同的模n对相同的明文m进行了加密，那么就可以在不分解n的情况下还原出明文m的值。<br>此时不需要分解n，不需要求解私钥，如果两个加密指数互素，就可以通过共模攻击在两个密文和公钥被嗅探到的情况下还原出明文m的值。<br>若干次加密，每次n都一样，明文根据题意也一样。</p>
+<ul>
+<li>如果已知：n1，n2，c1，c2，e1，e2，并且其中n1=n2的话：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">s = egcd(e1, e2)</span><br><span class="line"> s1 = s[1]</span><br><span class="line"> s2 = s[2]</span><br><span class="line">   print s</span><br><span class="line"> n=n1</span><br><span class="line">   if s1&lt;0:</span><br><span class="line">     s1 = - s1</span><br><span class="line">     c1 = modinv(c1, n)</span><br><span class="line">   elif s2&lt;0:</span><br><span class="line">     s2 = - s2</span><br><span class="line">     c2 = modinv(c2, n)</span><br><span class="line"> m=(pow(c1,s1,n)*pow(c2,s2,n)) % n</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf记录/" rel="tag"># ctf记录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/08/mysql提权/" rel="next" title="mysql提权">
+                <i class="fa fa-chevron-left"></i> mysql提权
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/09/复现强网杯python-is-the-best-language-2/" rel="prev" title="复现强网杯python is the best language 2">
+                复现强网杯python is the best language 2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#RSA的加密过程"><span class="nav-number">1.</span> <span class="nav-text">RSA的加密过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实验吧ctf的RSA的题"><span class="nav-number">2.</span> <span class="nav-text">实验吧ctf的RSA的题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#其他解密方式"><span class="nav-number">3.</span> <span class="nav-text">其他解密方式</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
