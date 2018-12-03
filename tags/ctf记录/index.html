@@ -108,27 +108,20 @@
 
 
 
-  <meta name="description" content="https://www.anquanke.com/post/id/162656http://wonderkun.cc/index.html/?p=718 ####环境12ubuntu 18.04php 7.2 PS：lsb_release -a   //查看ubuntu的发行版本 ####题目123&amp;lt;?php($_=@$GET[&amp;apos;orange&amp;apos;]) &amp;amp;&amp;amp;">
-<meta property="og:type" content="website">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="cws6">
-<meta property="og:url" content="https://cws6.github.io/user-5035860-1543717448/ctf记录/复现One-line-php-challenge.html">
+<meta property="og:url" content="https://cws6.github.io/tags/ctf记录/index.html">
 <meta property="og:site_name" content="cws6">
-<meta property="og:description" content="https://www.anquanke.com/post/id/162656http://wonderkun.cc/index.html/?p=718 ####环境12ubuntu 18.04php 7.2 PS：lsb_release -a   //查看ubuntu的发行版本 ####题目123&amp;lt;?php($_=@$GET[&amp;apos;orange&amp;apos;]) &amp;amp;&amp;amp;">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-dfb44de0f9b1ba8a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7414c21ee93432e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-02T02:24:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="cws6">
-<meta name="twitter:description" content="https://www.anquanke.com/post/id/162656http://wonderkun.cc/index.html/?p=718 ####环境12ubuntu 18.04php 7.2 PS：lsb_release -a   //查看ubuntu的发行版本 ####题目123&amp;lt;?php($_=@$GET[&amp;apos;orange&amp;apos;]) &amp;amp;&amp;amp;">
-<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-dfb44de0f9b1ba8a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/user-5035860-1543717448/ctf记录/复现One-line-php-challenge.html">
+  <link rel="canonical" href="https://cws6.github.io/tags/ctf记录/">
 
 
 
@@ -138,7 +131,7 @@
   };
 </script>
 
-  <title> | cws6</title>
+  <title>Tag: ctf记录 | cws6</title>
   
 
 
@@ -187,7 +180,7 @@
     
   
 
-  <div class="container sidebar-position-left page-post-detail">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
     <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -246,7 +239,7 @@
         
         
           
-          <li class="menu-item menu-item-tags">
+          <li class="menu-item menu-item-tags menu-item-active">
 
     
     
@@ -325,135 +318,56 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-    
-    
-    <div class="post-block page">
-      <header class="post-header">
-
-<h1 class="post-title" itemprop="name headline"></h1>
-
-<div class="post-meta">
   
   
-
-
   
-  
-  <ul class="breadcrumb">
-    
-      
-      
-        
-          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li>CTF记录</li>
-        
-      
-    
-      
-      
-        
-          <li><a href="/user-5035860-1543717448/复现One-line-php-challenge.html/">复现ONE-LINE-PHP-CHALLENGE.HTML</a></li>
-          
-            
-          
-        
-      
-    
-  </ul>
+  <div class="post-block tag">
 
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
-        
-        
-          <p><a href="https://www.anquanke.com/post/id/162656" target="_blank" rel="noopener">https://www.anquanke.com/post/id/162656</a><br><a href="http://wonderkun.cc/index.html/?p=718" target="_blank" rel="noopener">http://wonderkun.cc/index.html/?p=718</a></p>
-<p>####环境<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu 18.04</span><br><span class="line">php 7.2</span><br></pre></td></tr></table></figure></p>
-<p><strong>PS：<code>lsb_release -a</code>   //查看ubuntu的发行版本</strong></p>
-<p>####题目<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">($_=@$GET[&apos;orange&apos;]) &amp;&amp; @substr(file($_)[0],0,6) ===&apos;@&lt;?php&apos; ?include($_):highlight_file(__FILE__);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure></p>
-<p><strong>PS:通过 get 方式传入一个 orange 参数，作为文件名，然后程序会将我们传入文件名的那个文件取出头6个字符和 @&lt;?php 比对，如果配对成功那么就会包含这个文件，否则就什么都不做</strong></p>
-<p>####解题思路：</p>
-<ul>
-<li>通过 <code>PHP_SESSION_UPLOAD_PROGRESS</code>控制 <code>session 文件</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-dfb44de0f9b1ba8a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
-</ul>
-<p>php7.2的session文件存储路径是固定的<code>/var/lib/php/sessions/sess_{php_session_id}</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-7414c21ee93432e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<ul>
-<li>文件的开头必须是 <code>@&lt;?php</code>，<code>sess</code>文件中的内容<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upload_progress_K0rz3n|a:5:&#123;s:10:&quot;start_time&quot;;i:1540314711;s:14:&quot;content_length&quot;;i:764161;s:15:&quot;bytes_processed&quot;;i:5302;s:4:&quot;done&quot;;b:0;s:5:&quot;files&quot;;a:1:&#123;i:0;a:7:&#123;s:10:&quot;field_name&quot;;s:6:&quot;submit&quot;;s:4:&quot;name&quot;;s:7:&quot;tmp.gif&quot;;s:8:&quot;tmp_name&quot;;N;s:5:&quot;error&quot;;i:0;s:4:&quot;done&quot;;b:0;s:10:&quot;start_time&quot;;i:1540314711;s:15:&quot;bytes_processed&quot;;i:5302;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>这个文件是以 <code>upload_progress</code> 开头的,不能直接包含，需要控制这个开头，但是最多控制这18个字符，如果超过了就会影响到我们的 payload ，导致 shell 无法创建</p>
-
-        
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>ctf记录<small>Tag</small>
+        </h1>
       </div>
+
       
-      
+        
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      <h2 class="post-title">
+        
+            <a class="post-title-link" href="/2018/12/03/RSA入门/" itemprop="url">
+              
+                <span itemprop="name">RSA入门</span>
+              
+            </a>
+        
+      </h2>
+
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated" datetime="2018-12-03T08:04:50+08:00" content="2018-12-03">
+          12-03
+        </time>
+      </div>
+
+    </header>
+  </article>
+
+
       
     </div>
-    
 
-
-  
-  
-  <ul class="breadcrumb">
-    
-      
-      
-        
-          <li><a href="/user-5035860-1543717448/">USER-5035860-1543717448</a></li>
-          
-            
-          
-        
-      
-    
-      
-      
-        
-          <li>CTF记录</li>
-        
-      
-    
-      
-      
-        
-          <li><a href="/user-5035860-1543717448/复现One-line-php-challenge.html/">复现ONE-LINE-PHP-CHALLENGE.HTML</a></li>
-          
-            
-          
-        
-      
-    
-  </ul>
-
-
-    
-    
-    
   </div>
+  
+  
+  
+
+  
 
 
           </div>
           
-
-  
-
-
 
         </div>
         
@@ -683,10 +597,6 @@
   
 
   
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
-
-
 
   
 
