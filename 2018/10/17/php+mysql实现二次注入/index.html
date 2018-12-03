@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://www.jianshu.com/p/3fe7904683ac 环境 wampserver2.5-Apache-2.4.9-Mysql-5.6.17-php5.5.12-32b  PS:我只有这个版本的wamp环境可以成功的实现二次注入，在phpstudy的版本中都自带的有转义，若是在插入数据的时候再加上转义那么存到数据库中的脏数据也都被转义了。 sql二次注入原理：在第一">
+<meta name="keywords" content="数据库及漏洞学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="php+mysql实现二次注入">
+<meta property="og:url" content="https://cws6.github.io/2018/10/17/php+mysql实现二次注入/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://www.jianshu.com/p/3fe7904683ac 环境 wampserver2.5-Apache-2.4.9-Mysql-5.6.17-php5.5.12-32b  PS:我只有这个版本的wamp环境可以成功的实现二次注入，在phpstudy的版本中都自带的有转义，若是在插入数据的时候再加上转义那么存到数据库中的脏数据也都被转义了。 sql二次注入原理：在第一">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-45290f748917900c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-9c804be2d7457f87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T13:32:48.756Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="php+mysql实现二次注入">
+<meta name="twitter:description" content="参考文献：https://www.jianshu.com/p/3fe7904683ac 环境 wampserver2.5-Apache-2.4.9-Mysql-5.6.17-php5.5.12-32b  PS:我只有这个版本的wamp环境可以成功的实现二次注入，在phpstudy的版本中都自带的有转义，若是在插入数据的时候再加上转义那么存到数据库中的脏数据也都被转义了。 sql二次注入原理：在第一">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-45290f748917900c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/10/17/php+mysql实现二次注入/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>php+mysql实现二次注入 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/10/17/php+mysql实现二次注入/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">php+mysql实现二次注入
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-17 18:32:31" itemprop="dateCreated datePublished" datetime="2018-10-17T18:32:31+08:00">2018-10-17</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 21:32:48" itemprop="dateModified" datetime="2018-12-03T21:32:48+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="https://www.jianshu.com/p/3fe7904683ac" target="_blank" rel="noopener">https://www.jianshu.com/p/3fe7904683ac</a></p>
+<h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><blockquote>
+<p>wampserver2.5-Apache-2.4.9-Mysql-5.6.17-php5.5.12-32b</p>
+</blockquote>
+<p><em>PS:我只有这个版本的wamp环境可以成功的实现二次注入，在phpstudy的版本中都自带的有转义，若是在插入数据的时候再加上转义那么存到数据库中的脏数据也都被转义了。</em></p>
+<h4 id="sql二次注入原理："><a href="#sql二次注入原理：" class="headerlink" title="sql二次注入原理："></a>sql二次注入原理：</h4><p><strong>在第一次进行数据库插入数据的时候，仅仅只是使用了 addslashes或 get_magic_quotes_gpc对其中的特殊字符进行了转义，在写入数据库的时候还是保留了原来的数据，但是数据本身还是脏数据。在下一次进行需要进行查询的时候，直接从数据库中取出了脏数据，没有进行进一步的检验和处理，这样就会造成SQL的二次注入。</strong><br><strong>比如在第一次插入数据的时候，数据中带有单引号，直接插入到了数据库中；然后在下一次使用中在拼凑的过程中，就形成了二次注入</strong></p>
+<h4 id="例1"><a href="#例1" class="headerlink" title="例1"></a>例1</h4><p><strong>sqli-labs第24关</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$username = mysql_real_escape_string($_POST[&quot;login_user&quot;]);</span><br><span class="line">$password = mysql_real_escape_string($_POST[&quot;login_password&quot;]);</span><br><span class="line">$sql = &quot;SELECT * FROM users WHERE username=&apos;$username&apos; and password=&apos;$password&apos;&quot;;</span><br><span class="line">使用`mysql_real_escape_string`进行转义处理，无法进行SQL注入。</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>注册一个<code>admin&#39;#</code>的账号<br><img src="https://upload-images.jianshu.io/upload_images/5035860-45290f748917900c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>用<code>admin&#39;#</code>登陆，并进行密码修改，密码修改为<code>123</code><br>可以看到<code>admin</code>的密码由原来的<code>admin</code>修改为<code>123</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-9c804be2d7457f87.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$sql = &quot;UPDATE users SET PASSWORD=&apos;$pass&apos; where username=&apos;$username&apos; and password=&apos;$curr_pass&apos; &quot;; </span><br><span class="line">这是因为上面的数据库更新语句，在用户名为 &quot;admin&apos;#&quot; 时执行的实际是： </span><br><span class="line">$sql = &quot;UPDATE users SET PASSWORD=&apos;$pass&apos; where username=&apos;admin&apos;#&apos; and password=&apos;$curr_pass&apos; &quot;;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="例2"><a href="#例2" class="headerlink" title="例2"></a>例2</h4><p>一个简单demo<br><strong>创建数据库</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; create database demo;</span><br><span class="line">mysql&gt; use demo;</span><br><span class="line">mysql&gt; create table story(id int(10) NOT NULL AUTO_INCREMENT,title varchar(50) NOT NULL,author varchar(30) NOT NULL,description varchar(300) NOT NULL,content varchar(888) NOT NULL,PRIMARY KEY (id));</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>connect.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$dbuser =&apos;root&apos;;</span><br><span class="line">$dbpass =&apos;xxxx&apos;;</span><br><span class="line">$dbname =&quot;demo&quot;;</span><br><span class="line">$host = &apos;localhost&apos;;</span><br><span class="line">$dbname1 = &quot;story&quot;;</span><br><span class="line"></span><br><span class="line">$con1 = mysqli_connect($host,$dbuser,$dbpass,$dbname);</span><br><span class="line">if (mysqli_connect_errno($con1))</span><br><span class="line">&#123;</span><br><span class="line">    echo &quot;Failed to connect to MySQL: &quot; . mysqli_connect_error();</span><br><span class="line">&#125;</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>inser.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">   include(&apos;connect.php&apos;);</span><br><span class="line">   $title=addslashes($_POST[&apos;title&apos;]);  //addslashes 将预定义字符串转义</span><br><span class="line">   echo $title;</span><br><span class="line">   $author=addslashes($_POST[&apos;author&apos;]);</span><br><span class="line">   $description=addslashes($_POST[&apos;description&apos;]);</span><br><span class="line">   $content=addslashes($_POST[&apos;content&apos;]);</span><br><span class="line">   $insert=&quot;INSERT INTO story(title,author,description,content) VALUES(&apos;$title&apos;,&apos;$author&apos;,&apos;$description&apos;,&apos;$content&apos;)&quot;;</span><br><span class="line">   echo $insert;</span><br><span class="line">   //mysqli_query(&quot;set names utf8&quot;); //设置编码</span><br><span class="line">   $result=mysqli_query($con1,$insert);</span><br><span class="line"></span><br><span class="line">   if($result)&#123;</span><br><span class="line">      echo &quot;success!!!&quot;;</span><br><span class="line">   &#125;else&#123;</span><br><span class="line">      echo &quot;default！&quot;;</span><br><span class="line">   &#125;</span><br><span class="line"> ?&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>connect.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;</span><br><span class="line">    &lt;meta charset=&quot;utf8&quot;&gt;</span><br><span class="line">    &lt;title&gt;啦啦啦啦啦啦&lt;/title&gt;</span><br><span class="line">  &lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">   &lt;?php</span><br><span class="line">   include(&apos;connect.php&apos;); //引入数据库配置文件</span><br><span class="line">   $id=$_GET[&apos;id&apos;]; </span><br><span class="line">   $select_sql=&quot;SELECT * FROM story WHERE id=&apos;$id&apos;&quot;;</span><br><span class="line">   //echo $select_sql;</span><br><span class="line">   $select_sql_result=mysqli_query($con1,$select_sql);</span><br><span class="line">   while($date=mysqli_fetch_array($select_sql_result))&#123;</span><br><span class="line">         echo &apos;书名:&apos;.$date[&apos;title&apos;].&apos;&lt;/br&gt;&apos;;</span><br><span class="line">         echo &apos;作者:&apos;.$date[&apos;author&apos;].&apos;&lt;/br&gt;&apos;;</span><br><span class="line">         echo &apos;概述:&apos;.$date[&apos;description&apos;].&apos;&lt;/br&gt;&apos;;</span><br><span class="line">         echo &apos;正文:&apos;.$date[&apos;content&apos;].&apos;&lt;/br&gt;&apos;;</span><br><span class="line">   &#125;</span><br><span class="line">   ?&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>解法思路和例1类似。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/数据库及漏洞学习/" rel="tag"># 数据库及漏洞学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/10/JWT利用/" rel="next" title="JWT利用">
+                <i class="fa fa-chevron-left"></i> JWT利用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/22/复现jboss-CVE-2017-12149/" rel="prev" title="复现jboss CVE-2017-12149">
+                复现jboss CVE-2017-12149 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sql二次注入原理："><span class="nav-number">2.</span> <span class="nav-text">sql二次注入原理：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例1"><span class="nav-number">3.</span> <span class="nav-text">例1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#例2"><span class="nav-number">4.</span> <span class="nav-text">例2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

