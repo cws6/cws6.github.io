@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="xor解密：  lovelovelovelovelovelovelovelove12345���0��0��0�������� 12345678# -*- coding:utf-8 -*-a =open(&amp;apos;1.txt&amp;apos;,&amp;apos;rb&amp;apos;).read()b =open(&amp;apos;2.txt&amp;apos;,&amp;apos;rb&amp;apos;).read()lut = &amp;ap">
+<meta name="keywords" content="ctf记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="实验吧 杂项">
+<meta property="og:url" content="https://cws6.github.io/2017/12/08/实验吧-杂项/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="xor解密：  lovelovelovelovelovelovelovelove12345���0��0��0�������� 12345678# -*- coding:utf-8 -*-a =open(&amp;apos;1.txt&amp;apos;,&amp;apos;rb&amp;apos;).read()b =open(&amp;apos;2.txt&amp;apos;,&amp;apos;rb&amp;apos;).read()lut = &amp;ap">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-1d5bd27cfd5d68b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-608ac7f6b2a92432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/663">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-3f613c3174ddc0a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/718">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-2b4772b517bf22db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/664">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6f2059e496bf64c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/579">
+<meta property="og:updated_time" content="2018-12-03T11:52:43.725Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="实验吧 杂项">
+<meta name="twitter:description" content="xor解密：  lovelovelovelovelovelovelovelove12345���0��0��0�������� 12345678# -*- coding:utf-8 -*-a =open(&amp;apos;1.txt&amp;apos;,&amp;apos;rb&amp;apos;).read()b =open(&amp;apos;2.txt&amp;apos;,&amp;apos;rb&amp;apos;).read()lut = &amp;ap">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-1d5bd27cfd5d68b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2017/12/08/实验吧-杂项/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>实验吧 杂项 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2017/12/08/实验吧-杂项/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">实验吧 杂项
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-12-08 14:20:06" itemprop="dateCreated datePublished" datetime="2017-12-08T14:20:06+08:00">2017-12-08</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-03 19:52:43" itemprop="dateModified" datetime="2018-12-03T19:52:43+08:00">2018-12-03</time>
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <ol>
+<li>xor解密：</li>
+</ol>
+<p>lovelovelovelovelovelovelovelove<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">��</span><br><span class="line">�0�</span><br><span class="line">�0�</span><br><span class="line">�0��</span><br><span class="line">������</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># -*- coding:utf-8 -*-</span><br><span class="line">a =open(&apos;1.txt&apos;,&apos;rb&apos;).read()</span><br><span class="line">b =open(&apos;2.txt&apos;,&apos;rb&apos;).read()</span><br><span class="line">lut = &apos; &apos;</span><br><span class="line">for i in range(0,len(a)):</span><br><span class="line">    res =ord(list(a)[i]) ^ord(list(b)[i])</span><br><span class="line">    lut=lut +chr(res)</span><br><span class="line">    print  lut</span><br></pre></td></tr></table></figure>
+<p>2.</p>
+<p>竟然有个神奇的加密方式和蛇有关<code>http://serpent.online-domain-tools.com/</code>，记录下网址</p>
+<p>3.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">def revStr(s):</span><br><span class="line">    news=&apos; &apos;</span><br><span class="line">    for i in xrange(0,len(s),4):</span><br><span class="line">        news += s[i+2:i+4]</span><br><span class="line">        news += s[i:i+2]</span><br><span class="line">    return news</span><br><span class="line"></span><br><span class="line">def foo():</span><br><span class="line">    f=open(&apos;1&apos;)</span><br><span class="line">    s=&apos;377a&apos;</span><br><span class="line">    for line in f:</span><br><span class="line">        s+=revStr(line.strip()[8:].replace(&apos; &apos;,&apos;&apos;))</span><br><span class="line">        fsave=open(&apos;1.txt&apos;,&apos;wb&apos;)</span><br><span class="line">    fsave.write(s)</span><br><span class="line">    fsave.close()</span><br><span class="line">    pass</span><br><span class="line"></span><br><span class="line">if__name__ ==&apos;__main__&apos;:</span><br><span class="line">    foo()</span><br><span class="line">    print &apos;finished&apos;</span><br></pre></td></tr></table></figure></p>
+<p>7z脚本，加上文件头，并把换行，序号去掉，每四个数前俩和后俩交换位置。但是最后储存的时候，还需16进制导入010再另存为.7z格式</p>
+<p>4.</p>
+<p>用prosessing将16进制转换为图片。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">size(256,256);</span><br><span class="line">String[] str = loadStrings(&quot;1.txt&quot;);</span><br><span class="line">for(int i=0;i&lt;65536;i++)&#123;</span><br><span class="line">    if(str[0].charAt(i)==&apos;1&apos;)&#123;</span><br><span class="line">    point(i/256,i%256);&#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>5.BAT公司信息查询系统</p>
+<p>这个题 怪扎心的，点进去是一个表单，无论提交什么都出现同样的东西。查看页面源代码，就两个可以点的一个css和一个php，php点开什么都没有，点开css找到了一个图片，加在url后面得到一张二维码的图片，扫描二维码得到一个txt，里面有个奇奇怪怪的东西，还有个php，加在后面，然后更奇怪的出来了：<code>┼攠數畣整爠煥敵瑳∨灯捲≤┩&gt;</code>，据说这个是ansi编码，需要另存为unicode编码然后再用010导入的方式打开就行了。（不知道为什么我另存的时候需要换个名字，要不以16进制打开的方式还是会错。）</p>
+<p>6.抓到你了</p>
+<p>打开wireshark，ping用的协议是icmp，所以过滤条件就写icmp,依次查看报文，发现第二条有data，而且是16字节，就是他了。</p>
+<p>7.2015RCTF（misc50）</p>
+<p>腊鸡题看代码看的我眼疼，下载下来之后拖进010里面，发现是个rar，改后缀名，用sublime打开，是sqlmap跑出来的东西。ctrl+f搜索column_name爆字段名字的，这个的下面就是报flag的字段，</p>
+<p>从第一个flag到最后一个flag，url解码，会出现二分法爆flag表的flag字段内容，代表着每一位爆出来的字符的ascii码，将 ！= 后面的数字拿出来ascii解码即可。</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-1d5bd27cfd5d68b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt=""></p>
+<p>8.NSCTF misc250</p>
+<p>这个题看的writeup，下载来的pcapng用wireshark打开，然后在左上角点击，文件—导出对象—http—save all</p>
+<p>得到两个文件，一个是%5c,一个是压缩文件，压缩文件需要密码</p>
+<p>我们先看%5c，仍winhex，发现是html,改后缀打开，告诉我们密码是nsfocus+5位数字</p>
+<p>这应该就是rar的密码，直接掩码破解，还是很快的。然后打开rar压缩包就可以了。</p>
+<p>9.deeeeeeaaaaaadbeeeeeeeeeef-200</p>
+<p>腊鸡火狐，图片根本打不开，换到谷歌里面，将图片保存，然后托到010里面，画图打开，根本看不懂啊，这个字怪酷的，看了下前面的信息图片是iPhone5拍摄的，查了下iphone5的分辨率，发现图片大小不一样，改一下就行了，然后就找到key了。</p>
+<p>10.A记录</p>
+<p>cap的数据包果断需要用wireshark分析.不过这里我们需要查询dns请求，所以需要解密cap（必须要有essid,password），甩到kali。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-608ac7f6b2a92432.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/663" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-3f613c3174ddc0a6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/718" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-2b4772b517bf22db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/664" alt=""></p>
+<p><code>aircrack-ng</code>这个命令挺强的，百度的时候看到了好多可以用来破解wlan的教程，本来想试下的，但是我没有无线网卡啊，这就很尴尬了。<br>解完有个新的cap，打开搜索dns就能看到了。</p>
+<p>11.绕</p>
+<p>打开题目链接是个表单，先查看页面源代码，发现了下面这一段</p>
+<pre><code>_=&apos;function $(){e=getEleById(&quot;c&quot;).value;length==16^22a60b0b310e5ece$0ebe5){tU2FsdGS481hY7lo/IBh2Waw==nVkX1829lDS37Dtcv78qFewreA/kNjZ1UZ6LuMTMoP2i8U/2KZtCckgQoGAmEapD0Ys=[t,n,r,i];for(o=0;o&lt;13;++o){[0]);.splice(0,1)}}}\&apos;&lt; onclick=$()&gt;Ok\&apos;);delete _var &quot;,&quot;docu.)match(/&quot;];/)!=null=[&quot;write(s[o%4]buttonif(e.ment&apos;;for(Y in $=&apos;&apos;)with(_.split($[Y]))_=join(pop());eval(_)
+</code></pre><p>我是用谷歌做的，直接f12有个console模块，将eval改成console.log,出来的内容，看下这一块</p>
+<pre><code>if(e.length==16)if(e.match(/^22a60b/)!=null)if(e.match(/0b310/)!=null)if(e.match(/e5ece$/)!=null)if(e.match(/0ebe5/)!=null)
+</code></pre><p>拼接下得到<code>22a60b310ebe5ece</code>，提交到表单中，得到<code>U2FsdGVkX182eA/8U/2KZS481hY9lDS37kNjZ1UZtCckgQoGA7lo/Dtcv78qFew6LuMTMoP2mEapD0YIBh2Waw==</code>，又是aes对称加密，名字MD5加密，解密得到<code>ctf%7BConsole.log%28shiyanbar%29%7D</code>，再url解码就行了</p>
+<p>12.雌黄出其唇吻</p>
+<p>访问网页，只有一串字符串，而且刷新后还会变，F12查看页面源代码，什么都没有发现，网址<a href="http://ctf5.shiyanbar.com/misc/10/`，加个爬虫的文件试试，于是访问http://ctf5.shiyanbar.com/misc/10/robots.txt，发现都是disallow，不能访问，但是右面进度条还没到底，拉到最下面是一个xml，于是访问http://ctf5.shiyanbar.com/misc/10//sitemap87591u096080.xml，看到两个php，/flag1241098092ewiuqu9t53.php" target="_blank" rel="noopener">http://ctf5.shiyanbar.com/misc/10/`，加个爬虫的文件试试，于是访问http://ctf5.shiyanbar.com/misc/10/robots.txt，发现都是disallow，不能访问，但是右面进度条还没到底，拉到最下面是一个xml，于是访问http://ctf5.shiyanbar.com/misc/10//sitemap87591u096080.xml，看到两个php，/flag1241098092ewiuqu9t53.php</a>  访问得到base加密的字符串，解密即可</p>
+<p>13.女神</p>
+<p>下载题目给的压缩包，解压有个txt还有一个文件夹，把文本里面的内容拿去base64解码，得到PNG开头的内容，我是将解码的内容存到txt里面又导入到010里面，但是图片就是不能打开，看了下wp，直接在python里面，<code>open(&#39;nvshen.png&#39;,&#39;wb&#39;).write(open(&#39;C:\\Users\\cws6\\Desktop\\nvshen.txt&#39;,&#39;rb&#39;).read().decode(&#39;base64&#39;))</code>，一个命令就搞定了，图片去百度识图就行了，对名字是中文不要符号。</p>
+<p>14.XDCTF misc100</p>
+<p>下载出来是两张一模一样的图片，原以为是得用steglove分析，但是看到题目提示说是brainfuck，就直接用bftools就行了，和隐写里面的brainfuck一样的操作方式。</p>
+<pre><code>G:\tools\信息隐藏\bftools&gt;bftools.exe decode braincopter C:\Users\cws6\Desktop\zzzzzzyu.png --output --out.png
+
+G:\tools\信息隐藏\bftools&gt;bftools.exe run --out.png
+</code></pre><p>15.XDCTF misc200</p>
+<p>密码分析中，已知明文攻击（Known plaintext attack）是一种攻击模式，指攻击者掌握了某段明文 x 和对应密文 y。在所有密码分析中，均假设攻击者知道正在使用的密码体制，该假设称为Kerckhoff假设。而已知明文攻击也假设攻击者能够获取部分明文和相应密文，如截取信息前段，通过该类型攻击获取加密方式，从而便于破解后段密文。希尔密码依赖唯密文攻击较难破解，而通过已知明文攻击则容易攻破。(说了那么多，这道题其实就是知道了readme.txt的明文和密文，然后得到Encryption key</p>
+<p>下载下来不知道是个什么格式的东西，拖到010里面，找打了五个zip压缩包，但是名字改成.zip解压需要密码，看wp说是有两个压缩包，但是我找到了五个啊。。本来想着直接010阶段分开的，但是不知道为什么只把后两个截出来的话前面就死了，然后就foremost分离了，得到两个压缩包</p>
+<pre><code>root@kali:~# foremost &apos;/root/Desktop/areyoukidding&apos;
+</code></pre><p>两个readme.txt的CRC相同，所以这应该就是相应的明文和密文，使用ARCHPR<br><img src="https://upload-images.jianshu.io/upload_images/5035860-6f2059e496bf64c2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/579" alt=""><br>得到所示的三个密钥就可以解密了，解压后的文件夹中的flag.txt就是flag</p>
+<p>16.你有记日志的习惯吗</p>
+<p>不知道该怎么形容这个题，下载的时候那么大，其实是很懵的这要找到啥时候啊，然后默默翻了下评论，在\www\lampp\etc这个文件下面有个my.cnf 搜索key得到password=YouGotIt!@#$</p>
+<p>17.这是捕获的黑客攻击数据包，Administrator用户的密码在此次攻击中泄露了，你能找到吗？</p>
+<p>通过观察可以大概判断192.168.30.101  给服务器上了菜刀。因为菜刀是以POST方式发送数据的，我们过滤http,然后查看那些post,随便打开一条,在下面HTML里面可到BASE64加密后的Value值，通过解密就可以很显示的看到菜刀指令。可以将那些value值都base64解码一下，很快就能找到了。</p>
+<p>18.Only one file</p>
+<p>下载下来拖到binwalk里面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">binwalk  /root/Desktop/onlyOneFile</span><br></pre></td></tr></table></figure></p>
+<p>不知道为啥我没用-e直接解出来了。。然后将图片合成一张<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /root/Desktop/onlyOneFile1/* &gt; one.png</span><br></pre></td></tr></table></figure></p>
+<p>图片拖到010里面没找到什么有用的东西，又用steglove还是没找到什么东西，看下面评论说是adobe firework的，我们需要用firework打开，百度了下这个东西，就不想安装了，ps打开还不行就不做了。。据说是这个里面有个二维码反色下扫描就行了。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf记录/" rel="tag"># ctf记录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/维吉尼亚密码的加密解密/" rel="next" title="维吉尼亚密码的加密解密">
+                <i class="fa fa-chevron-left"></i> 维吉尼亚密码的加密解密
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/19/redis与ssh-keygen/" rel="prev" title="redis与ssh-keygen">
+                redis与ssh-keygen <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>

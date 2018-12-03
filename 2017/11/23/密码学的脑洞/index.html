@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538 GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。工作原理  解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1">
-<meta name="keywords" content="漏洞学习">
+  <meta name="description" content="1.来Play啊！！！(playfair)题目12WOODPECKER有一群大佬等你来的啊SL SY I APLWB GW KBOB flag：IT IS A PIECE OF CAKE12345w c f  m uo k g  n vd r h  q xp a i/j s ye b l  t z  playfair的解密：  Playfair解密算法首先将密钥填写在一个5*5的矩阵中（去Q留Z）">
+<meta name="keywords" content="ctf记录">
 <meta property="og:type" content="article">
-<meta property="og:title" content="源码泄露总结">
-<meta property="og:url" content="https://cws6.github.io/2018/12/01/源码泄露总结/index.html">
+<meta property="og:title" content="密码学的脑洞">
+<meta property="og:url" content="https://cws6.github.io/2017/11/23/密码学的脑洞/index.html">
 <meta property="og:site_name" content="cws6">
-<meta property="og:description" content="参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538 GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。工作原理  解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1">
+<meta property="og:description" content="1.来Play啊！！！(playfair)题目12WOODPECKER有一群大佬等你来的啊SL SY I APLWB GW KBOB flag：IT IS A PIECE OF CAKE12345w c f  m uo k g  n vd r h  q xp a i/j s ye b l  t z  playfair的解密：  Playfair解密算法首先将密钥填写在一个5*5的矩阵中（去Q留Z）">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-02T10:33:02.060Z">
+<meta property="og:updated_time" content="2018-12-03T12:00:29.884Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="源码泄露总结">
-<meta name="twitter:description" content="参考文献：https://www.jianshu.com/p/15b63d14781fGitHack地址https://blog.csdn.net/gitchat/article/details/79014538 GIT 源码泄露GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。工作原理  解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1">
+<meta name="twitter:title" content="密码学的脑洞">
+<meta name="twitter:description" content="1.来Play啊！！！(playfair)题目12WOODPECKER有一群大佬等你来的啊SL SY I APLWB GW KBOB flag：IT IS A PIECE OF CAKE12345w c f  m uo k g  n vd r h  q xp a i/j s ye b l  t z  playfair的解密：  Playfair解密算法首先将密钥填写在一个5*5的矩阵中（去Q留Z）">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
+  <link rel="canonical" href="https://cws6.github.io/2017/11/23/密码学的脑洞/">
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>源码泄露总结 | cws6</title>
+  <title>密码学的脑洞 | cws6</title>
   
 
 
@@ -323,7 +323,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/01/源码泄露总结/">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2017/11/23/密码学的脑洞/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cws6">
@@ -340,7 +340,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">源码泄露总结
+          <h1 class="post-title" itemprop="name headline">密码学的脑洞
               
             
           </h1>
@@ -365,7 +365,7 @@
                 
               
 
-              <time title="Created: 2018-12-01 21:26:29" itemprop="dateCreated datePublished" datetime="2018-12-01T21:26:29+08:00">2018-12-01</time>
+              <time title="Created: 2017-11-23 19:09:24" itemprop="dateCreated datePublished" datetime="2017-11-23T19:09:24+08:00">2017-11-23</time>
             
 
             
@@ -382,7 +382,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-02 18:33:02" itemprop="dateModified" datetime="2018-12-02T18:33:02+08:00">2018-12-02</time>
+                <time title="Modified: 2018-12-03 20:00:29" itemprop="dateModified" datetime="2018-12-03T20:00:29+08:00">2018-12-03</time>
               
             
           </span>
@@ -415,23 +415,46 @@
       
 
       
-        <p>参考文献：<a href="https://www.jianshu.com/p/15b63d14781f" target="_blank" rel="noopener">https://www.jianshu.com/p/15b63d14781f</a><br><a href="https://link.jianshu.com/?t=https://github.com/lijiejie/GitHack" target="_blank" rel="noopener">GitHack地址</a><br><a href="https://blog.csdn.net/gitchat/article/details/79014538" target="_blank" rel="noopener">https://blog.csdn.net/gitchat/article/details/79014538</a></p>
-<h4 id="GIT-源码泄露"><a href="#GIT-源码泄露" class="headerlink" title="GIT 源码泄露"></a>GIT 源码泄露</h4><p>GitHack是一个.git泄露利用测试脚本，通过泄露的文件，还原重建工程源代码。<br><strong>工作原理</strong></p>
+        <h4 id="1-来Play啊！！！-playfair"><a href="#1-来Play啊！！！-playfair" class="headerlink" title="1.来Play啊！！！(playfair)"></a>1.来Play啊！！！(playfair)</h4><p><strong>题目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">WOODPECKER有一群大佬等你来的啊</span><br><span class="line">SL SY I APLWB GW KBOB</span><br></pre></td></tr></table></figure></p>
+<p>flag：IT IS A PIECE OF CAKE<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">w c f  m u</span><br><span class="line">o k g  n v</span><br><span class="line">d r h  q x</span><br><span class="line">p a i/j s y</span><br><span class="line">e b l  t z</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li>解析.git/index文件，找到工程中所有的： ( 文件名，文件sha1 )</li>
-<li>去.git/objects/ 文件夹下下载对应的文件</li>
-<li>zlib解压文件，按原始的目录结构写入源代码</li>
-<li>用法：<br><code>GitHack.py http://www.baidu.cn/.git/</code></li>
+<li>playfair的解密：</li>
 </ul>
-<h4 id="SVN-导致文件泄露"><a href="#SVN-导致文件泄露" class="headerlink" title="SVN 导致文件泄露"></a>SVN 导致文件泄露</h4><p>假如可以访问<code>http://www.baidu.com/.svn/entries</code>有内容，就可能存在<code>svn泄露</code><br>可以使用工具<code>dvcs-ripper</code>下载网站源码</p>
+<p>Playfair解密算法首先将密钥填写在一个5*5的矩阵中（去Q留Z），矩阵中其它未用到的字母按顺序填在矩阵剩余位置中，根据替换矩阵由密文得到明文。（密钥可以竖着或横着填，两种方法）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">（1） 若c1 c2在同一行，对应明文p1 p2分别是紧靠c1 c2 左端的字母。其中最后一列被看做是第一列的左方。</span><br><span class="line">（2） 若c1 c2在同一列，对应明文p1 p2分别是紧靠c1 c2 上方的字母。其中最后一行被看做是第一行的上方。</span><br><span class="line">（3）若c1 c2不在同一行，不在同一列，则p1 p2是由c1 c2确定的矩形的其他两角的字母。</span><br></pre></td></tr></table></figure></p>
+<h4 id="2-Who-are-U（列移位密码）"><a href="#2-Who-are-U（列移位密码）" class="headerlink" title="2. Who are U（列移位密码）"></a>2. Who are U（列移位密码）</h4><pre><code>734 152 6
+</code></pre><p><strong>题目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rita/taea/hrli/eels/eshw/hwry/weie</span><br></pre></td></tr></table></figure></p>
+<p>flag：wherethereisawillthereisaway<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">whereth</span><br><span class="line">ereisaw</span><br><span class="line">illther</span><br><span class="line">eisaway</span><br></pre></td></tr></table></figure></p>
+<p><em>密钥的字母按26个英文字母表的顺序排序，然后将给的密文划分成矩阵。例如w是7就将划分的第七列填到第一列，然后将答案横行显示就可以了。</em></p>
+<h4 id="3-（Bazeries密码）"><a href="#3-（Bazeries密码）" class="headerlink" title="3.（Bazeries密码）"></a>3.（Bazeries密码）</h4><p><strong>题目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">3332啊哈哈哈</span><br><span class="line">cp/dpv/ypg/gpe/lb/npi/ilk/kdp/rw/fbg/nk</span><br></pre></td></tr></table></figure></p>
+<p>flag:experienceisthemotherofwisdom</p>
+<p>PC/VPD/GPY/EPG/BL/IPN/KLI/PDK/WR/GBF/KN</p>
+<p>EX PER IEN CEI ST HEM OTH ERO FW ISD OM<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">T W    O  H U                            A F  L Q V</span><br><span class="line">S A    N  D R                            B G  M R W</span><br><span class="line">E I/J  Y  B C                            C H  N S X</span><br><span class="line">F G    K  L M                            D I/J O T Y</span><br><span class="line">P Q    V  X Z                            E K  P U Z</span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><p>用法：<br><code>rip-svn.pl -v -u http://www.baidu.com/.svn/</code><br>####DS_Store 文件泄漏<br>假如可以访问<code>http://www.baidu.com/.ds_store</code>有内容，就可能存在<code>DS_store泄露</code><br>可以使用工具<code>dsstoreexp</code>，下载源代码</p>
+<li>3332是啥呢，是反过来的2333啊，将密文按2333这个顺序循环划分，然后反过来啊，如cp就是pc，dpv就是vpd。</li>
+<li>2333的英文是two thousand three hundred thirty three 这是密钥啊，将它按照playfair密钥的填充方式填一下，这回是先横，然后明文顺序填出，密文所在的密钥的矩阵位置对照的明文矩阵就是flag了</li>
+</ul>
+<h4 id="4-ADFGX加密"><a href="#4-ADFGX加密" class="headerlink" title="4.(ADFGX加密)"></a>4.(ADFGX加密)</h4><p><strong>题目</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">dd fx da df dx xd dx fg</span><br><span class="line">areyouok</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  A D F G X</span><br><span class="line">A p h q g m</span><br><span class="line">D e a y n o</span><br><span class="line">F f d x k r</span><br><span class="line">G c v s z w</span><br><span class="line">X b u t i/j l</span><br></pre></td></tr></table></figure>
+<p>adfgx加密：第一个字母是行，第二个字母是列。类似维吉尼亚解密。</p>
+<p>5.</p>
+<p><strong>题目：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">0x436c5579526e4e6b52315a725744453551334e4c526a4933636c564e596c6878526a425862314a61535374444e5649326432564d4e465172547a565052456c525644526857545a54634552425258497765566f726332493950516f3d</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li><p>0x是16进制开头，将0x去掉，转换成字符串，一定要将0x去掉</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ClUyRnNkR1ZrWDE5Q3NLRjI3clVNYlhxRjBXb1JaSStDNVI2d2VMNFQrTzVPRElRVDRhWTZTcERBRXIweVorc2I9PQo=</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>用法<br><code>ds_store_exp.py http://www.baidu.com/.ds_Store</code></p>
+<li><p>一看等号base64啊，base64解密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">U2FsdGVkX19CsKF27rUMbXqF0WoRZI+C5R6weL4T+O5ODIQT4aY6SpDAEr0yZ+sb==</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>怎么还有等号，还是base64么，当然不是</p>
 </li>
 </ul>
-<h4 id="网站备份压缩文件"><a href="#网站备份压缩文件" class="headerlink" title="网站备份压缩文件"></a>网站备份压缩文件</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">.rar    .zip   .7z    .tar.gz    .bak     .swp    .txt</span><br></pre></td></tr></table></figure>
-<h4 id="WEB-INF-web-xml-泄露"><a href="#WEB-INF-web-xml-泄露" class="headerlink" title="WEB-INF/web.xml 泄露"></a>WEB-INF/web.xml 泄露</h4><p>假如可以访问<code>http://www.baidu.com/WEB-INF/web.xml</code>查看配置文件</p>
+<p>aes对称加密，U2FsdGVkX1这是aes加密后的算是标准格式吧，既然是aes加密肯定得有密钥啊，题目提示出题人的名字，那就出题人的名字就是密钥啊。md5加密密钥再解密就可以了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">md5(shenghuimin,16) = 751ce6e59ec905d2</span><br></pre></td></tr></table></figure></p>
+<p>flag：yuanjiashengisveryhandsome</p>
+<h4 id="几个比较棒的加密解密网址："><a href="#几个比较棒的加密解密网址：" class="headerlink" title="几个比较棒的加密解密网址："></a>几个比较棒的加密解密网址：</h4><p><a href="http://tool.oschina.net/encrypt/" target="_blank" rel="noopener">http://tool.oschina.net/encrypt/</a></p>
+<p>凯撒密码解密：<a href="http://www.zjslove.com/3.decode/" target="_blank" rel="noopener">http://www.zjslove.com/3.decode/</a></p>
+<p>词频分析：<a href="https://quipqiup.com/" target="_blank" rel="noopener">https://quipqiup.com/</a></p>
+<p>栅栏密码: <a href="http://www.qqxiuzi.cn/bianma/zhalanmima.php" target="_blank" rel="noopener">http://www.qqxiuzi.cn/bianma/zhalanmima.php</a></p>
+<p>这个真的超级全：<a href="https://www.bejson.com/enc/base64/" target="_blank" rel="noopener">https://www.bejson.com/enc/base64/</a></p>
 
       
     </div>
@@ -464,7 +487,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/漏洞学习/" rel="tag"># 漏洞学习</a>
+            <a href="/tags/ctf记录/" rel="tag"># ctf记录</a>
           
         </div>
       
@@ -477,18 +500,14 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/11/09/一些加密算法/" rel="next" title="一些加密算法">
-                <i class="fa fa-chevron-left"></i> 一些加密算法
-              </a>
-            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/02/empire入门/" rel="prev" title="empire入门">
-                empire入门 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/11/23/维吉尼亚密码的加密解密/" rel="prev" title="维吉尼亚密码的加密解密">
+                维吉尼亚密码的加密解密 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -621,7 +640,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#GIT-源码泄露"><span class="nav-number">1.</span> <span class="nav-text">GIT 源码泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SVN-导致文件泄露"><span class="nav-number">2.</span> <span class="nav-text">SVN 导致文件泄露</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#网站备份压缩文件"><span class="nav-number">3.</span> <span class="nav-text">网站备份压缩文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WEB-INF-web-xml-泄露"><span class="nav-number">4.</span> <span class="nav-text">WEB-INF/web.xml 泄露</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-来Play啊！！！-playfair"><span class="nav-number">1.</span> <span class="nav-text">1.来Play啊！！！(playfair)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Who-are-U（列移位密码）"><span class="nav-number">2.</span> <span class="nav-text">2. Who are U（列移位密码）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-（Bazeries密码）"><span class="nav-number">3.</span> <span class="nav-text">3.（Bazeries密码）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-ADFGX加密"><span class="nav-number">4.</span> <span class="nav-text">4.(ADFGX加密)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#几个比较棒的加密解密网址："><span class="nav-number">5.</span> <span class="nav-text">几个比较棒的加密解密网址：</span></a></li></ol></div>
             
 
           </div>
