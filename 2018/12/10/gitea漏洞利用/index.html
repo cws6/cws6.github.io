@@ -121,7 +121,7 @@
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-54ecf8e5890d0e75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-6af7eeeeb48d9e94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-9d7838250dc1534d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-12-10T06:27:11.462Z">
+<meta property="og:updated_time" content="2018-12-19T01:40:57.225Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="gitea漏洞利用">
 <meta name="twitter:description" content="参考文献 :https://github.com/vulhub/vulhub/tree/master/gitea/1.4-rcehttp://blog.nsfocus.net/gitea-1-4-0-rce/https://www.leavesongs.com/PENETRATION/gitea-remote-command-execution.htmlgitea安装：https://www.mo">
@@ -371,12 +371,24 @@
                 
               
 
-              <time title="Created: 2018-12-10 09:59:10 / Modified: 14:27:11" itemprop="dateCreated datePublished" datetime="2018-12-10T09:59:10+08:00">2018-12-10</time>
+              <time title="Created: 2018-12-10 09:59:10" itemprop="dateCreated datePublished" datetime="2018-12-10T09:59:10+08:00">2018-12-10</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-19 09:40:57" itemprop="dateModified" datetime="2018-12-19T09:40:57+08:00">2018-12-19</time>
               
             
           </span>
@@ -424,7 +436,8 @@
 </li>
 </ul>
 <p><img src="https://upload-images.jianshu.io/upload_images/5035860-6fa5e82348d3d9ef.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<h4 id="读取配置文件，构造JWT密文"><a href="#读取配置文件，构造JWT密文" class="headerlink" title="读取配置文件，构造JWT密文"></a>读取配置文件，构造JWT密文</h4><p>读取gitea的配置文件。这个文件在<code>$GITEA_CUSTOM/conf/app.ini</code>，<code>$GITEA_CUSTOM</code>是<code>gitea</code>的根目录，默认是<code>/var/lib/gitea/</code>，我自己安装的是在<code>custom</code>里面，所以需要构造出的Oid是  <code>....custom/conf/app.ini</code> （经过转换后就变成了<code>/gitea/lfs/../../custom/conf/app.ini</code>，也就是<code>/custom/conf/app.ini</code>。)<br><img src="https://upload-images.jianshu.io/upload_images/5035860-54ecf8e5890d0e75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-6af7eeeeb48d9e94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="读取配置文件，构造JWT密文"><a href="#读取配置文件，构造JWT密文" class="headerlink" title="读取配置文件，构造JWT密文"></a>读取配置文件，构造JWT密文</h4><p>读取gitea的配置文件。这个文件在<code>$GITEA_CUSTOM/conf/app.ini</code>，<code>$GITEA_CUSTOM</code>是<code>gitea</code>的根目录，默认是<code>/var/lib/gitea/</code>，我自己安装的是在<code>custom</code>里面，所以需要构造出的Oid是  <code>....custom/conf/app.ini</code> （经过转换后就变成了<code>/gitea/lfs/../../custom/conf/app.ini</code>，也就是<code>/custom/conf/app.ini</code>。)<br><img src="https://upload-images.jianshu.io/upload_images/5035860-54ecf8e5890d0e75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-6af7eeeeb48d9e94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <h6 id="Gitea中，LFS的接口是使用JWT认证，其加密密钥就是配置文件中的LFS-JWT-SECRET。可以构造JWT认证，进而获取LFS完整的读写权限。"><a href="#Gitea中，LFS的接口是使用JWT认证，其加密密钥就是配置文件中的LFS-JWT-SECRET。可以构造JWT认证，进而获取LFS完整的读写权限。" class="headerlink" title="Gitea中，LFS的接口是使用JWT认证，其加密密钥就是配置文件中的LFS_JWT_SECRET。可以构造JWT认证，进而获取LFS完整的读写权限。"></a>Gitea中，LFS的接口是使用JWT认证，其加密密钥就是配置文件中的<code>LFS_JWT_SECRET</code>。可以构造JWT认证，进而获取LFS完整的读写权限。</h6><ul>
 <li><p>需要安装的模块</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip install PyJWT</span><br><span class="line">pip install jwt</span><br></pre></td></tr></table></figure>
@@ -570,7 +583,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">71</span>
+                    <span class="site-state-item-count">72</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
