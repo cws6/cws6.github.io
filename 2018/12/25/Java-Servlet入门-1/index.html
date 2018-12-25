@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：http://www.runoob.com/servlet tomcat安装为啥又安装，因为它又又又死了。下载解压就不说了。  双击bin目录下的java8w.exe出现unable to open the service tomcat8解决方法：在bin目录下运行service.bat install 在logs目录下，发现问题为&amp;quot;Address already in use">
+<meta name="keywords" content="java学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java Servlet入门[1]">
+<meta property="og:url" content="https://cws6.github.io/2018/12/25/Java-Servlet入门-1/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：http://www.runoob.com/servlet tomcat安装为啥又安装，因为它又又又死了。下载解压就不说了。  双击bin目录下的java8w.exe出现unable to open the service tomcat8解决方法：在bin目录下运行service.bat install 在logs目录下，发现问题为&amp;quot;Address already in use">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-642a4bcf8ac14503.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-0e184b7a50b0667e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2018-12-25T03:15:04.413Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java Servlet入门[1]">
+<meta name="twitter:description" content="参考文献：http://www.runoob.com/servlet tomcat安装为啥又安装，因为它又又又死了。下载解压就不说了。  双击bin目录下的java8w.exe出现unable to open the service tomcat8解决方法：在bin目录下运行service.bat install 在logs目录下，发现问题为&amp;quot;Address already in use">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-642a4bcf8ac14503.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2018/12/25/Java-Servlet入门-1/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Java Servlet入门[1] | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/12/25/Java-Servlet入门-1/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java Servlet入门[1]
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-25 11:14:00 / Modified: 11:15:04" itemprop="dateCreated datePublished" datetime="2018-12-25T11:14:00+08:00">2018-12-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="http://www.runoob.com/servlet" target="_blank" rel="noopener">http://www.runoob.com/servlet</a></p>
+<h4 id="tomcat安装"><a href="#tomcat安装" class="headerlink" title="tomcat安装"></a>tomcat安装</h4><p>为啥又安装，因为它又又又死了。下载解压就不说了。</p>
+<ul>
+<li>双击<code>bin</code>目录下的<code>java8w.exe</code>出现<code>unable to open the service tomcat8</code><br>解决方法：在<code>bin</code>目录下运行<code>service.bat install</code></li>
+<li>在logs目录下，发现问题为<code>&quot;Address already in use: JVM_Bind&quot;</code><br>解决方法：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">netstat -ano |findstr &quot;8080&quot;  #查看被占用的端口</span><br><span class="line">tasklist |findstr &quot;4760&quot;   #查看进程名</span><br><span class="line">taskkill /f /im 进程名   #关闭进程</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>最后双击<code>startup.bat</code>启动 Tomcat。</p>
+<h4 id="Servlet"><a href="#Servlet" class="headerlink" title="Servlet"></a>Servlet</h4><p> Java Servlet 是运行在 Web 服务器或应用服务器上的程序，它是作为来自<code>Web 浏览器或其他HTTP 客户端的请求</code>和<code>HTTP 服务器上的数据库或应用程序之间</code>的中间层。使用 Servlet，可以收集来自网页表单的用户输入，呈现来自数据库或者其他源的记录，还可以动态创建网页。(莫名感觉和php的作用有点像)</p>
+<p><strong>Servlet 执行以下主要任务：</strong></p>
+<ul>
+<li>读取客户端（浏览器）发送的显式的数据。这包括网页上的 HTML 表单，或者也可以是来自 applet 或自定义的 HTTP 客户端程序的表单。</li>
+<li>读取客户端（浏览器）发送的隐式的 HTTP 请求数据。这包括 cookies、媒体类型和浏览器能理解的压缩格式等等。</li>
+<li>处理数据并生成结果。这个过程可能需要访问数据库，执行 RMI 或 CORBA 调用，调用 Web 服务，或者直接计算得出对应的响应。</li>
+<li>发送显式的数据（即文档）到客户端（浏览器）。该文档的格式可以是多种多样的，包括文本文件（HTML 或 XML）、二进制文件（GIF 图像）、Excel 等。</li>
+<li>发送隐式的 HTTP 响应到客户端（浏览器）。这包括告诉浏览器或其他客户端被返回的文档类型（例如 HTML），设置 cookies 和缓存参数，以及其他类似的任务。</li>
+</ul>
+<h4 id="eclipse创建Servlet实例"><a href="#eclipse创建Servlet实例" class="headerlink" title="eclipse创建Servlet实例"></a>eclipse创建Servlet实例</h4><ul>
+<li><code>File--&gt;New--&gt;Servlet</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-642a4bcf8ac14503.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><strong>①hello world</strong></p>
+<ul>
+<li><p>在自动创建的<code>HelloServlet.java</code>的<code>doGet()函数</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.getWriter().write(&quot;Hello world&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>web.xml</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;  </span><br><span class="line">     &lt;!-- 类名 --&gt;  </span><br><span class="line">    &lt;servlet-name&gt;HelloServlet&lt;/servlet-name&gt;  </span><br><span class="line">    &lt;!-- 所在的包 --&gt;  </span><br><span class="line">    &lt;servlet-class&gt;cn.sheng.test.HelloServlet&lt;/servlet-class&gt;  </span><br><span class="line">  &lt;/servlet&gt;  </span><br><span class="line">  &lt;servlet-mapping&gt;  </span><br><span class="line">    &lt;servlet-name&gt;HelloServlet&lt;/servlet-name&gt;  </span><br><span class="line">    &lt;!-- 访问的网址 --&gt;  </span><br><span class="line">    &lt;url-pattern&gt;/test/HelloServlet&lt;/url-pattern&gt;  </span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问<code>http://localhost:8080/test/HelloServlet</code>得到<code>Hello world</code></p>
+</li>
+</ul>
+<p><strong>👂用<code>get方式</code>提交数据</strong></p>
+<ul>
+<li><p>在自动创建的<code>HelloServlet.java</code>的<code>doGet()函数</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">response.setContentType(&quot;text/html;charset=UTF-8&quot;);  // 设置响应内容类型</span><br><span class="line">PrintWriter out = response.getWriter();</span><br><span class="line">String title = &quot;使用 GET 方法读取表单数据&quot;;</span><br><span class="line">String name =new String(request.getParameter(&quot;name&quot;).getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);   // 处理中文</span><br><span class="line">String docType = &quot;&lt;!DOCTYPE html&gt; \n&quot;;</span><br><span class="line">out.println(docType +</span><br><span class="line">            &quot;&lt;html&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;head&gt;&lt;title&gt;&quot; + title + &quot;&lt;/title&gt;&lt;/head&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;body bgcolor=\&quot;#f0f0f0\&quot;&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;h1 align=\&quot;center\&quot;&gt;&quot; + title + &quot;&lt;/h1&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;ul&gt;\n&quot; +</span><br><span class="line">            &quot;  &lt;li&gt;&lt;b&gt;站点名&lt;/b&gt;：&quot;</span><br><span class="line">            + name + &quot;\n&quot; +</span><br><span class="line">            &quot;  &lt;li&gt;&lt;b&gt;网址&lt;/b&gt;：&quot;</span><br><span class="line">            + request.getParameter(&quot;url&quot;) + &quot;\n&quot; +</span><br><span class="line">            &quot;&lt;/ul&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>web.xml</code>中添加的内容同上</p>
+</li>
+<li>访问<code>http://localhost:8080/test/HelloServlet?name=123&amp;url=www.123.com</code>得到<code>get方式</code>提交的内容</li>
+</ul>
+<p><strong>🌂用表单的<code>POST 方法</code>提交数据</strong></p>
+<ul>
+<li><p>在<code>WebContent目录</code>下创建<code>post.html</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;测试界面&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=&quot;HelloServlet&quot; method=&quot;POST&quot;&gt;</span><br><span class="line">网址名：&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;</span><br><span class="line">&lt;br /&gt;</span><br><span class="line">网址：&lt;input type=&quot;text&quot; name=&quot;url&quot; /&gt;</span><br><span class="line">&lt;br /&gt;</span><br><span class="line">&lt;input type=&quot;checkbox&quot; name=&quot;runoob&quot; checked=&quot;checked&quot; /&gt; 菜鸟教程</span><br><span class="line">&lt;input type=&quot;checkbox&quot; name=&quot;google&quot;  /&gt; Google</span><br><span class="line">&lt;input type=&quot;checkbox&quot; name=&quot;taobao&quot; checked=&quot;checked&quot; /&gt; 淘宝</span><br><span class="line">&lt;input type=&quot;submit&quot; value=&quot;提交&quot; /&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>HelloServlet.java</code>中的<code>doGet()方法</code>中添加。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">response.setContentType(&quot;text/html;charset=UTF-8&quot;);</span><br><span class="line"></span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        String title = &quot;接收全部数据&quot;;</span><br><span class="line">        String name =new String(request.getParameter(&quot;name&quot;).getBytes(&quot;ISO8859-1&quot;),&quot;UTF-8&quot;);     // 处理中文</span><br><span class="line">        String docType = &quot;&lt;!DOCTYPE html&gt; \n&quot;;</span><br><span class="line">        out.println(docType +</span><br><span class="line">            &quot;&lt;html&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;head&gt;&lt;title&gt;&quot; + title + &quot;&lt;/title&gt;&lt;/head&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;body bgcolor=\&quot;#f0f0f0\&quot;&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;h1 align=\&quot;center\&quot;&gt;&quot; + title + &quot;&lt;/h1&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;/ul&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;table width=\&quot;100%\&quot; border=\&quot;1\&quot; align=\&quot;center\&quot;&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;tr bgcolor=\&quot;#949494\&quot;&gt;\n&quot; +</span><br><span class="line">            &quot;&lt;th&gt;参数名称&lt;/th&gt;&lt;th&gt;参数值&lt;/th&gt;\n&quot;+</span><br><span class="line">            &quot;&lt;/tr&gt;\n&quot;);</span><br><span class="line">        </span><br><span class="line">        Enumeration paramNames = request.getParameterNames();</span><br><span class="line"></span><br><span class="line">        while(paramNames.hasMoreElements()) &#123;</span><br><span class="line">            String paramName = (String)paramNames.nextElement();</span><br><span class="line">            out.print(&quot;&lt;tr&gt;&lt;td&gt;&quot; + paramName + &quot;&lt;/td&gt;\n&quot;);</span><br><span class="line">            String[] paramValues =</span><br><span class="line">            request.getParameterValues(paramName);</span><br><span class="line">            if (paramValues.length == 1) &#123;       // 读取单个值的数据</span><br><span class="line">                String paramValue = paramValues[0];</span><br><span class="line">                if (paramValue.length() == 0)</span><br><span class="line">                    out.println(&quot;&lt;td&gt;&lt;i&gt;没有值&lt;/i&gt;&lt;/td&gt;&quot;);</span><br><span class="line">                else</span><br><span class="line">                    out.println(&quot;&lt;td&gt;&quot; + paramValue + &quot;&lt;/td&gt;&quot;);</span><br><span class="line">            &#125; else &#123;          // 读取多个值的数据</span><br><span class="line">               out.println(&quot;&lt;td&gt;&lt;ul&gt;&quot;);</span><br><span class="line">                for(int i=0; i &lt; paramValues.length; i++) &#123;</span><br><span class="line">                out.println(&quot;&lt;li&gt;&quot; + paramValues[i]);</span><br><span class="line">            &#125;</span><br><span class="line">                out.println(&quot;&lt;/ul&gt;&lt;/td&gt;&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            out.print(&quot;&lt;/tr&gt;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        out.println(&quot;\n&lt;/table&gt;\n&lt;/body&gt;&lt;/html&gt;&quot;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在web.xml中添加的内容同上</p>
+</li>
+<li>访问<code>http://localhost:8080/test/post.html</code>打开<code>html界面</code>，向表单中添加数据并提交。</li>
+</ul>
+<p><strong>④使用<code>HttpServletRequest</code>的<code>getHeaderNames()方法</code>读取 HTTP 头信息</strong></p>
+<ul>
+<li><p><code>HelloServlet.java</code>中的<code>doGet()方法</code>中添加。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"> response.setContentType(&quot;text/html;charset=UTF-8&quot;);</span><br><span class="line">PrintWriter out = response.getWriter();</span><br><span class="line">String title = &quot;HTTP Header请求&quot;;</span><br><span class="line">String docType =</span><br><span class="line">        &quot;&lt;!DOCTYPE html&gt; \n&quot;;</span><br><span class="line">        out.println(docType +</span><br><span class="line">        &quot;&lt;html&gt;\n&quot; +</span><br><span class="line">        &quot;&lt;head&gt;&lt;meta charset=\&quot;utf-8\&quot;&gt;&lt;title&gt;&quot; + title + &quot;&lt;/title&gt;&lt;/head&gt;\n&quot;+</span><br><span class="line">        &quot;&lt;body bgcolor=\&quot;#f0f0f0\&quot;&gt;\n&quot; +</span><br><span class="line">        &quot;&lt;h1 align=\&quot;center\&quot;&gt;&quot; + title + &quot;&lt;/h1&gt;\n&quot; +</span><br><span class="line">        &quot;&lt;table width=\&quot;100%\&quot; border=\&quot;1\&quot; align=\&quot;center\&quot;&gt;\n&quot; +</span><br><span class="line">        &quot;&lt;tr bgcolor=\&quot;#949494\&quot;&gt;\n&quot; +</span><br><span class="line">        &quot;&lt;th&gt;Header 名称&lt;/th&gt;&lt;th&gt;Header 值&lt;/th&gt;\n&quot;+</span><br><span class="line">        &quot;&lt;/tr&gt;\n&quot;);</span><br><span class="line">Enumeration headerNames = request.getHeaderNames();</span><br><span class="line">while(headerNames.hasMoreElements()) &#123;</span><br><span class="line">      String paramName = (String)headerNames.nextElement();</span><br><span class="line">      out.print(&quot;&lt;tr&gt;&lt;td&gt;&quot; + paramName + &quot;&lt;/td&gt;\n&quot;);</span><br><span class="line">      String paramValue = request.getHeader(paramName);</span><br><span class="line">       out.println(&quot;&lt;td&gt; &quot; + paramValue + &quot;&lt;/td&gt;&lt;/tr&gt;\n&quot;);</span><br><span class="line">   &#125;</span><br><span class="line">  out.println(&quot;&lt;/table&gt;\n&lt;/body&gt;&lt;/html&gt;&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>web.xml</code>中添加的内容同上</p>
+</li>
+<li>打开网址<code>http://localhost:8080/test/HelloServlet</code>可以看到<code>HTTP 头信息</code></li>
+</ul>
+<p><strong>🌫HTTP Header 响应实例</strong><br>PS：data导入的jar包：<code>import java.util.Date;</code></p>
+<ul>
+<li><p><code>HelloServlet.java</code>中的<code>doGet()方法</code>中添加。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">response.setIntHeader(&quot;Refresh&quot;, 5);  // 设置刷新自动加载时间为 5 秒</span><br><span class="line">response.setContentType(&quot;text/html;charset=UTF-8&quot;);         // 设置响应内容类型</span><br><span class="line">Calendar cale = Calendar.getInstance();    //使用默认时区和语言环境获得一个日历  </span><br><span class="line">Date tasktime=cale.getTime();  //将Calendar类型转换成Date类型 </span><br><span class="line">SimpleDateFormat df=new SimpleDateFormat(&quot;yyyy-MM-dd HH:mm:ss&quot;);    //设置日期输出的格式</span><br><span class="line">String nowTime = df.format(tasktime);  //格式化输出  </span><br><span class="line">PrintWriter out = response.getWriter();</span><br><span class="line">String title = &quot;自动刷新 Header 设置&quot;;</span><br><span class="line">String docType =</span><br><span class="line">        &quot;&lt;!DOCTYPE html&gt;\n&quot;;</span><br><span class="line">        out.println(docType +</span><br><span class="line">          &quot;&lt;html&gt;\n&quot; +</span><br><span class="line">          &quot;&lt;head&gt;&lt;title&gt;&quot; + title + &quot;&lt;/title&gt;&lt;/head&gt;\n&quot;+</span><br><span class="line">          &quot;&lt;body bgcolor=\&quot;#f0f0f0\&quot;&gt;\n&quot; +</span><br><span class="line">          &quot;&lt;h1 align=\&quot;center\&quot;&gt;&quot; + title + &quot;&lt;/h1&gt;\n&quot; +</span><br><span class="line">          &quot;&lt;p&gt;当前时间是：&quot; + nowTime + &quot;&lt;/p&gt;\n&quot;);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>web.xml</code>中添加的内容同上</p>
+</li>
+<li>打开网址<code>http://localhost:8080/test/HelloServlet</code>可以看到<code>时间且5秒刷新一次</code></li>
+</ul>
+<p><strong>⑥HTTP 状态码实例</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">response.sendError(404, &quot;页面不存在&quot; );</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>在<code>web.xml</code>中添加的内容同上</li>
+<li>打开网址<code>http://localhost:8080/test/HelloServlet</code>可以看到<code>404页面</code></li>
+</ul>
+<p><strong>⑦Servlet 过滤器实例</strong></p>
+<ul>
+<li><code>test(项目)--&gt;New--&gt;Filter</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-0e184b7a50b0667e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><p><code>Filter.java</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public void init(FilterConfig fConfig) throws ServletException &#123;</span><br><span class="line">        String site = fConfig.getInitParameter(&quot;Site&quot;);     // 获取初始化参数</span><br><span class="line">        System.out.println(&quot;网站名称: &quot; + site);   // 输出初始化参数</span><br><span class="line">    &#125;</span><br><span class="line">    public void  doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws java.io.IOException, ServletException &#123;</span><br><span class="line">        System.out.println(&quot;站点网址：http://www.runoob.com&quot;);      // 输出站点名称</span><br><span class="line">        chain.doFilter(request,response);    // 把请求传回过滤链</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>web.xml</code>添加以下内容，其他同上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">  &lt;filter&gt;</span><br><span class="line">  &lt;filter-name&gt;Filter&lt;/filter-name&gt;</span><br><span class="line">  &lt;filter-class&gt;cn.sheng.test.Filter&lt;/filter-class&gt;</span><br><span class="line">  &lt;init-param&gt;</span><br><span class="line">    &lt;param-name&gt;Site&lt;/param-name&gt;</span><br><span class="line">    &lt;param-value&gt;百度&lt;/param-value&gt;</span><br><span class="line">  &lt;/init-param&gt;</span><br><span class="line">&lt;/filter&gt;</span><br><span class="line">&lt;filter-mapping&gt;</span><br><span class="line">  &lt;filter-name&gt;Filter&lt;/filter-name&gt;</span><br><span class="line">  &lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span><br><span class="line">&lt;/filter-mapping&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>web.xml</code>中的元素：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;filter&gt;指定一个过滤器。</span><br><span class="line">        &lt;filter-name&gt;用于为过滤器指定一个名字，该元素的内容不能为空。</span><br><span class="line">        &lt;filter-class&gt;元素用于指定过滤器的完整的类名。</span><br><span class="line">        &lt;init-param&gt;元素用于为过滤器指定初始化参数，它的子元素&lt;param-name&gt;指定参数的名字，&lt;param-value&gt;指定参数的值。</span><br><span class="line">        在过滤器中，可以使用FilterConfig接口对象来访问初始化参数。</span><br><span class="line">&lt;filter-mapping&gt;元素用于设置一个 Filter 所负责拦截的资源。一个Filter拦截的资源可通过两种方式来指定：Servlet 名称和资源访问的请求路径</span><br><span class="line">        &lt;filter-name&gt;子元素用于设置filter的注册名称。该值必须是在&lt;filter&gt;元素中声明过的过滤器的名字</span><br><span class="line">        &lt;url-pattern&gt;设置 filter 所拦截的请求路径(过滤器关联的URL样式)</span><br><span class="line">&lt;servlet-name&gt;指定过滤器所拦截的Servlet名称。</span><br><span class="line">    &lt;dispatcher&gt;指定过滤器所拦截的资源被 Servlet 容器调用的方式，可以是REQUEST,INCLUDE,FORWARD和ERROR之一，默认REQUEST。用户可以设置多个&lt;dispatcher&gt;子元素用来指定 Filter 对资源的多种调用方式进行拦截。</span><br><span class="line">    &lt;dispatcher&gt;子元素可以设置的值及其意义</span><br><span class="line">        REQUEST：当用户直接访问页面时，Web容器将会调用过滤器。如果目标资源是通过RequestDispatcher的include()或forward()方法访问时，那么该过滤器就不会被调用。</span><br><span class="line">        INCLUDE：如果目标资源是通过RequestDispatcher的include()方法访问时，那么该过滤器将被调用。除此之外，该过滤器不会被调用。</span><br><span class="line">        FORWARD：如果目标资源是通过RequestDispatcher的forward()方法访问时，那么该过滤器将被调用，除此之外，该过滤器不会被调用。</span><br><span class="line">        ERROR：如果目标资源是通过声明式异常处理机制调用时，那么该过滤器将被调用。除此之外，过滤器不会被调用。</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>访问<code>http://localhost:8080/test/test/HelloServlet</code>在控制台会出现一次<code>网站名称:百度</code>和两次<code>站点网址：http://www.baidu.com</code></li>
+</ul>
+<p><em>PS：使用多个过滤器的话就像上面一样添加就行，<code>filter-mapping 元素</code>的顺序决定了 Web 容器应用过滤器到<code>Servlet 的顺序</code></em></p>
+<p><strong>⑧Servlet 错误处理程序实例</strong></p>
+<ul>
+<li><code>File--&gt;New--&gt;Servlet</code>创建一个<code>ErrorHandler</code>实例</li>
+<li><p><code>ErrorHandler.java</code>中的<code>doGet()方法</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">Throwable throwable = (Throwable)</span><br><span class="line">request.getAttribute(&quot;javax.servlet.error.exception&quot;);</span><br><span class="line">Integer statusCode = (Integer)</span><br><span class="line">request.getAttribute(&quot;javax.servlet.error.status_code&quot;);</span><br><span class="line">String servletName = (String)</span><br><span class="line">request.getAttribute(&quot;javax.servlet.error.servlet_name&quot;);</span><br><span class="line">if (servletName == null)&#123;</span><br><span class="line">	servletName = &quot;Unknown&quot;;</span><br><span class="line"> &#125;</span><br><span class="line">String requestUri = (String)</span><br><span class="line">request.getAttribute(&quot;javax.servlet.error.request_uri&quot;);</span><br><span class="line">if (requestUri == null)&#123;</span><br><span class="line">	requestUri = &quot;Unknown&quot;;</span><br><span class="line"> &#125;		        </span><br><span class="line">response.setContentType(&quot;text/html;charset=UTF-8&quot;);  // 设置响应内容类型</span><br><span class="line">PrintWriter out = response.getWriter();</span><br><span class="line">String title = &quot;Error/Exception 信息&quot;;</span><br><span class="line">String docType = &quot;&lt;!DOCTYPE html&gt;\n&quot;;</span><br><span class="line">out.println(docType +</span><br><span class="line">	&quot;&lt;html&gt;\n&quot; +</span><br><span class="line">	 &quot;&lt;head&gt;&lt;title&gt;&quot; + title + &quot;&lt;/title&gt;&lt;/head&gt;\n&quot; +</span><br><span class="line">	 &quot;&lt;body bgcolor=\&quot;#f0f0f0\&quot;&gt;\n&quot;);</span><br><span class="line">if (throwable == null &amp;&amp; statusCode == null)&#123;</span><br><span class="line">	out.println(&quot;&lt;h2&gt;错误信息丢失&lt;/h2&gt;&quot;);</span><br><span class="line">	out.println(&quot;请返回 &lt;a href=\&quot;&quot; + </span><br><span class="line">	response.encodeURL(&quot;http://localhost:8080/&quot;) + &quot;\&quot;&gt;主页&lt;/a&gt;。&quot;);</span><br><span class="line">	&#125;else if (statusCode != null) &#123;</span><br><span class="line">		  out.println(&quot;错误代码 : &quot; + statusCode);</span><br><span class="line">	&#125;else&#123;</span><br><span class="line">		 out.println(&quot;&lt;h2&gt;错误信息&lt;/h2&gt;&quot;);</span><br><span class="line">		 out.println(&quot;Servlet Name : &quot; + servletName +  &quot;&lt;/br&gt;&lt;/br&gt;&quot;);</span><br><span class="line">		 out.println(&quot;异常类型 : &quot; + throwable.getClass( ).getName( ) +  &quot;&lt;/br&gt;&lt;/br&gt;&quot;);</span><br><span class="line">		 out.println(&quot;请求 URI: &quot; + requestUri + &quot;&lt;br&gt;&lt;br&gt;&quot;);</span><br><span class="line">		 out.println(&quot;异常信息: &quot; + throwable.getMessage( ));</span><br><span class="line">	  &#125;</span><br><span class="line">	 out.println(&quot;&lt;/body&gt;&quot;);</span><br><span class="line">	 out.println(&quot;&lt;/html&gt;&quot;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>web.xml</code>中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;ErrorHandler&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;cn.sheng.test.ErrorHandler&lt;/servlet-class&gt;</span><br><span class="line">&lt;/servlet&gt;</span><br><span class="line">&lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;ErrorHandler&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/test/ErrorHandler&lt;/url-pattern&gt;</span><br><span class="line">&lt;/servlet-mapping&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">    &lt;error-code&gt;404&lt;/error-code&gt;</span><br><span class="line">    &lt;location&gt;/test/ErrorHandler&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br><span class="line">&lt;error-page&gt;</span><br><span class="line">    &lt;exception-type&gt;java.lang.Throwable&lt;/exception-type &gt;</span><br><span class="line">    &lt;location&gt;/ErrorHandler&lt;/location&gt;</span><br><span class="line">&lt;/error-page&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问<code>http://localhost:8080/test/ErrorHandler/12</code>，可以看到<code>错误代码 : 404</code></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java学习/" rel="tag"># java学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/12/19/php-imap-CVE-2018-19158/" rel="next" title="php imap(CVE-2018-19158)">
+                <i class="fa fa-chevron-left"></i> php imap(CVE-2018-19158)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/12/25/Java-Servlet入门-2/" rel="prev" title="Java Servlet入门[2]">
+                Java Servlet入门[2] <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">74</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#tomcat安装"><span class="nav-number">1.</span> <span class="nav-text">tomcat安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Servlet"><span class="nav-number">2.</span> <span class="nav-text">Servlet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#eclipse创建Servlet实例"><span class="nav-number">3.</span> <span class="nav-text">eclipse创建Servlet实例</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
