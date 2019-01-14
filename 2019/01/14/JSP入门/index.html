@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="参考文献：http://www.runoob.com/jsp/jsp-tutorial.html eclipse运行JSP 先配置环境 创建一个动态项目File--&amp;gt;New--&amp;gt;Dynamic Web Project  WebContent文件夹下新建一个index.jsp在标签内添加 123&amp;lt;%    out.println(&amp;quot;Hello World!&amp;quot;);">
+<meta name="keywords" content="java学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JSP入门">
+<meta property="og:url" content="https://cws6.github.io/2019/01/14/JSP入门/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="参考文献：http://www.runoob.com/jsp/jsp-tutorial.html eclipse运行JSP 先配置环境 创建一个动态项目File--&amp;gt;New--&amp;gt;Dynamic Web Project  WebContent文件夹下新建一个index.jsp在标签内添加 123&amp;lt;%    out.println(&amp;quot;Hello World!&amp;quot;);">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-9723db6be7755b51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b9bbec75a3b8acf5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-3bcce9f85170d2db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-01-14T03:40:10.187Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JSP入门">
+<meta name="twitter:description" content="参考文献：http://www.runoob.com/jsp/jsp-tutorial.html eclipse运行JSP 先配置环境 创建一个动态项目File--&amp;gt;New--&amp;gt;Dynamic Web Project  WebContent文件夹下新建一个index.jsp在标签内添加 123&amp;lt;%    out.println(&amp;quot;Hello World!&amp;quot;);">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-9723db6be7755b51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2019/01/14/JSP入门/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JSP入门 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2019/01/14/JSP入门/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JSP入门
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-14 11:34:34 / Modified: 11:40:10" itemprop="dateCreated datePublished" datetime="2019-01-14T11:34:34+08:00">2019-01-14</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>参考文献：<a href="http://www.runoob.com/jsp/jsp-tutorial.html" target="_blank" rel="noopener">http://www.runoob.com/jsp/jsp-tutorial.html</a></p>
+<h4 id="eclipse运行JSP"><a href="#eclipse运行JSP" class="headerlink" title="eclipse运行JSP"></a>eclipse运行JSP</h4><ul>
+<li>先配置环境<br><img src="https://upload-images.jianshu.io/upload_images/5035860-9723db6be7755b51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><p>创建一个动态项目<code>File--&gt;New--&gt;Dynamic Web Project</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-b9bbec75a3b8acf5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>WebContent文件夹下新建一个<code>index.jsp</code><br>在<body>标签内添加</body></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%</span><br><span class="line">    out.println(&quot;Hello World!&quot;);</span><br><span class="line">%&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Window--&gt;Web Browser</code>修改为1默认浏览器</p>
+</li>
+<li><code>run as</code>运行即可</li>
+</ul>
+<h4 id="JSP处理过程"><a href="#JSP处理过程" class="headerlink" title="JSP处理过程"></a>JSP处理过程</h4><ul>
+<li>浏览器发送一个 HTTP 请求给服务器。</li>
+<li>Web 服务器识别出这是一个对 JSP 网页的请求，并且将该请求传递给<code>JSP 引擎</code>。通过使用 URL或者 <code>.jsp</code>文件来完成。</li>
+<li>JSP 引擎从磁盘中载入 JSP 文件，然后将它们转化为<code>Servlet</code>。这种转化只是简单地将所有模板文本改用<code>println()</code>语句，并且将所有的<code>JSP 元素</code>转化成<code>Java 代码</code>。</li>
+<li><code>JSP 引擎</code>将 <code>Servlet</code>编译成可执行类，并且将原始请求传递给<code>Servlet 引擎</code>。</li>
+<li>Web 服务器的某组件将会调用<code>Servlet 引擎</code>，然后载入并执行<code>Servlet 类</code>。在执行过程中，Servlet 产生<code>HTML 格式</code>的输出并将其内嵌于<code>HTTP response</code>中上交给 Web 服务器。</li>
+<li>Web 服务器以静态 HTML 网页的形式将<code>HTTP response</code>返回到浏览器中。</li>
+<li>最终，Web 浏览器处理<code>HTTP response</code>中动态产生的HTML网页，就好像在处理静态网页一样。</li>
+</ul>
+<h4 id="JSP语法"><a href="#JSP语法" class="headerlink" title="JSP语法"></a>JSP语法</h4><ul>
+<li>脚本程序：<code>&lt;% 代码片段 %&gt;</code></li>
+<li>JSP声明：<code>&lt;%! declaration; [ declaration; ]+ ... %&gt;</code>(&lt;%! int a, b, c; %&gt; )</li>
+<li>JSP表达式：<code>&lt;%= 表达式 %&gt;</code></li>
+<li>JSP注释：<code>&lt;%-- 注释 --%&gt;</code>    ，<code>&lt;!-- 注释 --&gt;</code>    </li>
+<li><p>JSP指令：<code>&lt;%@ directive attribute=&quot;value&quot; %&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page ... %&gt;  #定义页面的依赖属性，比如脚本语言、error页面、缓存需求</span><br><span class="line">&lt;%@ include ... %&gt;  #包含其他文件</span><br><span class="line">&lt;%@ taglib ... %&gt;  #引入标签库的定义，可以是自定义标签</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSP行为：<code>&lt;jsp:action_name attribute=&quot;value&quot; /&gt;</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">jsp:include  #用于在当前页面中包含静态或动态资源</span><br><span class="line">jsp:useBean	#寻找和初始化一个JavaBean组件</span><br><span class="line">jsp:setProperty	#设置 JavaBean组件的值</span><br><span class="line">jsp:getProperty	#将 JavaBean组件的值插入到 output中</span><br><span class="line">jsp:forward	#从一个JSP文件向另一个文件传递一个包含用户请求的request对象</span><br><span class="line">jsp:plugin	    #用于在生成的HTML页面中包含Applet和JavaBean对象</span><br><span class="line">jsp:element	#动态创建一个XML元素</span><br><span class="line">jsp:attribute	#定义动态创建的XML元素的属性</span><br><span class="line">jsp:body	#定义动态创建的XML元素的主体</span><br><span class="line">jsp:text	#用于封装模板数据</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSP隐含对象</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">request	  #HttpServletRequest类的实例</span><br><span class="line">response	   #HttpServletResponse类的实例</span><br><span class="line">out	         #PrintWriter类的实例，用于把结果输出至网页上</span><br><span class="line">session	 #HttpSession类的实例</span><br><span class="line">application	#ServletContext类的实例，与应用上下文有关</span><br><span class="line">config	    #ServletConfig类的实例</span><br><span class="line">pageContext	 #PageContext类的实例，提供对JSP页面所有对象以及命名空间的访问</span><br><span class="line">page	  #类似于Java类中的this关键字</span><br><span class="line">Exception	#Exception类的对象，代表发生错误的JSP页面中对应的异常对象</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="JSP实例"><a href="#JSP实例" class="headerlink" title="JSP实例"></a>JSP实例</h4><h4 id="生命周期实例"><a href="#生命周期实例" class="headerlink" title="生命周期实例"></a>生命周期实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Insert title here&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;%! </span><br><span class="line">  private int initVar=0;</span><br><span class="line">  private int serviceVar=0;</span><br><span class="line">  private int destroyVar=0;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%!</span><br><span class="line">  public void jspInit()&#123;</span><br><span class="line">    initVar++;</span><br><span class="line">    System.out.println(&quot;jspInit(): JSP被初始化了&quot;+initVar+&quot;次&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">  public void jspDestroy()&#123;</span><br><span class="line">    destroyVar++;</span><br><span class="line">    System.out.println(&quot;jspDestroy(): JSP被销毁了&quot;+destroyVar+&quot;次&quot;);</span><br><span class="line">  &#125;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;%</span><br><span class="line">  serviceVar++;</span><br><span class="line">  System.out.println(&quot;_jspService(): JSP共响应了&quot;+serviceVar+&quot;次请求&quot;);</span><br><span class="line">  String content1=&quot;初始化次数 : &quot;+initVar;</span><br><span class="line">  String content2=&quot;响应客户请求次数 : &quot;+serviceVar;</span><br><span class="line">  String content3=&quot;销毁次数 : &quot;+destroyVar;</span><br><span class="line">%&gt;</span><br><span class="line">&lt;h1&gt;JSP 测试实例&lt;/h1&gt;</span><br><span class="line">&lt;p&gt;&lt;%=content1 %&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;%=content2 %&gt;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&lt;%=content3 %&gt;&lt;/p&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>访问<code>http://localhost:8080/test/Life.jsp</code>得到<br><img src="https://upload-images.jianshu.io/upload_images/5035860-3bcce9f85170d2db.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<h5 id="jsp连接数据库"><a href="#jsp连接数据库" class="headerlink" title="jsp连接数据库"></a>jsp连接数据库</h5><p><strong>查询数据</strong></p>
+<ul>
+<li>index.jsp<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">    pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;%@ page import=&quot;java.io.*,java.util.*,java.sql.*&quot;%&gt;</span><br><span class="line">&lt;%@ page import=&quot;javax.servlet.http.*,javax.servlet.*&quot; %&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/core&quot; prefix=&quot;c&quot;%&gt;</span><br><span class="line">&lt;%@ taglib uri=&quot;http://java.sun.com/jsp/jstl/sql&quot; prefix=&quot;sql&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;sql:setDataSource var=&quot;snapshot&quot; driver=&quot;com.mysql.cj.jdbc.Driver&quot;</span><br><span class="line">     url=&quot;jdbc:mysql://localhost:3306/jsp?serverTimezone=GMT%2B8&quot;</span><br><span class="line">     user=&quot;root&quot;  password=&quot;root&quot;/&gt;</span><br><span class="line"> </span><br><span class="line">&lt;sql:query dataSource=&quot;$&#123;snapshot&#125;&quot; var=&quot;result&quot;&gt;</span><br><span class="line">SELECT * from websites;</span><br><span class="line">&lt;/sql:query&gt;</span><br><span class="line">&lt;h1&gt;JSP 数据库实例&lt;/h1&gt;</span><br><span class="line">&lt;table border=&quot;1&quot; width=&quot;100%&quot;&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">   &lt;th&gt;ID&lt;/th&gt;</span><br><span class="line">   &lt;th&gt;站点名&lt;/th&gt;</span><br><span class="line">   &lt;th&gt;站点地址&lt;/th&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;c:forEach var=&quot;row&quot; items=&quot;$&#123;result.rows&#125;&quot;&gt;</span><br><span class="line">&lt;tr&gt;</span><br><span class="line">   &lt;td&gt;&lt;c:out value=&quot;$&#123;row.id&#125;&quot;/&gt;&lt;/td&gt;</span><br><span class="line">   &lt;td&gt;&lt;c:out value=&quot;$&#123;row.name&#125;&quot;/&gt;&lt;/td&gt;</span><br><span class="line">   &lt;td&gt;&lt;c:out value=&quot;$&#123;row.url&#125;&quot;/&gt;&lt;/td&gt;</span><br><span class="line">&lt;/tr&gt;</span><br><span class="line">&lt;/c:forEach&gt;</span><br><span class="line">&lt;/table&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>PS:需导入jar包：<code>mysql-connector-java-8.0.11.jar</code> 和<code>jstl-1.2.jar</code>(放在项目的<code>lib目录</code>)，一定要注意jar包的版本，不同的版本语法不一样</p>
+<p><strong>插入数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;sql:update dataSource=&quot;$&#123;snapshot&#125;&quot; var=&quot;result&quot;&gt;</span><br><span class="line">INSERT INTO websites (name,url,alexa,country) VALUES (&apos;百度&apos;, &apos;http://www.baidu.com&apos;, 5093, &apos;CN&apos;);</span><br><span class="line">&lt;/sql:update&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>删除数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;sql:update dataSource=&quot;$&#123;snapshot&#125;&quot; var=&quot;count&quot;&gt;</span><br><span class="line">  DELETE FROM websites WHERE Id = ?</span><br><span class="line">  &lt;sql:param value=&quot;$&#123;11&#125;&quot; /&gt;</span><br><span class="line">&lt;/sql:update&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>修改数据</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;c:set var=&quot;SiteId&quot; value=&quot;3&quot;/&gt;</span><br><span class="line">&lt;sql:update dataSource=&quot;$&#123;snapshot&#125;&quot; var=&quot;count&quot;&gt;</span><br><span class="line">  UPDATE websites SET name = &apos;谷歌&apos; WHERE Id = ?</span><br><span class="line">  &lt;sql:param value=&quot;$&#123;SiteId&#125;&quot; /&gt;</span><br><span class="line">&lt;/sql:update&gt;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java学习/" rel="tag"># java学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/02/rmi入门/" rel="next" title="rmi入门">
+                <i class="fa fa-chevron-left"></i> rmi入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/01/14/struts2入门/" rel="prev" title="struts2入门">
+                struts2入门 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">77</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#eclipse运行JSP"><span class="nav-number">1.</span> <span class="nav-text">eclipse运行JSP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP处理过程"><span class="nav-number">2.</span> <span class="nav-text">JSP处理过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP语法"><span class="nav-number">3.</span> <span class="nav-text">JSP语法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSP实例"><span class="nav-number">4.</span> <span class="nav-text">JSP实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生命周期实例"><span class="nav-number">5.</span> <span class="nav-text">生命周期实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#jsp连接数据库"><span class="nav-number">5.1.</span> <span class="nav-text">jsp连接数据库</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
