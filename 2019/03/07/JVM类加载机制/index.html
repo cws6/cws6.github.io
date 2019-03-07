@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概念： JRE(Java运行环境)：所有的Java 程序都要在JRE下才能运行。 JDK：开发者编译、调试java程序用的开发工具包。JDK的工具也是Java程序，也需要JRE才能运行。在JDK的安装目录下有一个名为jre的目录，用于存放JRE文件。 JVM(Java虚拟机)是JRE的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM有自己完善的硬件架构">
+<meta name="keywords" content="java学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JVM类加载机制">
+<meta property="og:url" content="https://cws6.github.io/2019/03/07/JVM类加载机制/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="概念： JRE(Java运行环境)：所有的Java 程序都要在JRE下才能运行。 JDK：开发者编译、调试java程序用的开发工具包。JDK的工具也是Java程序，也需要JRE才能运行。在JDK的安装目录下有一个名为jre的目录，用于存放JRE文件。 JVM(Java虚拟机)是JRE的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM有自己完善的硬件架构">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-905c893fcbfd0542.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-ede52352ff46704c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-4d5e6df48d3a7e77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-03-07T08:19:05.296Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JVM类加载机制">
+<meta name="twitter:description" content="概念： JRE(Java运行环境)：所有的Java 程序都要在JRE下才能运行。 JDK：开发者编译、调试java程序用的开发工具包。JDK的工具也是Java程序，也需要JRE才能运行。在JDK的安装目录下有一个名为jre的目录，用于存放JRE文件。 JVM(Java虚拟机)是JRE的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM有自己完善的硬件架构">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-905c893fcbfd0542.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2019/03/07/JVM类加载机制/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>JVM类加载机制 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2019/03/07/JVM类加载机制/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JVM类加载机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-07 16:14:19 / Modified: 16:19:05" itemprop="dateCreated datePublished" datetime="2019-03-07T16:14:19+08:00">2019-03-07</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h4><ul>
+<li>JRE(Java运行环境)：所有的Java 程序都要在JRE下才能运行。</li>
+<li>JDK：开发者编译、调试java程序用的开发工具包。JDK的工具也是Java程序，也需要JRE才能运行。在JDK的安装目录下有一个名为jre的目录，用于存放JRE文件。</li>
+<li>JVM(Java虚拟机)是JRE的一部分。它是一个虚构出来的计算机，是通过在实际的计算机上仿真模拟各种计算机功能来实现的。JVM有自己完善的硬件架构，如处理器、堆栈、寄存器等，还具有相应的指令系统。使用JVM就是为了支持与操作系统无关，实现跨平台。JVM在执行字节码时，实际上最终还是把字节码解释成具体平台上的机器指令执行。</li>
+</ul>
+<h4 id="JVM-类加载机制详解："><a href="#JVM-类加载机制详解：" class="headerlink" title="JVM 类加载机制详解："></a>JVM 类加载机制详解：</h4><h6 id="JVM类加载机制分为五个部分："><a href="#JVM类加载机制分为五个部分：" class="headerlink" title="JVM类加载机制分为五个部分："></a>JVM类加载机制分为五个部分：</h6><ul>
+<li>加载：<br>  通过一个<code>类的全限定名</code>来获取定义此类的二进制字节流；<br>  将这个字节流所代表的静态存储结构转化为方法区的运行时数据结构；<br>  在内存中生成一个这个类的<code>java.lang.Class</code>对象，作为方法区这个类的各种数据的访问入口；</li>
+<li>验证 ：<br>为了确保Class文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。包括文件格式验证，元数据验证，字节码验证，符号引用验证。可以采用<code>-Xverifynone</code>参数来关闭大部分的类验证措施，以缩短虚拟机类加载的时间</li>
+<li><p>准备：<br> 为类变量分配内存并设置类变量初始值的阶段，这些变量所使用的内存都将在方法区中进行分配。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">public static int v = 8080; #变量v在准备阶段过后的初始值为0而不是8080，将v赋值为8080的putstatic指令是程序被编译后，存放于类构造器()方法之中，把value赋值为123的动作将在初始化阶段才会执行。</span><br><span class="line">public static final int v = 8080; #在编译阶段会为v生成`ConstantValue`属性，在准备阶段虚拟机会根据`ConstantValue`属性将v赋值为8080。</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>解析：<br>是虚拟机将常量池中的<code>符号引用</code>替换为<code>直接引用</code>的过程。符号引用就是class文件中的<code>CONSTANT_Class_info</code>，<code>CONSTANT_Field_info</code>，<code>CONSTANT_Method_info</code><br>符号引用：引用的目标并不一定要已经加载到内存中。各种虚拟机实现的内存布局可以各不相同，但是它们能接受的符号引用必须是一致的，因为符号引用的字面量形式明确定义在Java虚拟机规范的Class文件格式中。<br>直接引用：指向目标的指针，相对偏移量或是一个能间接定位到目标的句柄。如果有了直接引用，那引用的目标必定已经在内存中存在。</p>
+</li>
+<li><p>初始化：<br>初始化阶段是执行类构造器<client>方法的过程。<client>方法是由编译器自动收集类中的类变量的赋值操作和静态语句块中的语句合并而成的。虚拟机会保证<client>方法执行之前，父类的<client>方法已经执行完毕。如果一个类中没有对静态变量赋值也没有静态语句块，那么编译器可以不为这个类生成<client>()方法。</client></client></client></client></client></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">什么时候需要对类进行初始化？</span><br><span class="line">使用new该类实例化对象的时候；</span><br><span class="line">读取或设置类静态字段的时候（但被final修饰的字段，在编译器时就被放入常量池的静态字段除外static final）；</span><br><span class="line">调用类静态方法的时候；</span><br><span class="line">使用反射Class.forName(“xxxx”)对类进行反射调用的时候，该类需要初始化；</span><br><span class="line">初始化一个类的时候，有父类，先初始化父类（注：1. 接口除外，父接口在调用的时候才会被初始化；2.子类引用父类静态字段，只会引发父类初始化）；</span><br><span class="line">被标明为启动类的类（即包含main()方法的类）要初始化；</span><br><span class="line">当使用JDK1.7的动态语言支持时，如果一个java.invoke.MethodHandle实例最后的解析结果REF_getStatic、REF_putStatic、REF_invokeStatic的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化。</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">通过子类引用父类的静态字段，只会触发父类的初始化，而不会触发子类的初始化。</span><br><span class="line">定义对象数组，不会触发该类的初始化。</span><br><span class="line">常量在编译期间会存入调用类的常量池中，本质上并没有直接引用定义常量的类，不会触发定义常量所在的类。</span><br><span class="line">通过类名获取Class对象，不会触发类的初始化。</span><br><span class="line">通过Class.forName加载指定类时，如果指定参数initialize为false时，也不会触发类初始化，其实这个参数是告诉虚拟机，是否要对类进行初始化。</span><br><span class="line">通过ClassLoader默认的loadClass方法，也不会触发初始化动作。</span><br></pre></td></tr></table></figure>
+<h5 id="Java语言系统自带三个类加载器"><a href="#Java语言系统自带三个类加载器" class="headerlink" title="Java语言系统自带三个类加载器:"></a>Java语言系统自带三个类加载器:</h5><p>虚拟机设计团队把加载动作放到JVM外部实现，以便让应用程序决定如何获取所需的类：</p>
+<ul>
+<li><code>Bootstrap ClassLoader</code> 最顶层的启动类加载器，主要加载核心类库，<code>%JRE_HOME%\lib</code>下的jar包和class文件。或通过<code>-Xbootclasspath</code>参数指定路径中的类。</li>
+<li><code>Extention ClassLoader</code> 扩展的类加载器，加载目录<code>%JRE_HOME%\lib\ext</code>目录下的jar包和class文件。</li>
+<li><code>Appclass Loader</code>应用程序类加载器，加载用户路径的<code>classpath的所有类</code>。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-905c893fcbfd0542.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<h6 id="三个类加载器的加载顺序"><a href="#三个类加载器的加载顺序" class="headerlink" title="三个类加载器的加载顺序"></a>三个类加载器的加载顺序</h6><ul>
+<li><p>先创建个项目，再创建个<code>Test.java</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-ede52352ff46704c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">java.lang.ClassLoader cl = Test.class.getClassLoader();		</span><br><span class="line">System.out.println(&quot;ClassLoader is:&quot;+cl.toString());</span><br><span class="line">System.out.println(&quot;ClassLoader\&apos;s parent is:&quot;+cl.getParent().toString()); </span><br><span class="line">System.out.println(&quot;ClassLoader\&apos;s grand father is:&quot;+cl.getParent().getParent().toString());</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自己编写的<code>Test.class</code>文件是由<code>AppClassLoader</code>加载的</p>
+</li>
+<li><code>AppClassLoader</code>的parent是<code>ExtClassLoader</code>，<code>ExtClassLoader</code>的parent是<code>null</code></li>
+<li><code>BootStrapClassLoader</code>、<code>ExtClassLoader</code>、<code>AppClassLoader</code>都是加载指定路径下的jar包</li>
+</ul>
+<h6 id="JVM通过双亲委派模型进行类的加载，也可以通过继承java-lang-ClassLoader实现自定义的类加载器。"><a href="#JVM通过双亲委派模型进行类的加载，也可以通过继承java-lang-ClassLoader实现自定义的类加载器。" class="headerlink" title="JVM通过双亲委派模型进行类的加载，也可以通过继承java.lang.ClassLoader实现自定义的类加载器。"></a>JVM通过双亲委派模型进行类的加载，也可以通过继承<code>java.lang.ClassLoader</code>实现自定义的类加载器。</h6><p><img src="https://upload-images.jianshu.io/upload_images/5035860-4d5e6df48d3a7e77.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>当一个类加载器收到类加载任务，会先交给其父类加载器去完成，因此最终加载任务都会传递到顶层的启动类加载器，只有当父类加载器无法完成加载任务时，才会尝试自己执行加载任务。采用双亲委派的一个好处是比如加载位于<code>rt.jar</code>包中的类<code>java.lang.Object</code>，不管是哪个加载器加载这个类，最终都是委托给顶层的启动类加载器进行加载，这样就保证了使用不同的类加载器最终得到的都是同样一个Object对象。<br><strong>加载过程</strong></p>
+<ul>
+<li>首先通过Class c = findLoadedClass(name);判断一个类是否已经被加载过。</li>
+<li>如果没有被加载过执行if (c == null)中的程序，遵循双亲委派的模型，首先会通过递归从父加载器开始找，直到父类加载器是Bootstrap ClassLoader为止。</li>
+<li>最后根据resolve的值，判断这个class是否需要解析。<h4 id="一个实例"><a href="#一个实例" class="headerlink" title="一个实例"></a>一个实例</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">class Singleton&#123; </span><br><span class="line">	private static Singleton singleton = new Singleton(); </span><br><span class="line">	public static int value1; </span><br><span class="line">        public static int value2 = 0; </span><br><span class="line">	private Singleton()&#123; </span><br><span class="line">		value1++; </span><br><span class="line">		value2++; </span><br><span class="line">		&#125; </span><br><span class="line">	public static Singleton getInstance()&#123; </span><br><span class="line">		return singleton; </span><br><span class="line">		&#125; </span><br><span class="line">	&#125; </span><br><span class="line">class Singleton2&#123; </span><br><span class="line">	public static int value1; </span><br><span class="line">	public static int value2 = 0; </span><br><span class="line">	private static Singleton2 singleton2 = new Singleton2(); </span><br><span class="line">	private Singleton2()&#123; </span><br><span class="line">		value1++; </span><br><span class="line">		value2++; </span><br><span class="line">		&#125; </span><br><span class="line">	public static Singleton2 getInstance2()&#123; </span><br><span class="line">		return singleton2;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">public class jvm &#123;</span><br><span class="line">	public static void main(String[] args) &#123;</span><br><span class="line">		Singleton singleton = Singleton.getInstance();</span><br><span class="line">		System.out.println(&quot;Singleton1 value1:&quot; + singleton.value1); </span><br><span class="line">		System.out.println(&quot;Singleton1 value2:&quot; + singleton.value2); </span><br><span class="line">		Singleton2 singleton2 = Singleton2.getInstance2(); </span><br><span class="line">		System.out.println(&quot;Singleton2 value1:&quot; + singleton2.value1); </span><br><span class="line">		System.out.println(&quot;Singleton2 value2:&quot; + singleton2.value2); </span><br><span class="line">		&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h5><p>Singleton输出结果：1 0<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">首先执行main中的Singleton singleton = Singleton.getInstance();</span><br><span class="line">加载：加载类Singleton</span><br><span class="line">准备：为静态变量分配内存，设置默认值。这里为singleton(引用类型)设置为null,value1,value2（基本数据类型）设置默认值0</span><br><span class="line">初始化（按照赋值语句进行修改）：</span><br><span class="line">    执行private static Singleton singleton = new Singleton();</span><br><span class="line">    执行Singleton的构造器：value1++;value2++; 此时value1，value2均等于1</span><br><span class="line">    执行</span><br><span class="line">    public static int value1;</span><br><span class="line">    public static int value2 = 0;</span><br><span class="line">    此时value1=1，value2=0</span><br></pre></td></tr></table></figure></p>
+<p>Singleton2输出结果：1 1<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">执行main中的Singleton2 singleton2 = Singleton2.getInstance2();</span><br><span class="line">加载：加载类Singleton2</span><br><span class="line">准备：为静态变量分配内存，设置默认值。这里为value1,value2（基本数据类型）设置默认值0,singleton2(引用类型)设置为null,</span><br><span class="line">初始化（按照赋值语句进行修改）：</span><br><span class="line">    执行public static int value2 = 0;</span><br><span class="line">    此时value2=0(value1不变，依然是0);</span><br><span class="line">    执行</span><br><span class="line">    private static Singleton singleton = new Singleton();</span><br><span class="line">    执行Singleton2的构造器：value1++;value2++;</span><br><span class="line">    此时value1，value2均等于1,即为最后结果</span><br></pre></td></tr></table></figure></p>
+<hr>
+<p>参考文献：<a href="https://blog.csdn.net/briblue/article/details/54973413" target="_blank" rel="noopener">https://blog.csdn.net/briblue/article/details/54973413</a><br><a href="https://yq.aliyun.com/articles/518315" target="_blank" rel="noopener">https://yq.aliyun.com/articles/518315</a><br><a href="https://blog.csdn.net/noaman_wgs/article/details/74489549" target="_blank" rel="noopener">https://blog.csdn.net/noaman_wgs/article/details/74489549</a><br><a href="http://www.importnew.com/30567.html" target="_blank" rel="noopener">http://www.importnew.com/30567.html</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java学习/" rel="tag"># java学习</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/27/SpEL表达式注入/" rel="next" title="SpEL表达式注入">
+                <i class="fa fa-chevron-left"></i> SpEL表达式注入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">80</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://r1ka.me" title="http://r1ka.me" rel="noopener" target="_blank">r1ka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blank233.github.io/" title="https://blank233.github.io/" rel="noopener" target="_blank">Blank</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.lrestless.com/" title="http://blog.lrestless.com/" rel="noopener" target="_blank">lrestless</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wcute.github.io" title="https://wcute.github.io" rel="noopener" target="_blank">鸡翅儿</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/xiaoqiyue/" title="https://www.cnblogs.com/xiaoqiyue/" rel="noopener" target="_blank">爪爪</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#概念："><span class="nav-number">1.</span> <span class="nav-text">概念：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM-类加载机制详解："><span class="nav-number">2.</span> <span class="nav-text">JVM 类加载机制详解：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#JVM类加载机制分为五个部分："><span class="nav-number">2.0.1.</span> <span class="nav-text">JVM类加载机制分为五个部分：</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Java语言系统自带三个类加载器"><span class="nav-number">2.1.</span> <span class="nav-text">Java语言系统自带三个类加载器:</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#三个类加载器的加载顺序"><span class="nav-number">2.1.1.</span> <span class="nav-text">三个类加载器的加载顺序</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#JVM通过双亲委派模型进行类的加载，也可以通过继承java-lang-ClassLoader实现自定义的类加载器。"><span class="nav-number">2.1.2.</span> <span class="nav-text">JVM通过双亲委派模型进行类的加载，也可以通过继承java.lang.ClassLoader实现自定义的类加载器。</span></a></li></ol></li></ol><li class="nav-item nav-level-4"><a class="nav-link" href="#一个实例"><span class="nav-number">3.</span> <span class="nav-text">一个实例</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#结果"><span class="nav-number">3.1.</span> <span class="nav-text">结果</span></a></li></ol></li></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
